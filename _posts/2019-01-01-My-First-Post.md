@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Latent Matrix Factorization
-description: This is a short description about the content contained in the post.
+title: New Post Title
+description: Description about pot hast changed
 image: https://koaning.io/posts/priors-of-great-potential/drawing7.png
 ---
 
