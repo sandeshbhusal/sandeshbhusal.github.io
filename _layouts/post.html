@@ -1,4 +1,14 @@
 ---
 layout: default
 ---
-I am the content
+
+    <center>
+        <h2> {{ page.title }}</h2>
+        <br />
+    </center>
+<small>
+    Posted on {{ page.date | date_to_string }} <br />
+    Authored by <b> {{ page.author }} </b>
+</small>
+<br /><br />
+ {{ content }}
