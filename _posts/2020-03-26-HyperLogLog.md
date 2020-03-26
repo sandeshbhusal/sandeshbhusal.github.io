@@ -12,11 +12,11 @@ Hyperlog Log algorithm is a [probabilistic cardinality estimator](https://en.wik
 #####  1. Introduction to the Count-Distinct Problem:
 The count distinct problem, also known as the cardinality estimation problem is a well-known problem in a computer science, that aims to find the count of distinct items in a multiset, using storage units fewer than the count of elements (distinct and otherwise). Here's an illustration. Let us consider the following multiset of elements:
 
-`X = {1, 2, 3, 1, 2, 3, 4, 5, 6}`
+$$ X = \{1, 2, 3, 1, 2, 3, 4, 5, 6\} $$
 
 The cardinality of the given multiset (remember that I am using the term Multiset here, as a multiset allows multiple count of the same element in it, and the count is called as multiplicity of the element in the set. You might also already know multiset as pythonic lists, or vectors in C++) is 9, as there are 9 elements in the multiset. However, we can see that a set constructed from the given multiset will contain only 6 elements as the following:
 
-`X' = {1, 2, 3, 4, 5, 6}`
+$$ X' = \{1, 2, 3, 4, 5, 6\} $$
 
 This is the count distinct problem. We need to get the count of the distinct elements from the given multiset. This problem can also be re-phrased as finding out the cardinality of the set constructed from the given multiset. 
 
@@ -49,4 +49,16 @@ Enter -- HyperLogLog.
 
 &nbsp;
 
-##### 3. 
+##### 3. HyperLogLog Algorithm Formulation
+
+As the "cardinality estimator", we can say two things for sure -- HyperLogLog gives a probabilistic measure of cardinality. Now that I have grabbed the attention of all you data science and stats geeks out there, let's continue with the parts of a cardinality algorithm. In short, the algorithm needs the following parts:
+
+1. Add : To add new elements to the set.
+2. Count : To retrieve the count of distinct elements in the set.
+3. Merge: To obtain the union of two sets.
+
+The practical considerations and derivations will be discussed shortly.
+
+HyperLogLog assumes a storage array of element size $$ M $$. Multiple such storage elements, each with size $$ M $$ might be used for the estimator.
+
+###### 3.1 Addition of elements:
