@@ -1,14 +1,16 @@
 ---
 layout: default
 ---
+<title> {{ page.title }} | {{ site.title }} </title>
 
-    <center>
-        <h2> {{ page.title }}</h2>
-        <br />
-    </center>
-<small>
-    Posted on {{ page.date | date_to_string }} <br />
-    Authored by <b> {{ page.author }} </b>
-</small>
+<center>
+    <h2> {{ page.title }}</h2>
+    <br />
+
+    <small>
+        Posted on {{ page.date | date_to_string }} <br />
+        Authored by <b> {{ page.author }} </b>
+    </small>
+</center>
 <br /><br />
- {{ content }}
+{{ content }}
