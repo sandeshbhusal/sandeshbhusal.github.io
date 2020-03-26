@@ -1,8 +1,15 @@
+<!DOCTYPE html>
 <html>
     <head>
-        {% include head.html %}
+        <!-- static header html file. Do not change -->
+        {% include head.html %} 
     </head>
     <body>
-        {{ content }}
+        <!-- Header, containing the navigation bar and whatnot -->
+        {% include header.html %}
+        <!-- The content will be passed onto the body.html file. -->
+        {% include body.html %}
+        <!-- Static footer. Do not change. -->
+        {% include footer.html %}
     </body>
 </html>

@@ -1,0 +1,10 @@
+entries:
+
+- title: ABOUT
+  url: /about.html
+  
+- title: PROJECTS
+  url: /projects.html
+
+- title: BLOG
+  url: /

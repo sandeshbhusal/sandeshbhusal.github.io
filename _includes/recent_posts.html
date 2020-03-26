@@ -1,0 +1,109 @@
+<!-- This file contains the list of all recent posts :)  -->
+
+<div class = "lister">
+    <h4>Recent Posts:</h4>
+    <ul class = "post_card">
+        {% for post in site.posts %}
+            <li>
+                <a href = " {{ post.url }} ">
+                    <div class = "paner">
+                        <div class = "post_description">
+                            <br />
+                            <small>Posted on {{ post.date | date_to_long_string}} </small>
+                            <br />
+                            <h6>
+                                {{ post.title }}
+                            </h6>
+                            <br />
+                            <p>
+                                {{ post.description }}
+                            </p>
+                        </div>
+                        <div class = "post_image">
+                            <img src = " {{post.image}} " class = "post_image"/>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<style>
+    .paner{
+        display: flex;
+    }
+
+    @media screen and (max-width: 1200px){
+        .lister{
+            margin-left: 16px;
+            padding-right: 32px;
+            width: 100%;
+        }
+        .lister h4{
+            font-size: 1.2em;
+        }
+        .post_card{
+            background: white;
+            padding: 0px;
+            list-style-type: none;
+        }
+        .post_card li{
+            padding-top: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid silver;
+        }
+        h6{
+            margin-top: 16px;
+        }
+        img.post_image{
+            display: none;
+        }
+    }
+    /* The image is 1:2 ratio-ed */
+    img.post_image{
+        height: 180px;
+        width: 360px;
+        align-self: center;
+        float: right;
+    }
+    .post_description{
+        flex:4 ;
+    }
+    .lister{
+        width: 100%;
+    }
+    .lister h4{
+        font-size: 1.2em;
+    }
+    .post_card{
+        background: white;
+        padding: 0px;
+        list-style-type: none;
+    }
+    .post_card li{
+        opacity: 0.8;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid silver;
+    }
+    .post_card li:hover{
+        opacity: 1;
+        cursor: pointer;
+    }
+    h6{
+        margin-top: 16px;
+        font-size: 1.2em;
+    }
+    .post_image{
+        display: flex;
+    }
+    .paner p{
+        max-width: 400px;
+    }
+    .post_card a{
+        text-decoration: none;
+        color: black;
+
+    }
+</style>

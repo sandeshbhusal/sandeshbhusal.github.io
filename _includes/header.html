@@ -1,0 +1,55 @@
+<link rel = "stylesheet" href = "/assets/css/header.css" />
+
+<div class = "navbar_container">
+    <div class = "branding">
+        <h1>
+            SANDESH <br /> BHUSAL'S BLOG
+        </h1>
+    </div>
+    <div class = "menu_container">
+        <ul>
+            {% for item in site.data.menu_entries.entries %}
+                <a href = " {{ item.url }} ">
+                    <li> {{ item.title }} </li>
+                </a>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class = "menu_container_responsive">
+        <div id = "collapser"> 
+            <i class = "fa fa-bars" ></i>
+        </div>
+        <ul>
+            <li> </li>
+            {% for item in site.data.menu_entries.entries %}
+                <a href = " {{ item.url }} ">
+                    <li> {{ item.title }} </li>
+                </a>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script>
+    var menu_hidden  = true;
+    var collapser    = document.querySelector("#collapser")
+    var menu         = document.querySelector(".menu_container_responsive ul")
+
+    collapser.addEventListener("click", collapse_menu)
+
+    function collapse_menu(e){
+        console.log("Clicked menu button");
+        if (menu_hidden){
+            collapser.innerHTML = "<i class = 'fa fa-close' ></i>";
+            menu_hidden = false;
+            menu.style.top = "0px";
+            console.log("Called menu back from gulag");
+        }
+        else{
+            collapser.innerHTML = "<i class = 'fa fa-bars' ></i>";
+            menu.style.top = "-1000px";
+            menu_hidden  = true
+            console.log("Sent menu to gulag");
+        }
+    }
+</script>
