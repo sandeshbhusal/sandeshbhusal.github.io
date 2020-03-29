@@ -17,7 +17,6 @@ Given machine / generator is a uniform number distribution. For those of you who
 
 <p style="text-align:center">
 <br />
-Trial with quotes
 <img src = "https://i.imgur.com/NqM2EPa.png" width = "512" />
     <br /><br />
     <small> <i class = "caption">Fig: Uniform Distribution. The y-aixs denotes the probabilities and x-axis denotes the numbers in the distribution. </i> </small>
@@ -51,7 +50,7 @@ That's it! This is our first pair whose sum is exactly equal to $$ R $$. Now let
 
 <center>
 <br />
-    <img src = "https://i.imgur.com/Vke6C0o.png" width = 224/>
+    <img src = "https://i.imgur.com/Vke6C0o.png" width = "224" />
     <br /><br />
     <small> <i class = "caption">Fig: The point lies exactly on the line, which gives us the solution space for the sum of coordinates equal to R </i> </small>
 </center>
@@ -65,7 +64,7 @@ If we plot all these numbers, we can get a nice looking rectangle as follows:
 
 <center>
 <br />
-    <img src = "https://i.imgur.com/gY3tLPT.png" width = 224/>
+    <img src = "https://i.imgur.com/gY3tLPT.png" width = "224" />
     <br /><br />
     <small>
      <i class = "caption"> Fig: The possible pairs that can be formed by numbers in range [0, A] and [0, B] </i> 
@@ -78,7 +77,7 @@ All that is needed to be done now is superimposition of the two figures; the rec
 
 <center>
 <br />
-    <img src = "https://i.ibb.co/VYy3cFP/Image-removebg-preview-2.png" width = 224 />
+    <img src = "https://i.ibb.co/VYy3cFP/Image-removebg-preview-2.png" width = "224" />
     <br /><br />
     <small>
      <i class = "caption"> Fig: The shaded region represents our solutions space </i> 
