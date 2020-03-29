@@ -13,6 +13,9 @@ Bear with me for a moment. This will all be clear.
 
 ##### 1. Explanation of the problem:
 Given machine / generator is a uniform number distribution. For those of you who do not yet know what a uniform distribution is, it is a random number distribution where each each item has an equal probability of getting selected. Let us consider a bag with red, blue, black and green balls, each $$ 1 $$ in number. Then the distribution of balls is said to be uniform, because no matter what, each ball has a $$ 25% $$ probability of being selected from the bag. Back to the question. When we feed an input $$ A $$ to the machine, it can produce any number between $$ 0 $$  to $$ A $$ with equal probabilites, and again same is the case with $$ B $$. Now that the machine has generated two numbers, what will be the probability that the sum of those two will be lesser than a given number  $$ C $$?
+
+<img src = "https://i.imgur.com/NqM2EPa.png" width = 512/>
+
 <center>
 <br />
     <img src = "https://i.imgur.com/NqM2EPa.png" width = 512/>
