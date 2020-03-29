@@ -17,7 +17,8 @@ Given machine / generator is a uniform number distribution. For those of you who
 
 <p style="text-align:center">
 <br />
-    <img src = "https://i.imgur.com/NqM2EPa.png" width = 512/>
+Trial with quotes
+<img src = "https://i.imgur.com/NqM2EPa.png" width = "512" />
     <br /><br />
     <small> <i class = "caption">Fig: Uniform Distribution. The y-aixs denotes the probabilities and x-axis denotes the numbers in the distribution. </i> </small>
 </p>
