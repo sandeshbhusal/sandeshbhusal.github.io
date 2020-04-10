@@ -114,13 +114,17 @@ A Transition Function is characterized by the world, where it gives a discrete v
 1. Deterministic Transition Function - The value of next state for each action taken in a state is fixed and does not change. For an example, suppose Mr. W wants to move to the left, so we know for sure that he will bump into the wall for sure!
 2. Stochastic Transition Function: A stochastic transition function means that the transition over another state from current state through the occurence of an action is given by a probability distribution. Let's imagine for a moment that someone left the windows open, and the winds are blowing really hard. If Mr. W wants to move forward in the grid, then there is some probability that he will not end up in the grid immediately above his position, say, the wind blows him off and lands him in the grid to the left!
 
-Based on these factors, it is safe to assume that the transition function gives the probability distribution of a new state, given a current state and the action taken in that state, i.e.<br/><center>
+Based on these factors, we say that the transition function gives the probability distribution of a new state, given a current state and the action taken in that state, i.e.<br/><center>
 $$
 \mathbb T(s, s')= \mathbb P(s_{t+1} =s'|s_t, a_t)
 $$
 </center>
 
+This means that the transition function, which is a function which shows the relation between two states, is the probability that the world will transition to a new state $$ s'$$  given that an action $$ a_t $$ is taken in state $$ s_t $$. 
 
+<details>   <summary>Reading probability formulae</summary>   <p> For those of you who are unable to read the above formula, I suggest studying some basic probability first. The afforementioned formula gives the conditional probability. Conditional Probabilty, expressed as P(A|B) and read as probability of occurence of event A given that event B has already occured, is an important part in the study of RL algorithms, because stochastic models are based on this. </p> </details>
+
+<br />
 
 ###### R - REWARD FUNCTION:
 
@@ -144,7 +148,7 @@ $$
 $$
 </center>
 
-For any of you who find this difficult to understand, the policy is often expressed as a symbol $$\pi$$ , which maps each action-state pair to a probability, which is a real number between 0 and 1. For an action pair at the starting position of Mr. W, the policy for going to the left should be very low, but to the right or upwards should be very high. If we can find a policy that can map out the exact requirements according to the world, then we call this policy an optimal policy and it is represented as $$\pi^*$$.
+For any of you who find this difficult to understand, the policy is expressed as a function $$\pi$$ , which maps each action-state pair to a probability, which is a real number between 0 and 1. For an action pair at the starting position of Mr. W, the policy for going to the left should be very low, but to the right or upwards should be very high. If we can find a policy that can map out the exact requirements according to the world, then we call this policy an optimal policy and it is represented as $$\pi^*$$.
 
 <br />
 
