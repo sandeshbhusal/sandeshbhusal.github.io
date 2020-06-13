@@ -4,7 +4,7 @@ title: Reinforcement Learning
 description: Teaching computers to take actions through trial and errors
 image: https://i.ibb.co/yhhQZyw/Mr-Whiskers-and-RL-Project-Images-grid.png
 author: Sandesh Bhusal
-draft: false
+draft: true
 ---
 
 Computers are able to learn, extract patterns and make inferences from data with the help of many algorithms, like classification, regression, clustering, association algorithms and so on. One of the such interesting methods of teaching a  is reinforcement learning -- teaching computers to comprehend the world through trial and errors.

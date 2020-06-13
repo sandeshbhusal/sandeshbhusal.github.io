@@ -7,8 +7,9 @@ layout: default
 <title> {{ page.title }} | {{ site.title }} </title>
 
 <div class = "black">
-    <br />
     <center>
+        <hr />
+        <br />
         <h2> {{ page.title }}</h2>
         <br />
 
@@ -16,6 +17,9 @@ layout: default
             Posted on {{ page.date | date_to_string }} <br />
             Authored by <b> {{ page.author }} </b>
         </small>
+        <br />
+        <br />
+        <hr />
     </center>
     <br /><br />
     {{ content }}
