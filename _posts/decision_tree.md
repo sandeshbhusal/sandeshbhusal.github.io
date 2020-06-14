@@ -105,7 +105,7 @@ dataset['Outlook'].unique()
 
 
 
-    array(['Rainy', 'Overcast', 'Sunny'], dtype=object)
+    Output: array(['Rainy', 'Overcast', 'Sunny'], dtype=object)
 
 
 
@@ -139,7 +139,7 @@ for item in split_data_by_attribute(dataset, 'Outlook'):
     print(item)
     print()
 ```
-
+    Output:
     (    Temp Humidity  Windy Play Golf
     0    Hot     High  False        No
     1    Hot     High   True        No
@@ -162,7 +162,8 @@ for item in split_data_by_attribute(dataset, 'Outlook'):
     
 
 
-##### We can see that the above dataset got split by the "outlook" category into three datasets, where values for "outlook" are distinct. The values were "Sunny", "Rainy" and "Overcast"
+##### We can see that the above dataset got split by the "outlook" category
+Into three datasets, where values for "outlook" are distinct. The values were "Sunny", "Rainy" and "Overcast".
 
 
 ```python
@@ -187,11 +188,11 @@ calculate_entropy(dataset, "Play Golf")
 
 
 
-    0.9402859586706309
+    Output: 0.9402859586706309
 
 
 
-#### Okay! Now our data processing functions are complete!
+##### Okay! Now our data processing functions are complete!
 Let's try to iteratively construct a decision tree that will minimize the entropy, i.e. maximize the information gain at each step along the way!
 
 
@@ -252,13 +253,14 @@ def build_decision_tree(dataset, case = ""):
         build_decision_tree(dataset_s[0], case = case + " and " + attributes[max_ig_id] + "==" + str(dataset_s[1]))
 ```
 <br />
-#### Let's Run the program!
+##### Let's Run the program!
 <br />
 ```python
 build_decision_tree(dataset, case = "Start")
 ```
 
 ```html
+Output: 
 Building from previous split of Start
 Index(['Outlook', 'Temp', 'Humidity', 'Windy', 'Play Golf'], dtype='object')
 Max information gain found using  Outlook : 0.246749819774439
