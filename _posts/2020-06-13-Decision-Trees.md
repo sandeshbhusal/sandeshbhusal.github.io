@@ -82,6 +82,7 @@ Hunt's algorithm is an iterative algorithm that tries to partition the given dat
 {% include_relative decision_tree.md %}
 
 ### 6. Build your own Decision Tree
+Hmm.. The code above seems quite long though not complicated and it would be very difficult for us to visualize it in case of a large dataset. Also, we have only worked with nominal discrete values in the dataset (values that are categorical and not ordered in terms of value). For building more complicated decision trees, we can use different python packages out there which greatly simplify the task at hand, and also help us visualize the output of the decision tree! I leave the task to the reader of this blog post -- once you've created your own decision tree, using other peoples' libraries is a nominal task. But bear in mind the categorical values, and continuous values in decision tree making process. Some libraries don't play very well with those! For example, `sklearn` requires user to input non-nominal values, so for that you can do different types of variable encodings like one-hot encoding, binary encoding and so on.
 
 ### 7. The pros and cons of classification using Decision Trees:
 
