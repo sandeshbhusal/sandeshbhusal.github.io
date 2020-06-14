@@ -10,6 +10,7 @@ draft: false
 Decision trees are exactly what the name sounds like -- a method to make decisions. Wheather those decisions are related to finance (decision trees are used in economics to analyse the utility of a decision) or to draw inference from a set of data. Technically, decision trees are a series of questions that split the total solution space to smaller and smaller fragments until a conclusion can be drawn.
 
 ### 1. Introduction:
+
 One game comes to mind when I start thinking about decision trees. Whenever we were taken on an outing by the school on a bus, one of the students would spot something and everyone else would try to guess it.
 <center>
  <i>Q: Is it red?</i><br />
@@ -29,8 +30,9 @@ One game comes to mind when I start thinking about decision trees. Whenever we w
  <br />
 </center>
 While building a decision trees, every algorithm follows a generic guideline. Before learning about the guideline, let's learn about the parts of a decision tree:
+<br />
 
-#### 1.1. Parts of a decision tree:
+### 2. Structure of a Decision Tree:
 A decision tree contains nodes, leafs and edges. Some authors like to distinguish between root and internal nodes, but I do not like the distinction, as all internal nodes have the same properties as the root note. (Please feel free to contact me <a href= "mailto:073bct539.sandesh@pcampus.edu.np">here</a> if you have any contesting ideas!) Anywhoo, any node represents the collection of data at that particular node. As in the example above, we can easily imagine a lot of things in the bus. The first question asks if the thing is red, and when a negative answer is given then a conclusion is reached, where all the red things in the bus are eliminated. That reduces the amount of information to be processed next. 
 
 From the example we can see that, the first node is the collection of all objects in the bus, but from the first split, a new state is reached which is characterized by the collection of all objects in the bus that are not red. The question to be asked is the edge in the tree. Amongst many attributes of objects in the bus, we have chosen "color" as the criteria. This is an *attribute*. The objective of the game is to find the object in as few questions as possible. So, while selecting *spiltting attributes*, we need to choose the one, that minimizes the number of objects to be considered in the next iteration. 
@@ -45,7 +47,7 @@ Although the principles of the game may not exactly translate to construction of
 [ For calculation of entropy under a probability distribution, check this out!](https://planetcalc.com/2476/)
 
 <details>
-  <summary><i>Information and Entropy:</i></summary>
+  <summary><i>Detour: About Information and Entropy</i></summary>
   <p>
     <br />
     You should check out my blog post regarding information and entropy for more information.
@@ -55,10 +57,35 @@ Although the principles of the game may not exactly translate to construction of
 
 <br />
 
-#### 1.3 The Dataset and Hunt's Algorithm
+### 3. Problem Statement:
+
+Decision Trees are widely used in classification tasks, and that is going to be the primary focus of ours in this blog post. While decision trees are also used in other domains, such as CART trees which can perform both classification and regression, we are not going to discuss about those in this blog post. 
+
+Classification is a supervised learning task, opposed to clustering which is an unsupervised learning task. For classification, we need a labeled dataset that contains *labeled* data, i.e. the data that contains some classes. Let's consider a textbook example for now:
+<br />
+<center>
+  <img src = "/assets/imgs/posts/decision_trees/classification_table.png" width="512"/>
+  <br /><br />
+  <small><i> Example of a classification task: A decision must be made if we want to play golf or not based on current weather conditions.</i></small>
+</center>
+<br />
+The above table is a widely used textbook example while explaining the concepts of a decision tree. In the posed problem, we are given a table of **labeled** data, which tells us the decision to take under given weather conditions. For classification purposes, the data may be from the given table, or from somewhere else. 
+
+
+### 4. Hunt's Algorithm:
 
 Hunt's algorithm forms the basis for many Decision Tree algorithms, including ID3, C4.5, CART and so on. Hunt's algorithm is quite simple actually if you look at it. In this section, we will go over a simple dataset that I have constructed for the purposes of this tutorial, and we will talk about Hunt's algorithm in brief.
 
+Hunt's algorithm is an iterative algorithm that tries to partition the given dataset
+
+### 5. Construction of a Decision Tree -- An Example:
+{% include_relative decision_tree.md %}
+
+### 6. Build your own Decision Tree
+
+### 7. The pros and cons of classification using Decision Trees:
+
+### 8. On improving decision trees -- Random Forest Classifiers
 <br />
 
 #### References:
