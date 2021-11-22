@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>✌️</title>
-    <link>https://sandeshbhusal.github.io/</link>
-    <description>Recent content on ✌️</description>
+    <title>rust on ✌️</title>
+    <link>https://sandeshbhusal.github.io/tags/rust/</link>
+    <description>Recent content in rust on ✌️</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Mon, 22 Nov 2021 11:40:41 +0545</lastBuildDate><atom:link href="https://sandeshbhusal.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Nov 2021 11:40:41 +0545</lastBuildDate><atom:link href="https://sandeshbhusal.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Working With Rust Channels</title>
       <link>https://sandeshbhusal.github.io/posts/2021/11/working-with-rust-channels/</link>
@@ -15,18 +15,6 @@
       
       <guid>https://sandeshbhusal.github.io/posts/2021/11/working-with-rust-channels/</guid>
       <description>Channels are an abstraction for sharing data between concurrently-running threads. For an example, you have a mapreduce system, and map and reduce threads are running parallelly. Each mapped output needs to be reduced using a reducer thread. Instead of passing data to a shared memory, which would require locks, you could just pass data to a channel and it would be received by the corresponding receiver thread. Using [[Go]]&amp;rsquo;s language documentation,</description>
-    </item>
-    
-    <item>
-      <title>About me</title>
-      <link>https://sandeshbhusal.github.io/about/</link>
-      <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://sandeshbhusal.github.io/about/</guid>
-      <description>🥸 I am an aspiring systems engineer currently working as a solutions engineer @logpoint.
-I love to learn new things all the time, and have just started my foray. This blog is my companion on the way to learning new things in public.
-Previous work experience:
- LIS Nepal [Data science intern] Tootle [Data science intern] LICT at IOE, Tribhuvan University [Laboratory Intern]  I am polyglot and code in Python, Go and Rust (still learning).</description>
     </item>
     
   </channel>
