@@ -73,5 +73,124 @@ thread::spawn(<span style="color:#cdcd00">move</span> <span style="color:#39c">|
 ]]></content>
         </item>
         
+        <item>
+            <title>Namespaces in Linux</title>
+            <link>https://sandeshbhusal.github.io/posts/2021/11/namespaces-in-linux/</link>
+            <pubDate>Mon, 15 Nov 2021 11:58:24 +0545</pubDate>
+            
+            <guid>https://sandeshbhusal.github.io/posts/2021/11/namespaces-in-linux/</guid>
+            <description>Namespaces decide what subset of resources the processes running on a system can access or &amp;ldquo;see&amp;rdquo;. With namespaces, we can have isolated mountpoints, PID spaces (so that two processes on the OS can think their PID is the same), hostnames and network interfaces isolated to processes. These resources may have a different mapping on the host system. For an example, the first process running inside a PID namespace might think that its PID is 1 but in the host system, it is actually mapped to some other PID, like 1234.</description>
+            <content type="html"><![CDATA[<p>Namespaces decide what subset of resources the processes running on a system can access or &ldquo;see&rdquo;. With namespaces, we can have isolated mountpoints, PID spaces (so that two processes on the OS can think their PID is the same), hostnames and network interfaces isolated to processes. These resources may have a different mapping on the host system. For an example, the first process running inside a PID namespace might think that its PID is 1 but in the host system, it is actually mapped to some other PID, like 1234.</p>
+<p>The list of running namespaces in the host system can be extracted by running the <code>lsns</code> command. Namespaces provide the basis of isolation between processes running on the operating system and allocateable resources. There are various <a href="https://en.wikipedia.org/wiki/Linux_namespaces#:~:text=Namespace%20kinds%5Bedit%5D">types of namespaces</a> in linux. Some of the namespaces being used to build BeeJudge<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> are explained briefly below:</p>
+<h3 id="pid-namespaces">PID Namespaces</h3>
+<p>PID namespaces allow the isolation of process identifiers (PIDs) between different namespaces. As such, two processes running on the host system might think that they have the same PID when in reality they are different. Newly created namespaces assign PID of 1 to the first run process inside the namespace and subsequent PIDs to the processes after that. For a simple demonstration, let&rsquo;s look at the output after creating a new PID namespace with bash:</p>
+<blockquote>
+<p>Create a new PID namespace with the <code>unshare</code> command:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo unshare -p /bin/sh
+</code></pre></div><blockquote>
+<p>On the host system:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ps -ax | grep /bin/sh
+<span style="color:#cd00cd">1018662</span> pts/2    S      0:00 sudo unshare -pf /bin/sh
+<span style="color:#cd00cd">1018663</span> pts/2    S      0:00 unshare -pf /bin/sh
+<span style="color:#cd00cd">1018664</span> pts/2    S+     0:00 /bin/sh
+</code></pre></div><blockquote>
+<p>Inside the namespace:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000080"># echo $$</span>
+<span style="color:#cd00cd">1</span>
+</code></pre></div><p>Here we can see that although the <code>sh</code> process has PID of 1018664 on the host system, it has a PID of 1 inside the new namespace we created. We can also see that the PID namespaces are different by running the following commands on the system:</p>
+<blockquote>
+<p>On the host system:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo ls -lah /proc/1018664/ns
+total <span style="color:#cd00cd">0</span>
+dr-x--x--x <span style="color:#cd00cd">2</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 .
+dr-xr-xr-x <span style="color:#cd00cd">9</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:50 ..
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 cgroup -&gt; <span style="color:#cd0000">&#39;cgroup:[4026531835]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 ipc -&gt; <span style="color:#cd0000">&#39;ipc:[4026531839]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 mnt -&gt; <span style="color:#cd0000">&#39;mnt:[4026531840]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 net -&gt; <span style="color:#cd0000">&#39;net:[4026531992]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 pid -&gt; <span style="color:#cd0000">&#39;pid:[4026532764]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 pid_for_children -&gt; <span style="color:#cd0000">&#39;pid:[4026532764]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 user -&gt; <span style="color:#cd0000">&#39;user:[4026531837]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 uts -&gt; <span style="color:#cd0000">&#39;uts:[4026531838]&#39;</span>
+</code></pre></div><blockquote>
+<p>Inside the namespace:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000080"># ls -lah /proc/$$/ns</span>
+total <span style="color:#cd00cd">0</span>
+dr-x--x--x <span style="color:#cd00cd">2</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 .
+dr-xr-xr-x <span style="color:#cd00cd">9</span> root root <span style="color:#cd00cd">0</span> Oct  <span style="color:#cd00cd">6</span> 05:02 ..
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 cgroup -&gt; <span style="color:#cd0000">&#39;cgroup:[4026531835]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 ipc -&gt; <span style="color:#cd0000">&#39;ipc:[4026531839]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 mnt -&gt; <span style="color:#cd0000">&#39;mnt:[4026531840]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 net -&gt; <span style="color:#cd0000">&#39;net:[4026531992]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 pid -&gt; <span style="color:#cd0000">&#39;pid:[4026531836]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:53 pid_for_children -&gt; <span style="color:#cd0000">&#39;pid:[4026531836]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 user -&gt; <span style="color:#cd0000">&#39;user:[4026531837]&#39;</span>
+lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 uts -&gt; <span style="color:#cd0000">&#39;uts:[4026531838]&#39;</span>
+</code></pre></div><p>We can clearly see the different values for the PID-related namespaces.</p>
+<p>Now try running a <code>ps -ef</code> before proceeding to the next section. Although we can see all processes running on the host system, the processes cannot be killed from the new namespace. Try doing it 😄</p>
+<h3 id="mount-namespaces">Mount Namespaces</h3>
+<p>If you tried the above command in your system and ran a <code>ps -ef</code> command, you would be surprised to see that <em>all</em> the processes running on the host system are enumerated in the output. Technically it seems like there was no isolation of PIDs whatsoever! This happens due to a reason. When we created a new namespace, the old mountpoints are copied along to the new namespace. And commands like <code>ps</code> work on <code>/proc</code> mount to extract information about running processes.</p>
+<p>In order to avoid this complication, we will depend on mount namespaces. First of all, we will create a new PID namespace along with a mount namespace and fork a <code>/bin/sh</code> inside it as usual.</p>
+<blockquote>
+<p>Create the namespace on host machine</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir /tmp/namespaceroot
+$ unshare -pmf /bin/sh
+</code></pre></div><p>Why we created a <code>namespaceroot</code> folder will be evident shortly. Now inside the namespace, we run a series of commands to mount a temporary filesystem</p>
+<blockquote>
+<p>Inside the namespace</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000080"># mount -t tmpfs tmpfs /tmp/namespaceroot</span>
+<span style="color:#000080"># mkdir -p /tmp/namespaceroot/proc</span>
+<span style="color:#000080"># mount -t proc proc /tmp/namespaceroot/proc</span>
+<span style="color:#000080"># ps -ef</span>
+UID          PID    PPID  C STIME TTY          TIME CMD
+root           <span style="color:#cd00cd">1</span>       <span style="color:#cd00cd">0</span>  <span style="color:#cd00cd">0</span> 02:36 pts/3    00:00:00 /bin/sh
+root          <span style="color:#cd00cd">18</span>       <span style="color:#cd00cd">1</span>  <span style="color:#cd00cd">0</span> 02:46 pts/3    00:00:00 bash
+root          <span style="color:#cd00cd">45</span>      <span style="color:#cd00cd">18</span>  <span style="color:#cd00cd">0</span> 02:47 pts/3    00:00:00 bash
+root          <span style="color:#cd00cd">46</span>      <span style="color:#cd00cd">45</span>  <span style="color:#cd00cd">0</span> 02:47 pts/3    00:00:00 tee -a /root/.bash_history
+root          <span style="color:#cd00cd">47</span>      <span style="color:#cd00cd">45</span>  <span style="color:#cd00cd">0</span> 02:47 pts/3    00:00:00 logger -t root<span style="color:#39c">[</span>18<span style="color:#39c">]</span>
+root          <span style="color:#cd00cd">48</span>      <span style="color:#cd00cd">18</span>  <span style="color:#cd00cd">0</span> 02:48 pts/3    00:00:00 ps -ef
+<span style="color:#000080"># ls /proc</span>
+<span style="color:#cd00cd">1</span>          cpuinfo      ioports      mdstat        schedstat      timer_list
+<span style="color:#cd00cd">18</span>         crypto       irq          meminfo       scsi           tty
+<span style="color:#cd00cd">49</span>         devices      kallsyms     misc          self           uptime
+<span style="color:#cd00cd">50</span>         diskstats    kcore        modules       slabinfo       version
+<span style="color:#cd00cd">51</span>         dma          keys         mounts        softirqs       version_signature
+<span style="color:#cd00cd">52</span>         driver       key-users    mpt           spl            vmallocinfo
+acpi       execdomains  kmsg         mtrr          stat           vmstat
+buddyinfo  fb           kpagecgroup  net           swaps          zoneinfo
+bus        filesystems  kpagecount   pagetypeinfo  sys
+cgroups    fs           kpageflags   partitions    sysrq-trigger
+cmdline    interrupts   loadavg      pressure      sysvipc
+consoles   iomem        locks        sched_debug   thread-self
+</code></pre></div><p>and the <code>findmount</code> command returns a pretty picture as well. The output is too long to list here but you should have a good idea from it as well.</p>
+<p>Along with <code>proc</code>, we will also isolate the <code>/tmp</code> mount</p>
+<blockquote>
+<p>On the host</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir -p /tmp/newtmp
+</code></pre></div><blockquote>
+<p>Inside the namespace</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000080"># mount -o bind,nodev /tmp/newtmp /tmp</span>
+<span style="color:#000080"># ls /tmp</span>
+</code></pre></div><p>Now if you create any file inside the <code>/tmp/newtmp</code> folder in host system, it should be readable inside the namespace.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>BeeJudge is a planned project, which has been suspended to lack of access to a linux VM/Machine. It is a code-judging platform for linux.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+        </item>
+        
     </channel>
 </rss>

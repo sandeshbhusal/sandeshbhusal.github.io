@@ -18,6 +18,15 @@
     </item>
     
     <item>
+      <title>Namespaces in Linux</title>
+      <link>https://sandeshbhusal.github.io/posts/2021/11/namespaces-in-linux/</link>
+      <pubDate>Mon, 15 Nov 2021 11:58:24 +0545</pubDate>
+      
+      <guid>https://sandeshbhusal.github.io/posts/2021/11/namespaces-in-linux/</guid>
+      <description>Namespaces decide what subset of resources the processes running on a system can access or &amp;ldquo;see&amp;rdquo;. With namespaces, we can have isolated mountpoints, PID spaces (so that two processes on the OS can think their PID is the same), hostnames and network interfaces isolated to processes. These resources may have a different mapping on the host system. For an example, the first process running inside a PID namespace might think that its PID is 1 but in the host system, it is actually mapped to some other PID, like 1234.</description>
+    </item>
+    
+    <item>
       <title>About me</title>
       <link>https://sandeshbhusal.github.io/about/</link>
       <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
