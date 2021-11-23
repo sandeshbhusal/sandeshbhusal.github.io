@@ -6,13 +6,13 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Mon, 22 Nov 2021 11:40:41 +0545</lastBuildDate>
+        <lastBuildDate>Fri, 19 Nov 2021 11:40:41 +0545</lastBuildDate>
         <atom:link href="https://sandeshbhusal.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
             <title>Working With Rust Channels</title>
             <link>https://sandeshbhusal.github.io/posts/2021/11/working-with-rust-channels/</link>
-            <pubDate>Mon, 22 Nov 2021 11:40:41 +0545</pubDate>
+            <pubDate>Fri, 19 Nov 2021 11:40:41 +0545</pubDate>
             
             <guid>https://sandeshbhusal.github.io/posts/2021/11/working-with-rust-channels/</guid>
             <description>Channels are an abstraction for sharing data between concurrently-running threads. For an example, you have a mapreduce system, and map and reduce threads are running parallelly. Each mapped output needs to be reduced using a reducer thread. Instead of passing data to a shared memory, which would require locks, you could just pass data to a channel and it would be received by the corresponding receiver thread. Using [[Go]]&amp;rsquo;s language documentation,</description>
@@ -21,17 +21,17 @@
 <p>Do not communicate by sharing memory; instead, share memory by communicating.</p>
 </blockquote>
 <p>Example: Implement a chat system or a system where many threads perform parts of a calculation and send the parts to one thread that aggregates the results. Channels are supplied by <code>std::sync</code>, and a type of channel called <code>mpsc</code> is used in the book, which stands for multiple producer single consumer.</p>
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#cdcd00">use</span> std::sync::mpsc;
-<span style="color:#cdcd00">use</span> std::thread
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">use</span> std::sync::mpsc;
+<span style="color:#66d9ef">use</span> std::thread
 
-<span style="color:#cdcd00">fn</span> main() {
-  <span style="color:#00cd00">let</span> (tx, rx) <span style="color:#39c">=</span> mpsc::channel(); 
-  thread::spawn(<span style="color:#cdcd00">move</span> <span style="color:#39c">||</span> {
-    <span style="color:#00cd00">let</span> val <span style="color:#39c">=</span> <span style="color:#cd00cd">String</span>::from(<span style="color:#cd0000">&#34;hi&#34;</span>); 
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+  <span style="color:#66d9ef">let</span> (tx, rx) <span style="color:#f92672">=</span> mpsc::channel(); 
+  thread::spawn(<span style="color:#66d9ef">move</span> <span style="color:#f92672">||</span> {
+    <span style="color:#66d9ef">let</span> val <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hi&#34;</span>); 
     tx.send(val).unwrap(); 
   }); 
-  <span style="color:#00cd00">let</span> received <span style="color:#39c">=</span> rx.recv().unwrap(); 
-  println!(<span style="color:#cd0000">&#34;Got: {}&#34;</span>, received);
+  <span style="color:#66d9ef">let</span> received <span style="color:#f92672">=</span> rx.recv().unwrap(); 
+  println!(<span style="color:#e6db74">&#34;Got: {}&#34;</span>, received);
 }
 </code></pre></div><p>Code Synopsis:</p>
 <ul>
@@ -40,27 +40,27 @@
 <li><code>tx.send</code> needs to be <code>unwrap()</code>ped because receiving end might&rsquo;ve been dropped, so we might have errors.</li>
 <li><code>recv()</code> call does not block, instead returns <code>Result&lt;T, E&gt;</code>, so that if no data is available, it returns an &lsquo;Error&rsquo;.</li>
 <li>Example of using a channel&rsquo;s non-blocking &ldquo;recv&rdquo; function-
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#cdcd00">enum</span> <span style="color:#00cdcd">Message</span>{
-  JoinRequest(<span style="color:#cd00cd">String</span>),
-  DataRequest(<span style="color:#cd00cd">String</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">Message</span>{
+  JoinRequest(String),
+  DataRequest(String)
 }
 
-<span style="color:#00cd00">let</span> (transmitter, receiver) <span style="color:#39c">=</span> mpsc::channel();
-thread::spawn(<span style="color:#cdcd00">move</span> <span style="color:#39c">||</span> {
-  <span style="color:#00cd00">let</span> x <span style="color:#39c">=</span> Message::DataRequest(<span style="color:#cd00cd">String</span>::from(<span style="color:#cd0000">&#34;I want data&#34;</span>));
-  <span style="color:#00cd00">let</span> y <span style="color:#39c">=</span> Message::JoinRequest(<span style="color:#cd00cd">String</span>::from(<span style="color:#cd0000">&#34;I want to join!&#34;</span>));
+<span style="color:#66d9ef">let</span> (transmitter, receiver) <span style="color:#f92672">=</span> mpsc::channel();
+thread::spawn(<span style="color:#66d9ef">move</span> <span style="color:#f92672">||</span> {
+  <span style="color:#66d9ef">let</span> x <span style="color:#f92672">=</span> Message::DataRequest(String::from(<span style="color:#e6db74">&#34;I want data&#34;</span>));
+  <span style="color:#66d9ef">let</span> y <span style="color:#f92672">=</span> Message::JoinRequest(String::from(<span style="color:#e6db74">&#34;I want to join!&#34;</span>));
   transmitter.send(x).unwrap();
-  thread::sleep(time::Duration::from_secs(<span style="color:#cd00cd">2</span>));
+  thread::sleep(time::Duration::from_secs(<span style="color:#ae81ff">2</span>));
   transmitter.send(y).unwrap();
 });
 
-<span style="color:#cdcd00">for</span> item <span style="color:#cdcd00">in</span> receiver{
-  <span style="color:#cdcd00">match</span> item {
-    Message::JoinRequest(join) <span style="color:#39c">=&gt;</span> {
-      println!(<span style="color:#cd0000">&#34;I got {}&#34;</span>, join);
+<span style="color:#66d9ef">for</span> item <span style="color:#66d9ef">in</span> receiver{
+  <span style="color:#66d9ef">match</span> item {
+    Message::JoinRequest(join) <span style="color:#f92672">=&gt;</span> {
+      println!(<span style="color:#e6db74">&#34;I got {}&#34;</span>, join);
     },
-    Message::DataRequest(data) <span style="color:#39c">=&gt;</span> {
-      println!(<span style="color:#cd0000">&#34;I got {}&#34;</span>, data);
+    Message::DataRequest(data) <span style="color:#f92672">=&gt;</span> {
+      println!(<span style="color:#e6db74">&#34;I got {}&#34;</span>, data);
     }
   }
 }
@@ -87,50 +87,50 @@ thread::spawn(<span style="color:#cdcd00">move</span> <span style="color:#39c">|
 <blockquote>
 <p>Create a new PID namespace with the <code>unshare</code> command:</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo unshare -p /bin/sh
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo unshare -p /bin/sh
 </code></pre></div><blockquote>
 <p>On the host system:</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ps -ax | grep /bin/sh
-<span style="color:#cd00cd">1018662</span> pts/2    S      0:00 sudo unshare -pf /bin/sh
-<span style="color:#cd00cd">1018663</span> pts/2    S      0:00 unshare -pf /bin/sh
-<span style="color:#cd00cd">1018664</span> pts/2    S+     0:00 /bin/sh
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ps -ax | grep /bin/sh
+<span style="color:#ae81ff">1018662</span> pts/2    S      0:00 sudo unshare -pf /bin/sh
+<span style="color:#ae81ff">1018663</span> pts/2    S      0:00 unshare -pf /bin/sh
+<span style="color:#ae81ff">1018664</span> pts/2    S+     0:00 /bin/sh
 </code></pre></div><blockquote>
 <p>Inside the namespace:</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000080"># echo $$</span>
-<span style="color:#cd00cd">1</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># echo $$</span>
+<span style="color:#ae81ff">1</span>
 </code></pre></div><p>Here we can see that although the <code>sh</code> process has PID of 1018664 on the host system, it has a PID of 1 inside the new namespace we created. We can also see that the PID namespaces are different by running the following commands on the system:</p>
 <blockquote>
 <p>On the host system:</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo ls -lah /proc/1018664/ns
-total <span style="color:#cd00cd">0</span>
-dr-x--x--x <span style="color:#cd00cd">2</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 .
-dr-xr-xr-x <span style="color:#cd00cd">9</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:50 ..
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 cgroup -&gt; <span style="color:#cd0000">&#39;cgroup:[4026531835]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 ipc -&gt; <span style="color:#cd0000">&#39;ipc:[4026531839]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 mnt -&gt; <span style="color:#cd0000">&#39;mnt:[4026531840]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 net -&gt; <span style="color:#cd0000">&#39;net:[4026531992]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 pid -&gt; <span style="color:#cd0000">&#39;pid:[4026532764]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 pid_for_children -&gt; <span style="color:#cd0000">&#39;pid:[4026532764]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 user -&gt; <span style="color:#cd0000">&#39;user:[4026531837]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:55 uts -&gt; <span style="color:#cd0000">&#39;uts:[4026531838]&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo ls -lah /proc/1018664/ns
+total <span style="color:#ae81ff">0</span>
+dr-x--x--x <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 .
+dr-xr-xr-x <span style="color:#ae81ff">9</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:50 ..
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 cgroup -&gt; <span style="color:#e6db74">&#39;cgroup:[4026531835]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 ipc -&gt; <span style="color:#e6db74">&#39;ipc:[4026531839]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 mnt -&gt; <span style="color:#e6db74">&#39;mnt:[4026531840]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 net -&gt; <span style="color:#e6db74">&#39;net:[4026531992]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 pid -&gt; <span style="color:#e6db74">&#39;pid:[4026532764]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 pid_for_children -&gt; <span style="color:#e6db74">&#39;pid:[4026532764]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 user -&gt; <span style="color:#e6db74">&#39;user:[4026531837]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 uts -&gt; <span style="color:#e6db74">&#39;uts:[4026531838]&#39;</span>
 </code></pre></div><blockquote>
 <p>Inside the namespace:</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000080"># ls -lah /proc/$$/ns</span>
-total <span style="color:#cd00cd">0</span>
-dr-x--x--x <span style="color:#cd00cd">2</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 .
-dr-xr-xr-x <span style="color:#cd00cd">9</span> root root <span style="color:#cd00cd">0</span> Oct  <span style="color:#cd00cd">6</span> 05:02 ..
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 cgroup -&gt; <span style="color:#cd0000">&#39;cgroup:[4026531835]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 ipc -&gt; <span style="color:#cd0000">&#39;ipc:[4026531839]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 mnt -&gt; <span style="color:#cd0000">&#39;mnt:[4026531840]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 net -&gt; <span style="color:#cd0000">&#39;net:[4026531992]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 pid -&gt; <span style="color:#cd0000">&#39;pid:[4026531836]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:53 pid_for_children -&gt; <span style="color:#cd0000">&#39;pid:[4026531836]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 user -&gt; <span style="color:#cd0000">&#39;user:[4026531837]&#39;</span>
-lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd00cd">0</span> Nov <span style="color:#cd00cd">16</span> 01:39 uts -&gt; <span style="color:#cd0000">&#39;uts:[4026531838]&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ls -lah /proc/$$/ns</span>
+total <span style="color:#ae81ff">0</span>
+dr-x--x--x <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 .
+dr-xr-xr-x <span style="color:#ae81ff">9</span> root root <span style="color:#ae81ff">0</span> Oct  <span style="color:#ae81ff">6</span> 05:02 ..
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 cgroup -&gt; <span style="color:#e6db74">&#39;cgroup:[4026531835]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 ipc -&gt; <span style="color:#e6db74">&#39;ipc:[4026531839]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 mnt -&gt; <span style="color:#e6db74">&#39;mnt:[4026531840]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 net -&gt; <span style="color:#e6db74">&#39;net:[4026531992]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 pid -&gt; <span style="color:#e6db74">&#39;pid:[4026531836]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:53 pid_for_children -&gt; <span style="color:#e6db74">&#39;pid:[4026531836]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 user -&gt; <span style="color:#e6db74">&#39;user:[4026531837]&#39;</span>
+lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 uts -&gt; <span style="color:#e6db74">&#39;uts:[4026531838]&#39;</span>
 </code></pre></div><p>We can clearly see the different values for the PID-related namespaces.</p>
 <p>Now try running a <code>ps -ef</code> before proceeding to the next section. Although we can see all processes running on the host system, the processes cannot be killed from the new namespace. Try doing it 😄</p>
 <h3 id="mount-namespaces">Mount Namespaces</h3>
@@ -139,30 +139,30 @@ lrwxrwxrwx <span style="color:#cd00cd">1</span> root root <span style="color:#cd
 <blockquote>
 <p>Create the namespace on host machine</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir /tmp/namespaceroot
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir /tmp/namespaceroot
 $ unshare -pmf /bin/sh
 </code></pre></div><p>Why we created a <code>namespaceroot</code> folder will be evident shortly. Now inside the namespace, we run a series of commands to mount a temporary filesystem</p>
 <blockquote>
 <p>Inside the namespace</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000080"># mount -t tmpfs tmpfs /tmp/namespaceroot</span>
-<span style="color:#000080"># mkdir -p /tmp/namespaceroot/proc</span>
-<span style="color:#000080"># mount -t proc proc /tmp/namespaceroot/proc</span>
-<span style="color:#000080"># ps -ef</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># mount -t tmpfs tmpfs /tmp/namespaceroot</span>
+<span style="color:#75715e"># mkdir -p /tmp/namespaceroot/proc</span>
+<span style="color:#75715e"># mount -t proc proc /tmp/namespaceroot/proc</span>
+<span style="color:#75715e"># ps -ef</span>
 UID          PID    PPID  C STIME TTY          TIME CMD
-root           <span style="color:#cd00cd">1</span>       <span style="color:#cd00cd">0</span>  <span style="color:#cd00cd">0</span> 02:36 pts/3    00:00:00 /bin/sh
-root          <span style="color:#cd00cd">18</span>       <span style="color:#cd00cd">1</span>  <span style="color:#cd00cd">0</span> 02:46 pts/3    00:00:00 bash
-root          <span style="color:#cd00cd">45</span>      <span style="color:#cd00cd">18</span>  <span style="color:#cd00cd">0</span> 02:47 pts/3    00:00:00 bash
-root          <span style="color:#cd00cd">46</span>      <span style="color:#cd00cd">45</span>  <span style="color:#cd00cd">0</span> 02:47 pts/3    00:00:00 tee -a /root/.bash_history
-root          <span style="color:#cd00cd">47</span>      <span style="color:#cd00cd">45</span>  <span style="color:#cd00cd">0</span> 02:47 pts/3    00:00:00 logger -t root<span style="color:#39c">[</span>18<span style="color:#39c">]</span>
-root          <span style="color:#cd00cd">48</span>      <span style="color:#cd00cd">18</span>  <span style="color:#cd00cd">0</span> 02:48 pts/3    00:00:00 ps -ef
-<span style="color:#000080"># ls /proc</span>
-<span style="color:#cd00cd">1</span>          cpuinfo      ioports      mdstat        schedstat      timer_list
-<span style="color:#cd00cd">18</span>         crypto       irq          meminfo       scsi           tty
-<span style="color:#cd00cd">49</span>         devices      kallsyms     misc          self           uptime
-<span style="color:#cd00cd">50</span>         diskstats    kcore        modules       slabinfo       version
-<span style="color:#cd00cd">51</span>         dma          keys         mounts        softirqs       version_signature
-<span style="color:#cd00cd">52</span>         driver       key-users    mpt           spl            vmallocinfo
+root           <span style="color:#ae81ff">1</span>       <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">0</span> 02:36 pts/3    00:00:00 /bin/sh
+root          <span style="color:#ae81ff">18</span>       <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0</span> 02:46 pts/3    00:00:00 bash
+root          <span style="color:#ae81ff">45</span>      <span style="color:#ae81ff">18</span>  <span style="color:#ae81ff">0</span> 02:47 pts/3    00:00:00 bash
+root          <span style="color:#ae81ff">46</span>      <span style="color:#ae81ff">45</span>  <span style="color:#ae81ff">0</span> 02:47 pts/3    00:00:00 tee -a /root/.bash_history
+root          <span style="color:#ae81ff">47</span>      <span style="color:#ae81ff">45</span>  <span style="color:#ae81ff">0</span> 02:47 pts/3    00:00:00 logger -t root<span style="color:#f92672">[</span>18<span style="color:#f92672">]</span>
+root          <span style="color:#ae81ff">48</span>      <span style="color:#ae81ff">18</span>  <span style="color:#ae81ff">0</span> 02:48 pts/3    00:00:00 ps -ef
+<span style="color:#75715e"># ls /proc</span>
+<span style="color:#ae81ff">1</span>          cpuinfo      ioports      mdstat        schedstat      timer_list
+<span style="color:#ae81ff">18</span>         crypto       irq          meminfo       scsi           tty
+<span style="color:#ae81ff">49</span>         devices      kallsyms     misc          self           uptime
+<span style="color:#ae81ff">50</span>         diskstats    kcore        modules       slabinfo       version
+<span style="color:#ae81ff">51</span>         dma          keys         mounts        softirqs       version_signature
+<span style="color:#ae81ff">52</span>         driver       key-users    mpt           spl            vmallocinfo
 acpi       execdomains  kmsg         mtrr          stat           vmstat
 buddyinfo  fb           kpagecgroup  net           swaps          zoneinfo
 bus        filesystems  kpagecount   pagetypeinfo  sys
@@ -174,12 +174,12 @@ consoles   iomem        locks        sched_debug   thread-self
 <blockquote>
 <p>On the host</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir -p /tmp/newtmp
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir -p /tmp/newtmp
 </code></pre></div><blockquote>
 <p>Inside the namespace</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#ccc;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000080"># mount -o bind,nodev /tmp/newtmp /tmp</span>
-<span style="color:#000080"># ls /tmp</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># mount -o bind,nodev /tmp/newtmp /tmp</span>
+<span style="color:#75715e"># ls /tmp</span>
 </code></pre></div><p>Now if you create any file inside the <code>/tmp/newtmp</code> folder in host system, it should be readable inside the namespace.</p>
 <section class="footnotes" role="doc-endnotes">
 <hr>
