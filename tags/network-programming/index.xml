@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Network Programming on ✌️</title>
+    <link>https://sandeshbhusal.github.io/tags/network-programming/</link>
+    <description>Recent content in Network Programming on ✌️</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Mon, 22 Nov 2021 12:30:30 +0545</lastBuildDate><atom:link href="https://sandeshbhusal.github.io/tags/network-programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Writing a DNS Server in Rust</title>
+      <link>https://sandeshbhusal.github.io/posts/2021/11/writing-a-dns-server-in-rust/</link>
+      <pubDate>Mon, 22 Nov 2021 12:30:30 +0545</pubDate>
+      
+      <guid>https://sandeshbhusal.github.io/posts/2021/11/writing-a-dns-server-in-rust/</guid>
+      <description>I really don&amp;rsquo;t know if this is a good idea, but I am going to write a DNS server in Rust and dogfood it for a while. The absolute goal of this project would be to run this as a local adblocker on my laptop, something like a Pi Hole.
+The server would need to have the following functional requirements:
+ Return replies for the following types of records:  A AAAA CNAME PTR   Cache replies returned previously with a suitable TTL Search using third-party servers like cloudflare and google and cache-and-forward the results for unknown domains Have a blocklist feature to block resolution of certain domain names Run on both TCP and UDP  The server would have the following non-functional requirements:</description>
+    </item>
+    
+  </channel>
+</rss>
