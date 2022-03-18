@@ -2,17 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://sandeshbhusal.github.io/series/learning-rust/</loc>
-    <lastmod>2021-11-19T11:40:41+05:45</lastmod>
+    <loc>https://sandeshbhusal.github.io/posts/2022/02/all-about-raft/</loc>
+    <lastmod>2022-02-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://sandeshbhusal.github.io/</loc>
+    <lastmod>2022-02-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="fr"
+                href="https://sandeshbhusal.github.io/fr/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://sandeshbhusal.github.io/"
+                />
+  </url><url>
+    <loc>https://sandeshbhusal.github.io/tags/distributed-systems/</loc>
+    <lastmod>2022-02-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://sandeshbhusal.github.io/series/distributed-systems/</loc>
+    <lastmod>2022-02-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://sandeshbhusal.github.io/posts/</loc>
-    <lastmod>2021-11-19T11:40:41+05:45</lastmod>
-  </url><url>
-    <loc>https://sandeshbhusal.github.io/tags/rust/</loc>
-    <lastmod>2021-11-19T11:40:41+05:45</lastmod>
+    <lastmod>2022-02-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://sandeshbhusal.github.io/series/</loc>
-    <lastmod>2021-11-19T11:40:41+05:45</lastmod>
+    <lastmod>2022-02-09T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
@@ -25,7 +42,7 @@
                 />
   </url><url>
     <loc>https://sandeshbhusal.github.io/tags/</loc>
-    <lastmod>2021-11-19T11:40:41+05:45</lastmod>
+    <lastmod>2022-02-09T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
@@ -37,24 +54,17 @@
                 href="https://sandeshbhusal.github.io/tags/"
                 />
   </url><url>
+    <loc>https://sandeshbhusal.github.io/series/learning-rust/</loc>
+    <lastmod>2021-11-19T11:40:41+05:45</lastmod>
+  </url><url>
+    <loc>https://sandeshbhusal.github.io/tags/rust/</loc>
+    <lastmod>2021-11-19T11:40:41+05:45</lastmod>
+  </url><url>
     <loc>https://sandeshbhusal.github.io/tags/threads/</loc>
     <lastmod>2021-11-19T11:40:41+05:45</lastmod>
   </url><url>
     <loc>https://sandeshbhusal.github.io/posts/2021/11/working-with-rust-channels/</loc>
     <lastmod>2021-11-19T11:40:41+05:45</lastmod>
-  </url><url>
-    <loc>https://sandeshbhusal.github.io/</loc>
-    <lastmod>2021-11-19T11:40:41+05:45</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="fr"
-                href="https://sandeshbhusal.github.io/fr/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://sandeshbhusal.github.io/"
-                />
   </url><url>
     <loc>https://sandeshbhusal.github.io/tags/containers/</loc>
     <lastmod>2021-11-15T11:58:24+05:45</lastmod>
@@ -67,6 +77,8 @@
   </url><url>
     <loc>https://sandeshbhusal.github.io/about/</loc>
     <lastmod>2014-04-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://sandeshbhusal.github.io/articles/</loc>
   </url><url>
     <loc>https://sandeshbhusal.github.io/categories/</loc>
     <xhtml:link

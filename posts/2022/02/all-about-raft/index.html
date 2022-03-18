@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="dark">
+    <title>All about Raft | 0xdecaf</title>
+
+    
+    
+    
+    <meta property="og:site_name" content="" />
+    <meta property="og:title" content="All about Raft | 0xdecaf"/>
+    <meta itemprop="name" content="All about Raft | 0xdecaf" />
+    <meta name="twitter:title" content="All about Raft | 0xdecaf" />
+    <meta name="application-name" content="All about Raft | 0xdecaf" /><meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:image" content="https://sandeshbhusal.github.io/"/>
+    
+
+    <meta name="description" content="" />
+    <meta name="twitter:description" content=""/>
+    <meta itemprop="description" content=""/>
+    <meta property="og:description" content="" />
+
+    
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://sandeshbhusal.github.io/favicon.ico" />
+    
+    <link rel="stylesheet" href="https://sandeshbhusal.github.io/sass/main.min.ab99ff095f832511e24ffb2fba2b51ad473b2f7e9301d674eba2c6c3a6e8bd81.css">
+    
+</head>
+    
+    <script>
+        (function() {
+            const colorSchemeKey = 'ThemeColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'ThemeColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.userColorScheme = 'dark';
+        } else {
+            document.documentElement.dataset.userColorScheme = 'light';
+        }
+    })();
+</script>
+
+
+    <body class="dark">
+        <nav class="navbar">
+    <div class="container">
+        <div class="flex">
+            <div>
+                <a class="brand" href="https://sandeshbhusal.github.io/">
+                    
+                    <span class="emoji">
+                        🤖
+                    </span>
+                    
+                    
+                    0xdecaf
+                    </a>
+            </div>
+            <div class="flex">
+                
+                <a href="https://sandeshbhusal.github.io/articles/">Articles</a>
+                
+                <a href="https://sandeshbhusal.github.io/index.xml">RSS</a>
+                
+                <a href="https://sandeshbhusal.github.io/series/">Series</a>
+                
+                <a href="https://sandeshbhusal.github.io/tags/">Tags</a>
+                
+                
+                    <button id="dark-mode-button">
+                    <svg class="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M30.312.776C32 19 20 32 .776 30.312c8.199 7.717 21.091 7.588 29.107-.429C37.9 21.867 38.03 8.975 30.312.776z"/><path d="M30.705 15.915a1.163 1.163 0 1 0 1.643 1.641a1.163 1.163 0 0 0-1.643-1.641zm-16.022 14.38a1.74 1.74 0 0 0 0 2.465a1.742 1.742 0 1 0 0-2.465zm13.968-2.147a2.904 2.904 0 0 1-4.108 0a2.902 2.902 0 0 1 0-4.107a2.902 2.902 0 0 1 4.108 0a2.902 2.902 0 0 1 0 4.107z" fill="#FFCC4D"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                    <svg class="dark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M16 2s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2V2zm18 14s2 0 2 2s-2 2-2 2h-2s-2 0-2-2s2-2 2-2h2zM4 16s2 0 2 2s-2 2-2 2H2s-2 0-2-2s2-2 2-2h2zm5.121-8.707s1.414 1.414 0 2.828s-2.828 0-2.828 0L4.878 8.708s-1.414-1.414 0-2.829c1.415-1.414 2.829 0 2.829 0l1.414 1.414zm21 21s1.414 1.414 0 2.828s-2.828 0-2.828 0l-1.414-1.414s-1.414-1.414 0-2.828s2.828 0 2.828 0l1.414 1.414zm-.413-18.172s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zm-21 21s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zM16 32s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2v-2z"/><circle fill="#FFD983" cx="18" cy="18" r="10"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                    </button>
+                
+            </div>
+            </div>
+    </div>
+</nav>
+
+        <main>
+            
+<div class="container">
+    <article>
+        <header class="article-header">
+            <div class="thumb">
+                <div>
+                    <h1>All about Raft</h1>
+                    <div class="post-meta">
+                        <div>
+                            
+                            
+                            By map[name:Sandesh Bhusal] | <time>February 09, 2022</time>
+                            | 4 minutes
+                        </div>
+                        <div class="tags">
+                            
+                            <a href="https://sandeshbhusal.github.io/tags/distributed-systems/">Distributed Systems</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </article>
+
+    <div class="article-post">
+    <h2 id="introduction">
+    <a href="#introduction" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    Introduction
+</h2>
+<p><a href="https://raft.github.io">Raft</a> is a distributed consensus algorithm, which was posed as an <em>easier to understand</em> alternative to <a href="https://en.wikipedia.org/wiki/Paxos_computer_science">Paxos</a>. The Raft consensus algorithm works on replication of state machines, which is in itself broken down into three separate but concomitant tasks:</p>
+<ol>
+<li>Leader Election</li>
+<li>Log Replication</li>
+<li>Safety</li>
+</ol>
+<p>In addition to these, cluster membership changes are also accounted for in the original paper. In this blog post, we will go through the process of analyzing each of these avenues, and writing a very simple replicated state machine in Python with a custom implementation of Raft and run it across some docker
+containers.</p>
+<h2 id="on-raft">
+    <a href="#on-raft" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    On Raft
+</h2>
+<p>This section explains the <a href="https://raft.github.io/raft.pdf">original raft paper</a> in its most essential parts. Feel free to skip this portion if you already know what raft is and how it works. Or stick around for an introduction and a brief refresher 😄</p>
+<h3 id="about-replicated-state-machines">
+    <a href="#about-replicated-state-machines" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    About Replicated State machines:
+</h3>
+<p>Replication in distributed systems occurs usually through one of three ways:</p>
+<ol>
+<li>Transactional Replication used in transactional systems such as distributed
+databases</li>
+<li>State machine replication where</li>
+</ol>
+<h3 id="type-of-replication">
+    <a href="#type-of-replication" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    Type of replication:
+</h3>
+<p>There are two ways replication occurs:</p>
+<ol>
+<li>Active Replication</li>
+<li>Passive Replication - Raft is this type of replication where a master server forwards data to all other nodes in the cluster</li>
+</ol>
+<h3 id="raft-keywords">
+    <a href="#raft-keywords" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    Raft keywords:
+</h3>
+<p>Some keywords should be defined before we describe the entire algorithm:</p>
+<ol>
+<li><strong>Client:</strong> External machines that communicate with the cluster.</li>
+<li><strong>Role:</strong> Current role of the server in the cluster. This can be one of Leader, follower or Candidate
+<ul>
+<li>Leader: All changes by clients are sent to this node in the cluster</li>
+<li>Follower: Followers listen for commands from Leader</li>
+<li>Candidate: When followers do not receive any heartbeat message from the leader, they default to a Candidate state, showing their interest in becoming the leader</li>
+</ul>
+</li>
+<li><strong>Term:</strong> Time in raft is divided into discrete terms. Each term has at most one leader and may have no leaders at all (in case of a split vote). The Term is a monotonically increasing counter that is tracked by every node in the cluster.</li>
+<li><strong>Log:</strong> Log is the array of changes that has been made to the internal state machine. Log is unique to each node in the cluster and for all agreeing and correct nodes, Log should be similar. One example could look like this: <code>SET x 10 -&gt; SET y 10 -&gt; DEL x -&gt; SET y 30</code>.</li>
+<li><strong>Commit and Apply:</strong> The logs are committed and applied to the internal state machine of the servers. To commit a log means that the log has been stored in the node successfully, and that can be applied to the internal state machine of the node later on.</li>
+<li><strong>Election Timeout:</strong> Time for which a follower node waits to receive a heartbeat message or election votes. When this timeout expires, the election starts / gets canceled.</li>
+<li><strong>Split vote:</strong> No node in the cluster could get a majority vote to become the leader.</li>
+</ol>
+<p>Now that we have some idea of Raft under our belt, let&rsquo;s analyze the two main parts of Raft in conjunction with the third - Leader election and Log Replication and their safety conditions and how they are guaranteed by Raft.</p>
+<h3 id="the-leader-election">
+    <a href="#the-leader-election" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    The Leader election:
+</h3>
+<p>Every node in the cluster begins in a follower state with a certain timeout. When this timeout expires and no heartbeat or vote request is received from any of the other nodes in the cluster, the follower node increases its monotonic term counter and changes its state to a candidate. Then it sends out vote request to all other nodes in the cluster. The Algorithm can be enumerated as follows:</p>
+<ol>
+<li>Start as follower</li>
+<li>When follower:
+<ol>
+<li>If no heartbeat received until <code>election_timeout</code> time, increase own <code>term</code> and mark oneself as <code>candidate</code>. Then send <code>voterequestRPC</code> to all known nodes in cluster</li>
+<li>If heartbeat received:
+<ol>
+<li>If heartbeat is greater than or equal to own term, acknowledge the sender node as the leader</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>When Candidate:
+<ol>
+<li>Send out <code>voterequestRPC</code> to all nodes in the cluster and wait until <code>election_timeout</code>. When waiting:
+<ol>
+<li>If <code>voterequestRPC</code> received or heartbeat received whose term is equal to or greater than own term, then acknowledge sending node as leader.</li>
+<li>If <code>voterequestRPC</code> received from a node whose term is less than own term, reject that RPC.</li>
+<li>If the node does not receive majority votes even after <code>election_timeout</code> time, it will increment its own term, and start another election cycle by sending out <code>voterequestRPC</code>. However, an issue here might be that if the servers wait for the same duration as they did before, they will have a high chance of having the same outcome as they did before, i.e. a <code>split vote</code>. In order to mitigate this the <code>election_timeout</code> is randomized with a small variation, ( 150-300ms in paper ). This ensures that split votes do not persist.</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>When leader:
+<ol>
+<li>Send out periodic heartbeats to all nodes in the cluster. In order to decrease the chance that the follower might initiate an election before receiving the heartbeat, send out multiple heartbeats per <code>election_timeout</code> time so that this does not happen (Visualization for this is well-illustrated in <a href="https://raft.github.io">raft website</a>)</li>
+</ol>
+</li>
+</ol>
+<h3 id="common-issues-and-how-raft-avoids-them">
+    <a href="#common-issues-and-how-raft-avoids-them" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    Common issues and how Raft avoids them:
+</h3>
+
+    </div>
+</div>
+
+<div class="container">
+    
+    <nav class="flex container suggested">
+        
+        <a rel="prev" href="https://sandeshbhusal.github.io/posts/2021/11/working-with-rust-channels/" title="Previous post (older)">
+            <span>Previous</span>
+            Working With Rust Channels
+            </a>
+        
+        
+        
+    </nav>
+    
+</div>
+ 
+<div class="container">
+    
+</div>
+
+</main>
+
+
+        </main>
+        <footer class="footer flex">
+    <section class="container">
+        <nav class="footer-links">
+            
+        </nav>
+
+        
+    </section>
+    <script defer src="https://sandeshbhusal.github.io/ts/features.c81551cd4dbef120af278f16966a41142c02be9ff5d6a669be09820fbf047456.js" 
+    data-enable-footnotes="true"
+    ></script>
+</footer>
+
+    </body>
+</html>

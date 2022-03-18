@@ -1,196 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Posts on ✌️</title>
-        <link>https://sandeshbhusal.github.io/posts/</link>
-        <description>Recent content in Posts on ✌️</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Fri, 19 Nov 2021 11:40:41 +0545</lastBuildDate>
-        <atom:link href="https://sandeshbhusal.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-        
-        <item>
-            <title>Working With Rust Channels</title>
-            <link>https://sandeshbhusal.github.io/posts/2021/11/working-with-rust-channels/</link>
-            <pubDate>Fri, 19 Nov 2021 11:40:41 +0545</pubDate>
-            
-            <guid>https://sandeshbhusal.github.io/posts/2021/11/working-with-rust-channels/</guid>
-            <description>Channels are an abstraction for sharing data between concurrently-running threads. For an example, you have a mapreduce system, and map and reduce threads are running parallelly. Each mapped output needs to be reduced using a reducer thread. Instead of passing data to a shared memory, which would require locks, you could just pass data to a channel and it would be received by the corresponding receiver thread. Using [[Go]]&amp;rsquo;s language documentation,</description>
-            <content type="html"><![CDATA[<p>Channels are an abstraction for sharing data between concurrently-running threads. For an example, you have a mapreduce system, and map and reduce threads are running parallelly. Each mapped output needs to be reduced using a reducer thread. Instead of passing data to a shared memory, which would require locks, you could just pass data to a channel and it would be received by the corresponding receiver thread. Using [[Go]]&rsquo;s language documentation,</p>
-<blockquote>
-<p>Do not communicate by sharing memory; instead, share memory by communicating.</p>
-</blockquote>
-<p>Example: Implement a chat system or a system where many threads perform parts of a calculation and send the parts to one thread that aggregates the results. Channels are supplied by <code>std::sync</code>, and a type of channel called <code>mpsc</code> is used in the book, which stands for multiple producer single consumer.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">use</span> std::sync::mpsc;
-<span style="color:#66d9ef">use</span> std::thread
-
-<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-  <span style="color:#66d9ef">let</span> (tx, rx) <span style="color:#f92672">=</span> mpsc::channel(); 
-  thread::spawn(<span style="color:#66d9ef">move</span> <span style="color:#f92672">||</span> {
-    <span style="color:#66d9ef">let</span> val <span style="color:#f92672">=</span> String::from(<span style="color:#e6db74">&#34;hi&#34;</span>); 
-    tx.send(val).unwrap(); 
-  }); 
-  <span style="color:#66d9ef">let</span> received <span style="color:#f92672">=</span> rx.recv().unwrap(); 
-  println!(<span style="color:#e6db74">&#34;Got: {}&#34;</span>, received);
-}
-</code></pre></div><p>Code Synopsis:</p>
-<ul>
-<li><code>thread::spawn</code> used to spawn new thread</li>
-<li><code>move</code> used so that the new thread <em>owns</em> the <code>tx</code> object</li>
-<li><code>tx.send</code> needs to be <code>unwrap()</code>ped because receiving end might&rsquo;ve been dropped, so we might have errors.</li>
-<li><code>recv()</code> call does not block, instead returns <code>Result&lt;T, E&gt;</code>, so that if no data is available, it returns an &lsquo;Error&rsquo;.</li>
-<li>Example of using a channel&rsquo;s non-blocking &ldquo;recv&rdquo; function-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">Message</span>{
-  JoinRequest(String),
-  DataRequest(String)
-}
-
-<span style="color:#66d9ef">let</span> (transmitter, receiver) <span style="color:#f92672">=</span> mpsc::channel();
-thread::spawn(<span style="color:#66d9ef">move</span> <span style="color:#f92672">||</span> {
-  <span style="color:#66d9ef">let</span> x <span style="color:#f92672">=</span> Message::DataRequest(String::from(<span style="color:#e6db74">&#34;I want data&#34;</span>));
-  <span style="color:#66d9ef">let</span> y <span style="color:#f92672">=</span> Message::JoinRequest(String::from(<span style="color:#e6db74">&#34;I want to join!&#34;</span>));
-  transmitter.send(x).unwrap();
-  thread::sleep(time::Duration::from_secs(<span style="color:#ae81ff">2</span>));
-  transmitter.send(y).unwrap();
-});
-
-<span style="color:#66d9ef">for</span> item <span style="color:#66d9ef">in</span> receiver{
-  <span style="color:#66d9ef">match</span> item {
-    Message::JoinRequest(join) <span style="color:#f92672">=&gt;</span> {
-      println!(<span style="color:#e6db74">&#34;I got {}&#34;</span>, join);
-    },
-    Message::DataRequest(data) <span style="color:#f92672">=&gt;</span> {
-      println!(<span style="color:#e6db74">&#34;I got {}&#34;</span>, data);
-    }
-  }
-}
-</code></pre></div><ul>
-<li>In the same way, data can be &ldquo;tagged&rdquo; while passing to a channel with enums. This is a simple example, which can be used in cases like, when we have peers in a network that listen on a single port for both &ldquo;join&rdquo; request of new nodes, and &ldquo;sync&rdquo; requests to request for data. However, using enums is not really a good idea, since Rust allocates for the largest size in receiver. Instead, we could use <code>Box</code> to point to different types of data that can be available. Or <code>Arc</code> if it needs to be passed to multiple threads.</li>
-</ul>
-</li>
-</ul>
-<p>A variable cannot be &ldquo;reused&rdquo; after being sent down the channel, because the receiving thread might drop it or change it. So a third <code>println!(&quot;I sent {:?} down the channel&quot;, y);</code> would fail in the above code.</p>
-]]></content>
-        </item>
-        
-        <item>
-            <title>Namespaces in Linux</title>
-            <link>https://sandeshbhusal.github.io/posts/2021/11/namespaces-in-linux/</link>
-            <pubDate>Mon, 15 Nov 2021 11:58:24 +0545</pubDate>
-            
-            <guid>https://sandeshbhusal.github.io/posts/2021/11/namespaces-in-linux/</guid>
-            <description>Namespaces decide what subset of resources the processes running on a system can access or &amp;ldquo;see&amp;rdquo;. With namespaces, we can have isolated mountpoints, PID spaces (so that two processes on the OS can think their PID is the same), hostnames and network interfaces isolated to processes. These resources may have a different mapping on the host system. For an example, the first process running inside a PID namespace might think that its PID is 1 but in the host system, it is actually mapped to some other PID, like 1234.</description>
-            <content type="html"><![CDATA[<p>Namespaces decide what subset of resources the processes running on a system can access or &ldquo;see&rdquo;. With namespaces, we can have isolated mountpoints, PID spaces (so that two processes on the OS can think their PID is the same), hostnames and network interfaces isolated to processes. These resources may have a different mapping on the host system. For an example, the first process running inside a PID namespace might think that its PID is 1 but in the host system, it is actually mapped to some other PID, like 1234.</p>
-<p>The list of running namespaces in the host system can be extracted by running the <code>lsns</code> command. Namespaces provide the basis of isolation between processes running on the operating system and allocateable resources. There are various <a href="https://en.wikipedia.org/wiki/Linux_namespaces#:~:text=Namespace%20kinds%5Bedit%5D">types of namespaces</a> in linux. Some of the namespaces being used to build BeeJudge<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> are explained briefly below:</p>
-<h3 id="pid-namespaces">PID Namespaces</h3>
-<p>PID namespaces allow the isolation of process identifiers (PIDs) between different namespaces. As such, two processes running on the host system might think that they have the same PID when in reality they are different. Newly created namespaces assign PID of 1 to the first run process inside the namespace and subsequent PIDs to the processes after that. For a simple demonstration, let&rsquo;s look at the output after creating a new PID namespace with bash:</p>
-<blockquote>
-<p>Create a new PID namespace with the <code>unshare</code> command:</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo unshare -p /bin/sh
-</code></pre></div><blockquote>
-<p>On the host system:</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ps -ax | grep /bin/sh
-<span style="color:#ae81ff">1018662</span> pts/2    S      0:00 sudo unshare -pf /bin/sh
-<span style="color:#ae81ff">1018663</span> pts/2    S      0:00 unshare -pf /bin/sh
-<span style="color:#ae81ff">1018664</span> pts/2    S+     0:00 /bin/sh
-</code></pre></div><blockquote>
-<p>Inside the namespace:</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># echo $$</span>
-<span style="color:#ae81ff">1</span>
-</code></pre></div><p>Here we can see that although the <code>sh</code> process has PID of 1018664 on the host system, it has a PID of 1 inside the new namespace we created. We can also see that the PID namespaces are different by running the following commands on the system:</p>
-<blockquote>
-<p>On the host system:</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo ls -lah /proc/1018664/ns
-total <span style="color:#ae81ff">0</span>
-dr-x--x--x <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 .
-dr-xr-xr-x <span style="color:#ae81ff">9</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:50 ..
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 cgroup -&gt; <span style="color:#e6db74">&#39;cgroup:[4026531835]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 ipc -&gt; <span style="color:#e6db74">&#39;ipc:[4026531839]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 mnt -&gt; <span style="color:#e6db74">&#39;mnt:[4026531840]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 net -&gt; <span style="color:#e6db74">&#39;net:[4026531992]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 pid -&gt; <span style="color:#e6db74">&#39;pid:[4026532764]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 pid_for_children -&gt; <span style="color:#e6db74">&#39;pid:[4026532764]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 user -&gt; <span style="color:#e6db74">&#39;user:[4026531837]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:55 uts -&gt; <span style="color:#e6db74">&#39;uts:[4026531838]&#39;</span>
-</code></pre></div><blockquote>
-<p>Inside the namespace:</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ls -lah /proc/$$/ns</span>
-total <span style="color:#ae81ff">0</span>
-dr-x--x--x <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 .
-dr-xr-xr-x <span style="color:#ae81ff">9</span> root root <span style="color:#ae81ff">0</span> Oct  <span style="color:#ae81ff">6</span> 05:02 ..
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 cgroup -&gt; <span style="color:#e6db74">&#39;cgroup:[4026531835]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 ipc -&gt; <span style="color:#e6db74">&#39;ipc:[4026531839]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 mnt -&gt; <span style="color:#e6db74">&#39;mnt:[4026531840]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 net -&gt; <span style="color:#e6db74">&#39;net:[4026531992]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 pid -&gt; <span style="color:#e6db74">&#39;pid:[4026531836]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:53 pid_for_children -&gt; <span style="color:#e6db74">&#39;pid:[4026531836]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 user -&gt; <span style="color:#e6db74">&#39;user:[4026531837]&#39;</span>
-lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">0</span> Nov <span style="color:#ae81ff">16</span> 01:39 uts -&gt; <span style="color:#e6db74">&#39;uts:[4026531838]&#39;</span>
-</code></pre></div><p>We can clearly see the different values for the PID-related namespaces.</p>
-<p>Now try running a <code>ps -ef</code> before proceeding to the next section. Although we can see all processes running on the host system, the processes cannot be killed from the new namespace. Try doing it 😄</p>
-<h3 id="mount-namespaces">Mount Namespaces</h3>
-<p>If you tried the above command in your system and ran a <code>ps -ef</code> command, you would be surprised to see that <em>all</em> the processes running on the host system are enumerated in the output. Technically it seems like there was no isolation of PIDs whatsoever! This happens due to a reason. When we created a new namespace, the old mountpoints are copied along to the new namespace. And commands like <code>ps</code> work on <code>/proc</code> mount to extract information about running processes.</p>
-<p>In order to avoid this complication, we will depend on mount namespaces. First of all, we will create a new PID namespace along with a mount namespace and fork a <code>/bin/sh</code> inside it as usual.</p>
-<blockquote>
-<p>Create the namespace on host machine</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir /tmp/namespaceroot
-$ unshare -pmf /bin/sh
-</code></pre></div><p>Why we created a <code>namespaceroot</code> folder will be evident shortly. Now inside the namespace, we run a series of commands to mount a temporary filesystem</p>
-<blockquote>
-<p>Inside the namespace</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># mount -t tmpfs tmpfs /tmp/namespaceroot</span>
-<span style="color:#75715e"># mkdir -p /tmp/namespaceroot/proc</span>
-<span style="color:#75715e"># mount -t proc proc /tmp/namespaceroot/proc</span>
-<span style="color:#75715e"># ps -ef</span>
-UID          PID    PPID  C STIME TTY          TIME CMD
-root           <span style="color:#ae81ff">1</span>       <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">0</span> 02:36 pts/3    00:00:00 /bin/sh
-root          <span style="color:#ae81ff">18</span>       <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0</span> 02:46 pts/3    00:00:00 bash
-root          <span style="color:#ae81ff">45</span>      <span style="color:#ae81ff">18</span>  <span style="color:#ae81ff">0</span> 02:47 pts/3    00:00:00 bash
-root          <span style="color:#ae81ff">46</span>      <span style="color:#ae81ff">45</span>  <span style="color:#ae81ff">0</span> 02:47 pts/3    00:00:00 tee -a /root/.bash_history
-root          <span style="color:#ae81ff">47</span>      <span style="color:#ae81ff">45</span>  <span style="color:#ae81ff">0</span> 02:47 pts/3    00:00:00 logger -t root<span style="color:#f92672">[</span>18<span style="color:#f92672">]</span>
-root          <span style="color:#ae81ff">48</span>      <span style="color:#ae81ff">18</span>  <span style="color:#ae81ff">0</span> 02:48 pts/3    00:00:00 ps -ef
-<span style="color:#75715e"># ls /proc</span>
-<span style="color:#ae81ff">1</span>          cpuinfo      ioports      mdstat        schedstat      timer_list
-<span style="color:#ae81ff">18</span>         crypto       irq          meminfo       scsi           tty
-<span style="color:#ae81ff">49</span>         devices      kallsyms     misc          self           uptime
-<span style="color:#ae81ff">50</span>         diskstats    kcore        modules       slabinfo       version
-<span style="color:#ae81ff">51</span>         dma          keys         mounts        softirqs       version_signature
-<span style="color:#ae81ff">52</span>         driver       key-users    mpt           spl            vmallocinfo
-acpi       execdomains  kmsg         mtrr          stat           vmstat
-buddyinfo  fb           kpagecgroup  net           swaps          zoneinfo
-bus        filesystems  kpagecount   pagetypeinfo  sys
-cgroups    fs           kpageflags   partitions    sysrq-trigger
-cmdline    interrupts   loadavg      pressure      sysvipc
-consoles   iomem        locks        sched_debug   thread-self
-</code></pre></div><p>and the <code>findmount</code> command returns a pretty picture as well. The output is too long to list here but you should have a good idea from it as well.</p>
-<p>Along with <code>proc</code>, we will also isolate the <code>/tmp</code> mount</p>
-<blockquote>
-<p>On the host</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir -p /tmp/newtmp
-</code></pre></div><blockquote>
-<p>Inside the namespace</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># mount -o bind,nodev /tmp/newtmp /tmp</span>
-<span style="color:#75715e"># ls /tmp</span>
-</code></pre></div><p>Now if you create any file inside the <code>/tmp/newtmp</code> folder in host system, it should be readable inside the namespace.</p>
-<section class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1" role="doc-endnote">
-<p>BeeJudge is a planned project, which has been suspended to lack of access to a linux VM/Machine. It is a code-judging platform for linux.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</section>
-]]></content>
-        </item>
-        
-    </channel>
+  <channel>
+    <title>Posts on 0xdecaf</title>
+    <link>https://sandeshbhusal.github.io/posts/</link>
+    <description>Recent content in Posts on 0xdecaf</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://sandeshbhusal.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>All about Raft</title>
+      <link>https://sandeshbhusal.github.io/posts/2022/02/all-about-raft/</link>
+      <pubDate>Wed, 09 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://sandeshbhusal.github.io/posts/2022/02/all-about-raft/</guid>
+      <description>Introduction  Raft is a distributed consensus algorithm, which was posed as an easier to understand alternative to Paxos. The Raft consensus algorithm works on replication of state machines, which is in itself broken down into three separate but concomitant tasks:
+ Leader Election Log Replication Safety  In addition to these, cluster membership changes are also accounted for in the original paper. In this blog post, we will go through the process of analyzing each of these avenues, and writing a very simple replicated state machine in Python with a custom implementation of Raft and run it across some docker containers.</description>
+    </item>
+    
+    <item>
+      <title>Working With Rust Channels</title>
+      <link>https://sandeshbhusal.github.io/posts/2021/11/working-with-rust-channels/</link>
+      <pubDate>Fri, 19 Nov 2021 11:40:41 +0545</pubDate>
+      
+      <guid>https://sandeshbhusal.github.io/posts/2021/11/working-with-rust-channels/</guid>
+      <description>Channels are an abstraction for sharing data between concurrently-running threads. For an example, you have a mapreduce system, and map and reduce threads are running parallelly. Each mapped output needs to be reduced using a reducer thread. Instead of passing data to a shared memory, which would require locks, you could just pass data to a channel and it would be received by the corresponding receiver thread. Using [[Go]]&amp;rsquo;s language documentation,</description>
+    </item>
+    
+    <item>
+      <title>Namespaces in Linux</title>
+      <link>https://sandeshbhusal.github.io/posts/2021/11/namespaces-in-linux/</link>
+      <pubDate>Mon, 15 Nov 2021 11:58:24 +0545</pubDate>
+      
+      <guid>https://sandeshbhusal.github.io/posts/2021/11/namespaces-in-linux/</guid>
+      <description>Namespaces decide what subset of resources the processes running on a system can access or &amp;ldquo;see&amp;rdquo;. With namespaces, we can have isolated mountpoints, PID spaces (so that two processes on the OS can think their PID is the same), hostnames and network interfaces isolated to processes. These resources may have a different mapping on the host system. For an example, the first process running inside a PID namespace might think that its PID is 1 but in the host system, it is actually mapped to some other PID, like 1234.</description>
+    </item>
+    
+  </channel>
 </rss>

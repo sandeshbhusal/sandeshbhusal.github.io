@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Distributed Systems on 0xdecaf</title>
+    <link>https://sandeshbhusal.github.io/series/distributed-systems/</link>
+    <description>Recent content in Distributed Systems on 0xdecaf</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://sandeshbhusal.github.io/series/distributed-systems/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>All about Raft</title>
+      <link>https://sandeshbhusal.github.io/posts/2022/02/all-about-raft/</link>
+      <pubDate>Wed, 09 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://sandeshbhusal.github.io/posts/2022/02/all-about-raft/</guid>
+      <description>Introduction  Raft is a distributed consensus algorithm, which was posed as an easier to understand alternative to Paxos. The Raft consensus algorithm works on replication of state machines, which is in itself broken down into three separate but concomitant tasks:
+ Leader Election Log Replication Safety  In addition to these, cluster membership changes are also accounted for in the original paper. In this blog post, we will go through the process of analyzing each of these avenues, and writing a very simple replicated state machine in Python with a custom implementation of Raft and run it across some docker containers.</description>
+    </item>
+    
+  </channel>
+</rss>
