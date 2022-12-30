@@ -70,6 +70,10 @@ url = "/series/"
 name = "Paper Notes"
 url = "/paper-notes/"
 
+[[menu.header]]
+name = "Book Notes"
+url = "/book-notes/"
+
 
 [[menu.footer]]
 name = "RSS"
