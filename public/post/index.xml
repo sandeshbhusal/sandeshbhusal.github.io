@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on </title>
+    <link>https://example.com/post/</link>
+    <description>Recent content in Posts on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 30 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>01 - Example of Polling</title>
+      <link>https://example.com/post/01-poll/</link>
+      <pubDate>Fri, 30 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/post/01-poll/</guid>
+      <description>Introduction  Async is a widely used paradigm for multitasking. I say multitasking and not multithreading because there&amp;rsquo;s difference between async and multithreading. We will get to that later. Async is a cooperative multitasking paradigm that is very useful in cases of IO bound tasks. In case of CPU bound tasks, multithreading would be the better choice. Async runtimes exploit the underlying threadpool available from the operating system to run &amp;ldquo;tasks&amp;rdquo;.</description>
+    </item>
+    
+  </channel>
+</rss>
