@@ -8,7 +8,7 @@ disqusShortname = "https-hugo-tania-netlify-app"
 
 [params]
 # Emoji will show before the blog title on site navbar.
-titleEmoji = "🤖"
+titleEmoji = "🏠"
 
 # Logo will show before the blog title on site navbar.
 titleLogo = ""
@@ -65,6 +65,12 @@ url = "/articles/"
 [[menu.header]]
 name = "Series"
 url = "/series/"
+
+[[menu.header]]
+name = "Paper Notes"
+url = "/paper-notes/"
+
+
 [[menu.footer]]
 name = "RSS"
 url = "/index.xml"

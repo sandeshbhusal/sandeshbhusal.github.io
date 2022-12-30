@@ -4,7 +4,8 @@ date: 2022-12-30
 categories:
 - series
 tags:
-- series
+- rust
+- async
 ---
 
 ## Introduction

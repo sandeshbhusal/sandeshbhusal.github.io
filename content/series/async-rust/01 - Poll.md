@@ -3,6 +3,9 @@ title: "Rust Async 01 - Polling"
 draft: false
 date: 2022-12-29
 author: Sandesh Bhusal
+tags:
+- rust
+- async
 ---
 
 ## Introduction
