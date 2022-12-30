@@ -1,5 +1,5 @@
 ---
-title: Articles
-subtitle: Posts, tutorials, snippets, musings, and everything else.
+title: Archives
+subtitle: Search by tags or text
 layout: "archives"
 ---

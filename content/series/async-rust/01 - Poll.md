@@ -1,7 +1,7 @@
 ---
-title: "01 - Example of Polling"
+title: "Rust Async 01 - Polling"
 draft: false
-date: 2022-12-30
+date: 2022-12-29
 author: Sandesh Bhusal
 ---
 
