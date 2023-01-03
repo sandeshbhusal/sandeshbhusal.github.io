@@ -23,13 +23,18 @@
     text-decoration: underline !important;
     margin: 0px !important;
   }
+
+  h1, h2, h3, h4 {
+    font-family: "Merriweather" !important;
+    letter-spacing: 0px;
+  }
 </style>
 
 <!--This script use to load font from outside<-->
 <script>
   (function () {
       const customFont = document.createElement('link');
-      customFont.href = "https://fonts.googleapis.com/css2?family=Inter&display=swap";
+      customFont.href = "https://fonts.googleapis.com/css2?family=Inter&family=Merriweather&display=swap";
 
       customFont.type = "text/css";
       customFont.rel = "stylesheet";

@@ -1,4 +1,4 @@
-Hello! 👋
+### Hello! 👋
 
 I am Sandesh Bhusal, the author of this blog. I am an aspiring Systems Engineer currently working as a full time Rust Developer at NXLog. Professionally, I work on the Rust - C FFI boundary, porting our old code to Rust and learning a ton of things along the way. I also work with Python and Go in my free time and side projects depending on the need.
 
@@ -12,3 +12,8 @@ My Past work experience saw me working in the following capabilities:
 I am also looking for graduate TA/RA opportunities in the fields of Database, High performance computing and Distributed Systems (preferably something that combines all of the above).
 
 View my [Academic Resume here](https://drive.google.com/file/d/13YPfmdC0atAuz4WY-rPvKjowAcqAMYxF/view?usp=sharing).
+
+##### My publications:
+Here are two research papers I have co-authored as a part of my final year undergraduate thesis:
+- [Video Compression for Surveillance Application using Deep Neural Networks](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=xoVLbo8AAAAJ&citation_for_view=xoVLbo8AAAAJ:u-x6o8ySG0sC)
+- [An efficient video compression network](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=xoVLbo8AAAAJ&citation_for_view=xoVLbo8AAAAJ:u5HHmVD_uO8C) 

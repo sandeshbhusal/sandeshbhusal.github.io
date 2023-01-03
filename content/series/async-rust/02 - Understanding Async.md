@@ -21,3 +21,13 @@ I think the blog post should've started with this question instead. In the first
 In the example in the first part, we took a look at doing two file reads concurrently - when one file is not availble for a read, we do not block and instead, opt to utilize our CPU time to checking if the second file is available for a read. We do not block, and when the OS signals to us that the second file is ready for reading, we read it.
 
 > **This is the main idea behind async - to not block waiting for external IO operations. This includes network, disk and file activity (I have separated disk and file because file might mean something else, like `stdin` as well).**
+
+## Components in play:
+
+There are several components of an Async framework that enable the effortless mutitasking. They are as follows:
+
+##### Task
+This is the unit of execution that runs as a async function. Sometimes it is called `task` or `async function` or even [`protothreads`](https://en.wikipedia.org/wiki/Protothread). The tasks run make requests for external IO, use CPU time to do calculations and yield back to the async runtime whenever possible. They follow the _cooperative multitasking_ model.
+
+##### Executor
+This is the main engine behind Async
