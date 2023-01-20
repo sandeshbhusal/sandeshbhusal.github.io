@@ -1,6 +1,6 @@
 ### Hello! 👋
 
-I am Sandesh Bhusal, the author of this blog. I am an aspiring Systems Engineer currently working as a full time Rust Developer at NXLog. Professionally, I work on the Rust - C FFI boundary, porting our old code to Rust and learning a ton of things along the way. I also work with Python and Go in my free time and side projects depending on the need.
+I am Sandesh Bhusal, the author of this blog. I am an aspiring Systems Engineer currently working as a full time Rust Developer at NXLog. Professionally, I work on the Rust - C FFI boundary, porting our old code to Rust and learning a ton of things along the way. I also work with Python and Go in my free time and side projects depending on the need. I believe in the concept of "Rolling blog", where I publish a blog entry - even when it's not yet ready to be published. Mistakes are not something to be embarassed about and if there's missing knowledge or mistake in the post, I'll update it later with the updated timestamp. After all, isn't that how we are supposed to learn?
 
 My Past work experience saw me working in the following capabilities:
 
