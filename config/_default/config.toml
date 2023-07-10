@@ -1,7 +1,7 @@
 baseURL = "https://sandeshbhusal.github.io"
 theme = "blowfish"
 languageCode = "en"
-title = "Sandesh Bhusal"
+title = "Sandesh Bhusal's Blog"
 
 [params]
 description = "Personal blog of Sandesh Bhusal"
