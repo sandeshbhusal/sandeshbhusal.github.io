@@ -1,0 +1,26 @@
+colorScheme = "fire"
+autoSwitchAppearance = true
+enableSearch = true
+enableCodeCopy = true
+smartTOC = true
+
+[homepage]
+layout = "card"
+homepageImage = "largecrab.jpg"
+# showRecent = true
+
+[header]
+layout = "fixed-fill"
+
+[article]
+showTableOfContents = true
+showAuthor = false
+
+[list]
+layoutBackgroundHeaderSpace = true
+cardView = false
+constrainItemsWidth = true
+showCards = false
+showTableOfContents = true
+groupbyyear = false
+showSummary = true

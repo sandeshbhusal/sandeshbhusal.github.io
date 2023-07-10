@@ -1,0 +1,33 @@
+baseURL = "https://sandeshbhusal.github.io"
+theme = "blowfish"
+languageCode = "en"
+title = "Sandesh Bhusal"
+
+[params]
+description = "Personal blog of Sandesh Bhusal"
+copyright = "All opinions on this article are solely my own and do not represent any organization I'm affiliated with."
+
+[author]
+name = "Sandesh Bhusal"
+colorScheme = "fire"
+links = [
+	{ twitter = "sandeshbhusal" },
+	{ github  = "sandeshbhusal" }
+]
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+enabledCodeCopy = true
+smartTOC = true
+footer.showMenu = false
+homepage.layout = "card"
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.87.0"
+    max = "0.115.1"
+
+[security.exec]
+allow = ["^asciidoctor$"]
