@@ -63,7 +63,8 @@ sections = [
     { name = "notes", path = "/notes", is_external = false },
     { name = "github", path = "https://github.com/sandeshbhusal", is_external = true },
 ]
-blog_section_path = "/blog"
+
+blog_section_path = "/posts"
 
 nav_separator = "::"
 nav_wrapper_left = "{"
