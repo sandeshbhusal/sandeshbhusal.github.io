@@ -61,6 +61,7 @@ math = "katex"
 sections = [
     { name = "blog", path = "/posts", is_external = false },
     { name = "notes", path = "/notes", is_external = false },
+    { name = "resume", path = "https://sandeshbhusal.github.io/static/resume.pdf", is_external = true },
     { name = "github", path = "https://github.com/sandeshbhusal", is_external = true },
 ]
 
