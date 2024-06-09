@@ -44,8 +44,8 @@ anchors = "on"
 
 name = "Sandesh Bhusal"                         # Your name
 id = "0x0decaf"                           # Your id / username / handle
-bio = "Ad maiora. Ad meliora."                          # Your bio
-avatar = "https://i.ibb.co/wRcVRwS/dp-white.png"            # Your avatar
+bio = "Systems Programmer"                          # Your bio
+avatar = "https://i.ibb.co/48xM7hC/DP-removebg-preview-1.png"            # Your avatar
 links = [                             # Your links
     { name = "GitHub", icon = "github", url = "https://github.com/sandeshbhusal" },
     { name = "Email", icon = "email", url = "mailto:<mail.sandeshbhusal@gmail.com>" },
@@ -56,12 +56,12 @@ homepage_layout = "about"             # "about" | "list" | "recent"
 recent_max = 15
 recent_more = true
 recent_more_text = "more »"
-math = "katex"
+math = true 
 
 sections = [
     { name = "blog", path = "/posts", is_external = false },
     { name = "notes", path = "/notes", is_external = false },
-    { name = "resume", path = "https://sandeshbhusal.github.io/static/resume.pdf", is_external = true },
+    { name = "resume", path = "https://raw.githubusercontent.com/sandeshbhusal/sandeshbhusal.github.io/main/static/resume.pdf", is_external = true },
     { name = "github", path = "https://github.com/sandeshbhusal", is_external = true },
 ]
 
