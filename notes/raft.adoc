@@ -1,0 +1,24 @@
+---
+title: "RAFT - understandable consensus"
+menu: "sandesh"
+description: "RAFT is a widely-used consensus algorithm in distributed systems. In this post, I explain the workings and implementation of RAFT"
+draft: false
+date: "2023-06-02"
+toc: true
+---
+
+== A brief intro: 
+
+Distributed systems, such as distributed databases (imagine redis) need to preserve a globally-consistent view of their data state. For an example, if you write `+a=1+` to the database from a server one geographic location, you would expect the return value of `+a+` to be returned as `+1+` when queried from a different server at a different geographical location. In order to do this, the servers should have a notion of "synchronized" internal state of data. And Raft helps us achieve this (and more) in an intuitive and understandable way.
+
+
+**Some keywords and their meanings:**
+
+Before we start, it's essential to understand what the different terminologies we are going to use throughout this blog post actually mean.
+
+1. Distributed system: A collection of machines that behave like a single entity.
+2. Consensus: Agreement about something between machines running inside the distributed system.
+3. Membership: State of presence of a machine inside the distributed system. Also, the act of adding a new machine in the system.
+4. Persistent "X": Something is persistent means that the thing is present on the machine storage even after the machine goes offline, shuts down or crashes inadvertendly.
+5. Entry: An action that can be taken on the server's state. If your server is an accumulator, Entry could be something like "add 1", "subtract 2", etc.
+6. Log: A persistent, append-only(? question here - maybe deletion allowed for out-of-sync servers?), mutable list of entries present per-server.
