@@ -6,7 +6,7 @@
 #=========================================================================================
 
 base_url = "https://sandeshbhusal.github.io"      # Domain name of your website
-title = "0x0decaf"
+title = "Sandesh Bhusal's Site"
 description = "Sandesh Bhusal's Blog"
 default_language = "en"
 theme = "serene"
@@ -43,7 +43,7 @@ anchors = "on"
 [extra]
 
 name = "Sandesh Bhusal"                         # Your name
-id = "0x0decaf"                           # Your id / username / handle
+id = "sandeshbhusal"                           # Your id / username / handle
 bio = "Systems Programmer"                          # Your bio
 avatar = "https://i.ibb.co/48xM7hC/DP-removebg-preview-1.png"            # Your avatar
 links = [                             # Your links
@@ -61,6 +61,7 @@ math = true
 sections = [
     { name = "blog", path = "/posts", is_external = false },
     { name = "notes", path = "/notes", is_external = false },
+    { name = "travel", path = "/travel", is_external = false},
     { name = "resume", path = "https://raw.githubusercontent.com/sandeshbhusal/sandeshbhusal.github.io/main/static/resume.pdf", is_external = true },
     { name = "github", path = "https://github.com/sandeshbhusal", is_external = true },
 ]
