@@ -37,7 +37,7 @@ This is where I spent most of my time. First of all, the linker script needs the
 
 Inside the datasheet, I found the memory map. The way netduinoplus2 boots up is configured by the boot-up pins, and the inital couple of bytes in the memory map (4G) are aliased depending on the boot pin configuration. In my case, it would boot up directly from flash which is at `0x08000000`.
 
-![Memory Map](/static/posts/stm32_mmap.png)
+![Memory Map](/posts/stm32_mmap.png)
 
 ### Build System
 
@@ -298,7 +298,7 @@ Breakpoint 1, main () at main.c:3
 
 And voila! We are in main.
 
-![debug](/static/posts/debug_panes.png)
+![debug](/posts/debug_panes.png)
 
 ## What did we learn? What's moving forward?
 It's more about what I learned:
