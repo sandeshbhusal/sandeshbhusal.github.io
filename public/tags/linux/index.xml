@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on </title>
+    <link>//localhost:1313/tags/linux/</link>
+    <description>Recent content in Linux on </description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 02 Jan 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Visiting `mmap`</title>
+      <link>//localhost:1313/posts/visiting-mmap/</link>
+      <pubDate>Mon, 02 Jan 2023 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/posts/visiting-mmap/</guid>
+      <description>&lt;h2 id=&#34;traditional-file-io&#34;&gt;Traditional File I/O&lt;/h2&gt;&#xA;&lt;p&gt;&lt;code&gt;mmap&lt;/code&gt; is a very interesting functionality that allows users to do a memory-mapped IO operation on linux files. In this blog post, I will try to define&#xA;the use case of &lt;code&gt;mmap&lt;/code&gt; as well as show you the tradeoffs of using &lt;code&gt;mmap&lt;/code&gt; vs using a simple file IO operation (along with some code and screenshots).&lt;/p&gt;&#xA;&lt;p&gt;When performing a simple file-based IO, like reading a file in an application, we often make use of the &lt;code&gt;open&lt;/code&gt; and &lt;code&gt;read&lt;/code&gt; syscalls. However, during executing&#xA;these syscalls, we pay for the overhead of copying bytes between the kernel buffer and the userspace program buffer. For an example, I ran the following test on my computer with a 4GiB file generated from &lt;code&gt;/dev/urandom&lt;/code&gt; bytes.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

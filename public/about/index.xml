@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>About on </title>
+    <link>//localhost:1313/about/</link>
+    <description>Recent content in About on </description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="//localhost:1313/about/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title></title>
+      <link>//localhost:1313/about/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/about/about/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;//localhost:1313/images/me-about-large.jpg&#34; alt=&#34;me&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;m Sandesh (pronounced Sun-they-sh), and I am a MS Student at Boise State University, currently working on my thesis titled &amp;ldquo;Diverse Program Input Generation for Dynamic Invariant Inference&amp;rdquo; where I work on modifying Evosuite to guide the genetic algorithm to explore various program paths.&lt;/p&gt;&#xA;&lt;p&gt;I have a Bachelor&amp;rsquo;s degree in computer engineering and like to tinker with low-level things. I am a Systems Programmer, and an avid Rustacean (check out my projects on Github!).&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
