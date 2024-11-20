@@ -1,6 +1,6 @@
 baseURL = "/"
 languageCode = "en-us"
-theme = "poison"
+theme = ["hugo-notice", "poison"]
 paginate = 10
 pluralizelisttitles = false   # removes the automatically appended "s" on sidebar entries
 
@@ -11,7 +11,7 @@ pluralizelisttitles = false   # removes the automatically appended "s" on sideba
     brand = "Sandesh Bhusal"                      # name of your site - appears in the sidebar
     remote_brand_image = 'https://www.spongebobshop.com/cdn/shop/products/Viacom_Spongebob_Tote_Printful_SBSP-PTBF-PT_Image03_800x.jpg?v=1583786194' # path to a remote file
     # brand_image = "/images/krabs.webp"    # path to the image shown in the sidebar
-    # description = "Rabbit hole(s) enthusiast" # Used as default meta description if not specified in front matter
+    description = "Stuck in a local minima" # Used as default meta description if not specified in front matter
     dark_mode = true                      # optional - defaults to false
     # favicon = "favicon.png"             # path to favicon (defaults to favicon.png)
 

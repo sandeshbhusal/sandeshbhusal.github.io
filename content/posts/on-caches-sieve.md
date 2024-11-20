@@ -5,10 +5,11 @@ date: 2024-05-13
 tags:
 - algorithms
 ---
-{% alert(header="WORK IN PROGRESS") %}
+{{< notice warning >}}
 This blog post is a work in progress and may have incomplete/irrelevant information.
 I don't recommend you to read this because it has incomplete information.
-{% end %}
+{{< /notice >}}
+
 
 Caches are a fundamental part of computer science, seen and used everywhere. In this post, I am collecting my notes on [SIEVE], a remarkable new cache-eviction policy proposed for Web workloads, that not only has a good hit ratio but also scales (almost) linearly with the number of CPU cores the machine has. Before I dive deep into the implementation, I will take you through a _brief_ refresher on caches, and the various extant eviction algorithms for them.
 
