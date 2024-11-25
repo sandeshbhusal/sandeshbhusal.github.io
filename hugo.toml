@@ -15,7 +15,7 @@ pluralizelisttitles = false   # removes the automatically appended "s" on sideba
     dark_mode = true                      # optional - defaults to false
     # favicon = "favicon.png"             # path to favicon (defaults to favicon.png)
 
-    # front_page_content = ["about"] # Equivalent to the default value, add page bundle names to include them on the front page.
+    front_page_content = ["posts"] # Equivalent to the default value, add page bundle names to include them on the front page.
 
     # MENU PLACEHOLDER
     # Menu dict keys:
@@ -25,7 +25,8 @@ pluralizelisttitles = false   # removes the automatically appended "s" on sideba
         # Limit:        If the files should be listed, how many should be shown.
     menu = [
         {Name = "About", URL = "/about/", HasChildren = false},
-        {Name = "Posts", URL = "/posts/", Pre = "", HasChildren = true, Limit = 10},
+        {Name = "Log", URL = "/weekly-log/", HasChildren = false},
+        {Name = "Posts", URL = "/posts/", Pre = "", HasChildren = true, Limit = 4},
     ]
 
     # hideToc= true
