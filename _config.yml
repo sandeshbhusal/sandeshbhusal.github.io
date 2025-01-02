@@ -641,3 +641,11 @@ jsonresume:
   - languages
   - interests
   - references
+
+#----------
+# Custom Jekyll headers
+#----------
+
+webrick:
+  headers:
+    Cache-Control: no-cache
