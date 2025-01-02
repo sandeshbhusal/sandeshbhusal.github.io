@@ -16,7 +16,61 @@ div,
 li,
 span,
 strong {
+  font-family: 'Inter';
+  font-size: 1.1rem;
   color: var(--global-text-color);
+}
+
+pre.highlight code span {
+  font-family: "Spline Sans Mono", monospace !important;
+  font-weight: 400;;
+  font-size: 0.9rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+  font-family: "PT Serif";
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+h1.post-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+h2 {
+  margin-top: 8px;;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+h3 {
+  margin-top: 8px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+h4 {
+  margin-top: 8px;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+h5 {
+  margin-top:8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+nav#toc-sidebar ul.nav a.nav-link {
+  // font-size: rem;
+  font-family: "Inter";
 }
 
 hr {
