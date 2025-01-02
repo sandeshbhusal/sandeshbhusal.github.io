@@ -27,6 +27,17 @@ ninja.data = [{
           window.location.href = "/blog/2024/gossip-glomers/";
         
       },
+    },{id: "post-writing-rewriting-a-lexer",
+      
+        title: "Writing (rewriting) a lexer",
+      
+      description: "A journey of writing a lexer for a simple language in Rust.",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/lexers/";
+        
+      },
     },{id: "post-binary-search-is-bananas",
       
         title: "Binary search is Bananas!",
