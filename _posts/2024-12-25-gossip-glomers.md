@@ -233,7 +233,7 @@ Everything looks good! ヽ(‘ー`)ノ
 
 Since the first message is always the `init` message, we can check to see if that is actually the case, and only process messages after the first one (since we might miss a `init` message, and reach an invalid node state).
 
-```patch
+```diff
 diff --git a/src/main.rs b/src/main.rs
 index 8cb2685..434d943 100644
 --- a/src/main.rs
@@ -350,7 +350,7 @@ index 8cb2685..434d943 100644
 
 The next part of the challenge is to handle unique ID generation. For that, we will introduce the required message types to our `Message` struct, and store an internal counter in the Node. Also, we improve "responding" by sending out messages on `stdout` _and_ logging our progress on `stderr`. The majority of the work is done in the `handle_generate` function as listed below:
 
-```patch
+```diff
 diff --git a/src/main.rs b/src/main.rs
 index 434d943..772c545 100644
 --- a/src/main.rs
@@ -480,7 +480,7 @@ index 6c79550..01adec1 100644
 
 Now the actual fun begins. We will implement methods to handle broadcast, and forward it to our peers. 
 
-```patch
+```diff
 diff --git a/src/main.rs b/src/main.rs
 index 772c545..7b19426 100644
 --- a/src/main.rs
@@ -615,7 +615,7 @@ For this, we need to implement handlers for `read`, `topology`, and `broadcast` 
 
 The next patch will implement a way to talk to other nodes, whatever is connected to ours.
 
-```patch
+```diff
 diff --git a/src/main.rs b/src/main.rs
 index 7b19426..0f955b8 100644
 --- a/src/main.rs
@@ -776,7 +776,7 @@ If we do not respond before updating our state, we will fall into an infinite lo
 
 The current method implements ways to send message, but we do not retry if it fails. Since we don't have the privilege of using `SyncRPC` that is in the go library, we need to implement our own. The go library uses `Context` with `Cancel`, and something similar that can be implemented in Rust is a `oneshot_channel`. For every message we expect to receive a reply to, we store a `oneshot` channel, which is keyed on the message id. If we receive any message whose `in_reply_to` field has that particular message id, we pop the channel, and cancel our timeout.
 
-```patch
+```diff
 diff --git a/src/main.rs b/src/main.rs
 index 0f955b8..b61487b 100644
 --- a/src/main.rs
@@ -918,7 +918,7 @@ index 1748ee8..d331470 100644
 
 In order to implement this, we create a `Tokio` runtime, and push futures that are polling the stdin, looking for messages we have replies to, or waiting on a timer, which fires every 100ms. Either the message reply arrives, or the timer expires, when we resend the message. Since we are only looking for replies (confirmation) to the Gossip messages, we match the message type on message send. The future is created only if the message type matches Gossip message. The modification to handling gossip is simple enough:
 
-```patch
+```diff
 diff --git a/src/main.rs b/src/main.rs
 index b61487b..ab1b253 100644
 --- a/src/main.rs

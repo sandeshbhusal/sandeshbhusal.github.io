@@ -1,9 +1,12 @@
-+++
-title= "Tinkering with STM32"
-date= 2024-08-05
-template= "post.html"
-math= "katex" 
-+++
+---
+layout: post
+title: "Tinkering with STM32"
+date: 2024-08-05
+published: true
+tags:
+- embedded
+- stm32
+---
 
 For a change of pace, I wanted to work on an embedded project, but being the "systems programmer" that I am, without a proper working knowledge of the electrical signals (well, I do have a degree, but it's not in electrical engineering), I decided to tinker with the STM32 microcontroller. After borrowing one from a friend (thanks, Royce!) I started to tinker with it, but I found myself working with a STM32 Cube IDE, and that just won't do, will it?
 

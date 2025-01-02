@@ -18,7 +18,7 @@ Enough is enough. I’ve decided to tackle this head-on and finally implement a 
 
 The basic phases of any language implementation involves the following phases:
 
-{{< mermaid >}}
+```mermaid
 graph LR 
     A["Input String"] --> B["Lexer"]
     B --> C["Tokens"]
@@ -26,7 +26,7 @@ graph LR
     D --> E["Abstract Syntax Tree (AST)"]
     E --> F["Evaluator"]
     F --> G["Result"]
-{{</ mermaid >}}
+```
 
 Each phase is a successive "lowering", i.e. we go from the form that can be the most ambigious, human-friendly, to the form that is easily-processable by computers. One would start with these phases by first thinking about how they would like to represent a query. I like to do this from reverse, i.e. represent the inputs to the evaluator, and going from there.
 
@@ -77,7 +77,7 @@ Both of these can have extensions like `functionCall` for `Expression`, and bool
 
 The types above are the nodes of a conceptual AST we would like to evaluate at the end of the day. The AST could look something like this:
 
-{{< mermaid >}}
+```mermaid
 graph TD
     A[BinaryExpression: Ge]
     B[BinaryExpression: Plus]
@@ -89,7 +89,7 @@ graph TD
     A --> E
     B --> C
     B --> D
-{{</ mermaid >}}
+```
 
 ### Representing Grammar
 

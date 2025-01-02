@@ -1,7 +1,8 @@
 ---
+layout: post
 title: "On Caches - SIEVE"
-template: "post.html"
 date: 2024-05-13
+published: false
 tags:
 - algorithms
 ---
@@ -24,10 +25,6 @@ A Cache is a structure that can be used to store frequently-accessed items, so t
 
 As such, it is not difficult to come up with some implementations of these algorithms. A (particularly) short example of LRU cache can look like the following:
 
-
-
-<details>
-    <summary> LRU Cache example </summary>
 
 ```c
 #include <stdio.h>
@@ -116,8 +113,6 @@ void* find(char *key) {
     return fetched;
 }
 ```
-</details>
-
 
 PHEW! That is a LOT of code! The meat of the matter - the only thing we're interested in the above is the **eviction policy**, in our LRU cache, we simply remove the least-recently-used item from the cache. The public-facing part of our code would be the `find` function, and every time we call the `fetch_data_external_function`, it would count as a cache-miss. Implementations for LFU would be similar and LIFO/FIFO would be simpler.
 
