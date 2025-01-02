@@ -1,0 +1,156 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Tinkering with STM32 | Bhusal's </title> <meta name="author" content="Sandesh Bhusal"> <meta name="description" content=""> <meta name="keywords" content="sandesh-bhusal,sandesh,bhusal,blog"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700|Material+Icons|PT+Serif:ital,wght@0,400;0,700;1,400;1,700|Inter:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-monokai.css?8ae2e3994bdbc9ef556d679b3cd92642" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://sandeshbhusal.github.io/blog/2024/tinkering-with-stm32/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-monokai.css?8ae2e3994bdbc9ef556d679b3cd92642" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Bhusal's </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/"> </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">Blog </a> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link"><i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Tinkering with STM32</h1> <p class="post-meta"> Created in August 05, 2024 </p> <p class="post-tags"> <a href="/blog/2024"> <i class="fa-solid fa-calendar fa-sm"></i> 2024 </a>   ·   <a href="/blog/tag/embedded"> <i class="fa-solid fa-hashtag fa-sm"></i> embedded</a>   <a href="/blog/tag/stm32"> <i class="fa-solid fa-hashtag fa-sm"></i> stm32</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p>For a change of pace, I wanted to work on an embedded project, but being the “systems programmer” that I am, without a proper working knowledge of the electrical signals (well, I do have a degree, but it’s not in electrical engineering), I decided to tinker with the STM32 microcontroller. After borrowing one from a friend (thanks, Royce!) I started to tinker with it, but I found myself working with a STM32 Cube IDE, and that just won’t do, will it?</p> <h2 id="qemu">QEMU</h2> <p><br></p> <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Qemu_logo.svg/1024px-Qemu_logo.svg.png" alt="QEMU Logo"></p> <p><br></p> <p>Enter QEMU. It is a virtual machine that emulates a CPU, and it is very useful for testing and debugging embedded software. After a brief hiatus with the STM32 Cube IDE, I decided to give it a try, because I wanted to try out other boards, and test my mettle with other boards, and a barebones approach. I had been using autogenerated codebases from the STM32 Cube IDE, and a lot of things are hidden under the hood. Becoming and embedded engineer would require me to interface directly with unknown hardware, for which no SDK exists (maybe I would have to write my own)!</p> <p>For simplicity’s sake, I decided to work with the netduinoplus2 board, which is supported by QEMU, under the machine name of “netduinoplus2”. It is a arm cortex-m4 board, which was analogous to the stm32-f4discovery board I borrowed from my friend.</p> <h2 id="finding-stuff">Finding stuff?</h2> <p>Now that I had my board, I needed a workflow. Trying to to cheat <em>too much</em> from lowlevel learning on youtube (his tutorials are aweeeeeesome btw), I gathered the information about the necessary bits from the internet, and his videos. Here were the basic things I would need:</p> <ul> <li>A toolchain</li> <li>A bootloader (mayhaps not, I will explain this later)</li> <li>A linker script</li> <li>Build system</li> </ul> <h3 id="toolchain">Toolchain</h3> <p>This was trivial. I had a working toolchain, and I just needed to add the necessary bits to make it work with the board.</p> <h3 id="a-linker-script">A Linker Script</h3> <p>This is where I spent most of my time. First of all, the linker script needs the memory map of the board. I looked at the description of the netduinoplus2 board on the QEMU docs, and <a href="https://github.com/qemu/qemu/blob/master/docs/system/arm/stm32.rst" rel="external nofollow noopener" target="_blank">found that it uses STM32F405RGT6 microcontroller</a>. I wanted the memory map but I was too lazy to check out the datasheet, so I poked around the qemu repo inside <a href="https://github.com/qemu/qemu/blob/master/hw/arm/netduinoplus2.c" rel="external nofollow noopener" target="_blank">https://github.com/qemu/qemu/blob/master/hw/arm/netduinoplus2.c</a>, but I didn’t find anything. Oh well. After a quick search, I found the <a href="hehe">datasheet</a> and the rest is history. Well, not really.</p> <p>Inside the datasheet, I found the memory map. The way netduinoplus2 boots up is configured by the boot-up pins, and the inital couple of bytes in the memory map (4G) are aliased depending on the boot pin configuration. In my case, it would boot up directly from flash which is at <code class="language-plaintext highlighter-rouge">0x08000000</code>.</p> <p><img src="/images/stm32_mmap.png" alt="Memory Map"></p> <h3 id="build-system">Build System</h3> <p>I used my trusty old mate, ‘Make’ for this purpose. I also wanted to use gdb to debug the code, which the toolchain brings along with it.</p> <h2 id="the-adventure-begins">The adventure begins</h2> <p>Armed with my half-baked knowledge of writing .. well .. everything, I started my journey. I had a head full of ideas, eyes full of dreams, and brain full of nothing. So I wrote this.</p> <h3 id="a-simple-main">A simple main</h3> <p>Our main does not need to do a lot. It just needs to exist. And well, loop.</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>Then this will get compiled with a “stub bootloader”. IDK where I got this idea, but the concept of mixing the arm assembly (and learning a bit of it), and calling C code sounded too sexy to pass up.</p> <div class="language-as highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span><span class="nx">extern</span> <span class="nx">main</span>
+<span class="p">.</span><span class="nx">global</span> <span class="nx">_start</span>
+
+<span class="nl">_start</span><span class="p">:</span>
+    <span class="nx">b</span> <span class="nx">main</span>
+</code></pre></div></div> <p>Then our linker script will come into play and help us organize these bits:</p> <pre><code class="language-ld">ENTRY(_start)
+
+MEMORY{
+     FLASH ( rw ) : ORIGIN = 0x08000000 , LENGTH = 1M
+     RAM ( xrw) : ORIGIN = 0x20000000 , LENGTH = 112K
+}
+
+SECTIONS
+{
+    . = 0x8000;
+
+    .text :
+    {
+        *(.text._start)        /* Ensure _start is placed first */
+        *(.text*)              /* All other .text sections from input files */
+        *(.rodata*)            /* Read-only data */
+    } &gt; FLASH
+}
+</code></pre> <p>Since I am too poor at maths, I used an online calculator to find the lengths of the memory regions. Ahh, the code is looking sexy already.</p> <p>Now, to tie it all together, I need a makefile.</p> <div class="language-make highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">TARGET</span><span class="o">=</span>arm-none-eabi
+<span class="nv">CORTEX</span><span class="o">=</span>cortex-m4
+<span class="nv">CFLAGS</span><span class="o">=</span><span class="nt">-nostartfiles</span>
+
+<span class="nv">CC</span><span class="o">=</span><span class="p">${</span>TARGET<span class="p">}</span><span class="nt">-gcc</span>
+<span class="nv">LD</span><span class="o">=</span><span class="p">${</span>TARGET<span class="p">}</span><span class="nt">-ld</span>
+<span class="nv">AS</span><span class="o">=</span><span class="p">${</span>TARGET<span class="p">}</span><span class="nt">-as</span>
+
+<span class="nv">OBJDUMP</span><span class="o">=</span><span class="p">${</span>TARGET<span class="p">}</span><span class="nt">-objdump</span>
+<span class="nv">OBJCOPY</span><span class="o">=</span><span class="p">${</span>TARGET<span class="p">}</span><span class="nt">-objcopy</span>
+
+<span class="nl">all</span><span class="o">:</span> <span class="nf">kernel.o</span>
+
+<span class="nl">boot.o</span><span class="o">:</span> <span class="nf">boot.s</span>
+        <span class="err">${AS}</span> <span class="nv">-mcpu</span><span class="o">=</span><span class="p">${</span>CORTEX<span class="p">}</span> <span class="nt">-g</span> boot.s <span class="nt">-o</span> boot.o
+
+<span class="nl">main.o</span><span class="o">:</span> <span class="nf">main.c</span>
+        <span class="err">${CC}</span> <span class="err">${CFLAGS}</span> <span class="err">-g</span> <span class="err">-nostdlib</span> <span class="nv">-mcpu</span><span class="o">=</span><span class="p">${</span>CORTEX<span class="p">}</span> <span class="nt">-c</span> main.c <span class="nt">-o</span> main.o
+
+<span class="nl">kernel.o</span><span class="o">:</span> <span class="nf">main.o boot.o</span>
+        <span class="err">${LD}</span> <span class="err">-T</span> <span class="err">linker.ld</span> <span class="err">main.o</span> <span class="err">boot.o</span> <span class="err">-o</span> <span class="err">kernel.o</span>
+
+<span class="nl">clean</span><span class="o">:</span>
+        <span class="err">rm</span> <span class="err">-rf</span> <span class="err">*.o</span> <span class="err">*.elf</span>
+</code></pre></div></div> <p>Just look at that makefile. So clean. So concise. So sexy…</p> <p><img src="https://a.pinatafarm.com/680x848/03f5bb020a/anthony-adams-rubbing-hands.jpg" width="400"></p> <p>Well, I digress. Now the time to run everything.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% make
+arm-none-eabi-gcc <span class="nt">-nostartfiles</span> <span class="nt">-nostdlib</span> <span class="nt">-mcpu</span><span class="o">=</span>cortex-m4 <span class="nt">-g</span> <span class="nt">-c</span> main.c <span class="nt">-o</span> main.o
+arm-none-eabi-gcc <span class="nt">-nostartfiles</span> <span class="nt">-nostdlib</span> <span class="nt">-mcpu</span><span class="o">=</span>cortex-m4 <span class="nt">-g</span> <span class="nt">-c</span> boot.c <span class="nt">-o</span> boot.o
+arm-none-eabi-ld <span class="nt">-T</span> linker.ld main.o boot.o <span class="nt">-o</span> kernel.elf
+
+% qemu-system-arm <span class="nt">-M</span> netduinoplus2 <span class="nt">-nographic</span> <span class="nt">-kernel</span> kernel.o
+qemu: fatal: Lockup: can<span class="s1">'t escalate 3 to HardFault (current priority -1)
+
+R00=00000000 R01=00000000 R02=00000000 R03=00000000
+R04=00000000 R05=00000000 R06=00000000 R07=00000000
+R08=00000000 R09=00000000 R10=00000000 R11=00000000
+R12=00000000 R13=af00b460 R14=fffffff9 R15=00000000
+XPSR=40000003 -Z-- A handler
+s00=00000000 s01=00000000 d00=0000000000000000
+s02=00000000 s03=00000000 d01=0000000000000000
+s04=00000000 s05=00000000 d02=0000000000000000
+s06=00000000 s07=00000000 d03=0000000000000000
+s08=00000000 s09=00000000 d04=0000000000000000
+s10=00000000 s11=00000000 d05=0000000000000000
+s12=00000000 s13=00000000 d06=0000000000000000
+s14=00000000 s15=00000000 d07=0000000000000000
+s16=00000000 s17=00000000 d08=0000000000000000
+s18=00000000 s19=00000000 d09=0000000000000000
+s20=00000000 s21=00000000 d10=0000000000000000
+s22=00000000 s23=00000000 d11=0000000000000000
+s24=00000000 s25=00000000 d12=0000000000000000
+s26=00000000 s27=00000000 d13=0000000000000000
+s28=00000000 s29=00000000 d14=0000000000000000
+s30=00000000 s31=00000000 d15=0000000000000000
+FPSCR: 00000000
+zsh: abort      qemu-system-arm -M netduinoplus2 -nographic -kernel kernel.o
+</span></code></pre></div></div> <p>This led me to a profound realization - this is why embedded engineers are so hard to find (and unhinged).</p> <h2 id="analyzing-the-crash">Analyzing the crash</h2> <p>No matter how hard I tried, I couldn’t find the cause of the crash. Surprisingly, it is easier to find the tutorial on Rust (mi cheri) than on C (mi cherry). I was able to find some blog posts, but they just were not working out. Turns out, I had my linker script all wrong.</p> <h3 id="looking-at-the-linker-script">Looking at the linker script</h3> <p>A quick look at the linker script shows a fatal flaw: 0x8000 is not the start of the .text section. So that line went away. After a couple of 5-minutes of debugging, I found the problem. The glaring issue. The bane of my code. (<em>add more drama here</em>).</p> <h4 id="the-ivt">The IVT</h4> <p>The interrupt vector table is a table of addresses of the interrupt handlers. The first entry in the IVT is the stack pointer base, followed by the reset handler, the nmi handler, the hard fault handler, and so on.</p> <p>The reset handler is the first thing that runs when the processor boots up.</p> <p>I did not have that.</p> <p>Ugh.</p> <p>The rectification was simple.</p> <pre><code class="language-ld">MEMORY
+{
+    FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 1M
+    RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 112K
+}
+
+SECTIONS
+{
+    .text :
+    {
+        *(.text._start)        /* Ensure _start is placed first */
+        *(.text*)              /* All other .text sections */
+        *(.rodata*)            /* Read-only data */
+        . = ALIGN(4);
+    } &gt; FLASH
+}
+</code></pre> <h4 id="the-bootloader">The bootloader</h4> <p>The bootloader was mostly fine. I was thinking about the bootloader-main connection, and I thought that it would be best to initialize the IVT in the bootloader, and then jump to the main. So I set about writing the IVT in the bootloader. In the end, I removed the bootloader asm, and rewrite the bootloader in C.</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp">
+</span>
+<span class="k">extern</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="c1">// Stack top starts at the end of the ram boundary. </span>
+<span class="c1">// This is technically the last mem location we can access.</span>
+<span class="c1">// https://www.st.com/resource/en/datasheet/stm32f405rg.pdf</span>
+<span class="cp">#define STACK_TOP 0x20010000
+</span>
+<span class="c1">// The entry function (mentioned in our linker script).</span>
+<span class="c1">// IDK What else I should add at this point, as this can be main instead of this.</span>
+<span class="kt">void</span> <span class="nf">_start</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">main</span><span class="p">();</span>  <span class="c1">// Call the main function</span>
+    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">);</span>  <span class="c1">// Infinite loop to prevent falling off the end. In case main exits.</span>
+<span class="p">}</span>
+
+<span class="c1">// NOTE: SUPERR important. If this does not exist, the CPU will NOT take us to the</span>
+<span class="c1">// _start function, i.e. reset handler.</span>
+<span class="c1">// Interrupt Vector Table</span>
+<span class="n">__attribute__</span><span class="p">((</span><span class="n">section</span><span class="p">(</span><span class="s">".isr_vector"</span><span class="p">)))</span>
+<span class="kt">uint32_t</span> <span class="n">isr_vector</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">STACK_TOP</span><span class="p">,</span>          <span class="c1">// Initial Stack Pointer</span>
+    <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span> <span class="n">_start</span><span class="p">,</span>  <span class="c1">// Reset Handler</span>
+<span class="p">};</span>
+</code></pre></div></div> <p>It’s a bit of a mess? but it works.</p> <h4 id="the-main">The main</h4> <p>The main is pretty much the same. Pretty and useless.</p> <h2 id="running--debugging">Running + debugging</h2> <p>Now I recompiled everything. It compiled fine. Now was the time to run it with qemu. It hung up.</p> <p>The question remains - did it hang up in the bootloader loop, or did it hang up in the main loop? I wasn’t sure. Enter, gdb.</p> <p>Running gdb with the qemu binary is pretty simple; in one pane, you run the qemu binary, and in the other one, run gdb. In the pane with qemu, run it like:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>qemu-system-arm <span class="nt">-M</span> netduinoplus2 <span class="nt">-nographic</span> <span class="nt">-kernel</span> kernel.elf <span class="nt">-gdb</span> tcp::4444 <span class="nt">-S</span>
+</code></pre></div></div> <p><sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p> <p>This suspends the execution of the kernel (which we will resume from gdb).</p> <p>In the gdb pane, run gdb like:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% arm-none-eabi-gdb kernel.elf                                                                                                                                                     <span class="o">(</span>main x!?<span class="o">)</span>
+GNU gdb <span class="o">(</span>GNU Arm Embedded Toolchain 10.3-2021.10<span class="o">)</span> 10.2.90.20210621-git
+Copyright <span class="o">(</span>C<span class="o">)</span> 2021 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type <span class="s2">"show copying"</span> and <span class="s2">"show warranty"</span> <span class="k">for </span>details.
+This GDB was configured as <span class="s2">"--host=x86_64-apple-darwin10 --target=arm-none-eabi"</span><span class="nb">.</span>
+Type <span class="s2">"show configuration"</span> <span class="k">for </span>configuration details.
+For bug reporting instructions, please see:
+&lt;https://www.gnu.org/software/gdb/bugs/&gt;.
+Find the GDB manual and other documentation resources online at:
+    &lt;http://www.gnu.org/software/gdb/documentation/&gt;.
+
+For <span class="nb">help</span>, <span class="nb">type</span> <span class="s2">"help"</span><span class="nb">.</span>
+Type <span class="s2">"apropos word"</span> to search <span class="k">for </span>commands related to <span class="s2">"word"</span>...
+Reading symbols from kernel.elf...
+</code></pre></div></div> <p>Then attach to the gdb session:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>gdb<span class="o">)</span> target remote localhost:4444
+Remote debugging using localhost:4444
+_start <span class="o">()</span> at boot.c:12
+12      void _start<span class="o">(</span>void<span class="o">)</span> <span class="o">{</span>
+<span class="o">(</span>gdb<span class="o">)</span> <span class="nb">break </span>main
+Breakpoint 1 at 0x800000c: file main.c, line 3.
+</code></pre></div></div> <p>Finally, continue the execution:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>gdb<span class="o">)</span> c
+Continuing.
+
+Breakpoint 1, main <span class="o">()</span> at main.c:3
+3           <span class="k">while</span><span class="o">(</span>1<span class="o">)</span><span class="p">;</span>
+<span class="o">(</span>gdb<span class="o">)</span>
+</code></pre></div></div> <p>And voila! We are in main.</p> <p><img src="/images/debug_panes.png" alt="debug"></p> <h2 id="what-did-we-learn-whats-moving-forward">What did we learn? What’s moving forward?</h2> <p>It’s more about what I learned:</p> <ul> <li>It’s not easy to debug embedded software unless you get into a debug env. Before a debug env, I cannot imagine how hard it is to debug a program.</li> <li>IVT is a cool thing. Don’t forget it.</li> <li>A lot of infrastructure has gone into building these toolchains (qemu, gdb, linker scripts, etc.). I came to have a deep sense of appreciation for all the engineers who develop that.</li> </ul> <p>Now that I have a somewhat working program, I can start to think about how to make it more useful. I am thinking about exploring Rust (esp in RISC-V) for my upcoming posts, since I recently bought a Milk-V board (which is super cool). Here’s to learning a lot, and I hope to see you in the future.</p> <hr> <div class="footnotes" role="doc-endnotes"> <ol> <li id="fn:1"> <p>If you omit one of the colons in the <code class="language-plaintext highlighter-rouge">tcp::4444</code>, the qemu gods will be very very angry with you. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p> </li> </ol> </div> </div> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2025 Sandesh Bhusal. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> </body> </html>

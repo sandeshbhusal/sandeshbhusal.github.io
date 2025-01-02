@@ -38,6 +38,17 @@ ninja.data = [{
           window.location.href = "/blog/2024/lexers/";
         
       },
+    },{id: "post-tinkering-with-stm32",
+      
+        title: "Tinkering with STM32",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/tinkering-with-stm32/";
+        
+      },
     },{id: "post-binary-search-is-bananas",
       
         title: "Binary search is Bananas!",
@@ -47,17 +58,6 @@ ninja.data = [{
       handler: () => {
         
           window.location.href = "/blog/2023/binary-search/";
-        
-      },
-    },{id: "post-a-post-with-formatting-and-links",
-      
-        title: "a post with formatting and links",
-      
-      description: "march &amp; april, looking forward to summer",
-      section: "Posts",
-      handler: () => {
-        
-          window.location.href = "/blog/2015/formatting-and-links/";
         
       },
     },{
