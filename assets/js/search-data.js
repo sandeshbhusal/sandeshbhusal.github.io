@@ -16,7 +16,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-gossip-glomers-efficient-broadcast",
+        },{id: "post-building-smol-linux-image-for-reproducible-crashes",
+      
+        title: "Building smol Linux image for reproducible crashes",
+      
+      description: "How I (sometimes) debug issues with reproducible kernel issues",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/up-and-until-kernel-init/";
+        
+      },
+    },{id: "post-gossip-glomers-efficient-broadcast",
       
         title: "Gossip Glomers - Efficient Broadcast",
       
@@ -38,9 +49,9 @@ ninja.data = [{
           window.location.href = "/blog/2024/lexers/";
         
       },
-    },{id: "post-tinkering-with-stm32",
+    },{id: "post-writing-a-baremetal-bootloader-for-stm32-no-sdk",
       
-        title: "Tinkering with STM32",
+        title: "Writing a Baremetal Bootloader for STM32 (no sdk)",
       
       description: "",
       section: "Posts",
