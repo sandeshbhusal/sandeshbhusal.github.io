@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Tinkering with STM32"
+title: "Writing a Baremetal Bootloader for STM32 (no sdk)"
 date: 2024-08-05
 published: true
 tags:
