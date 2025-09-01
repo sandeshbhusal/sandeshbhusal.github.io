@@ -1,0 +1,328 @@
+<!-- Font imports - Softer, more readable fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
+<style>
+
+  /* light mode colors */
+  body {
+    --primary-color: #5871a2;
+    --primary-pale-color: #5871a233;
+    --primary-decoration-color: #5871a210;
+    --bg-color: #fffef7;
+    --text-color: #2f3030;
+    --text-pale-color: #767676;
+    --text-decoration-color: #a9a9a9;
+    --highlight-mark-color: #5f75b020;
+
+    --callout-note-color: #5871a2;
+    --callout-tip-color: #268556;
+    --callout-important-color: #885fc9;
+    --callout-warning-color: #ab6632;
+    --callout-caution-color: #c64e4e;
+  }
+
+  /* dark mode colors */
+  body.dark {
+    --primary-color: #6f8fd1;
+    --primary-pale-color: #6f8fd166;
+    --primary-decoration-color: #6f8fd112;
+    --bg-color: #1c1c1c;
+    --text-color: #c1c1c1;
+    --text-pale-color: #848484;
+    --text-decoration-color: #5f5f5f;
+    --highlight-mark-color: #8296cb3b;
+
+    --callout-note-color: #6f8fd1;
+    --callout-tip-color: #47976f;
+    --callout-important-color: #9776cd;
+    --callout-warning-color: #ad7a52;
+    --callout-caution-color: #d06161;
+  }
+
+  /* typography - Softer, more readable fonts */
+  body {
+    --main-font: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --code-font: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --homepage-max-width: 768px;
+    --main-max-width: 768px; /* Default to homepage width for laptops */
+    --avatar-size: 60px;
+    --font-size: 16px;
+    --line-height: 1.5; /* Much tighter, more compact like fasterthanli.me */
+    --img-border-radius: 0px;
+    --detail-border-radius: 0px;
+    --dark-mode-img-brightness: 0.75;
+    --dark-mode-chart-brightness: 0.75;
+    --inline-code-border-radius: 2px;
+    --inline-code-bg-color: var(--primary-decoration-color);
+    --block-code-border-radius: 0px;
+    --block-code-border-color: var(--primary-color);
+    --detail-border-color: var(--primary-color);
+  }
+
+  /* Ultra-compact spacing like fasterthanli.me */
+  body {
+    font-size: 15px !important; /* Slightly smaller base font */
+  }
+
+  p {
+    margin-bottom: 0.8rem !important; /* Tighter paragraph spacing */
+  }
+
+  ul, ol {
+    margin-bottom: 0.8rem !important;
+    line-height: 1.4 !important; /* Even tighter for lists */
+  }
+
+  li {
+    margin-bottom: 0.1rem !important; /* Very tight list items */
+  }
+
+  /* Compact post info */
+  #post-info {
+    margin-bottom: 1rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* Wide display optimization - match homepage width */
+  @media (min-width: 1400px) {
+    body {
+      --main-max-width: 768px; /* Keep homepage width even on wide displays */
+    }
+  }
+
+  /* Word count and post info styling */
+  #post-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    align-items: flex-start !important;
+  }
+
+  #date, #word-count, #tags {
+    margin-bottom: 0 !important;
+  }
+
+  #word-count {
+    font-size: 0.9rem;
+    color: var(--text-pale-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  #word-count span {
+    margin: 0;
+  }
+
+  /* Tags page styling */
+  body.tag-list #wrapper,
+  body.tag-single #wrapper {
+    margin: 0 auto;
+    max-width: var(--main-max-width);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+  }
+
+  body.tag-list main,
+  body.tag-single main {
+    margin: 1em 0;
+    padding-top: 1rem;
+  }
+
+  /* Tighter interface spacing */
+  p {
+    margin-bottom: 1rem !important;
+  }
+
+  ul, ol {
+    margin-bottom: 1rem !important;
+  }
+
+  li {
+    margin-bottom: 0.25rem !important;
+  }
+
+  /* Better heading hierarchy - more compact */
+  h1 {
+    font-size: 2rem !important; /* Slightly smaller */
+    font-weight: 600 !important;
+    margin-top: 0 !important;
+    margin-bottom: 1.2rem !important;
+    line-height: 1.2 !important;
+  }
+
+  h2 {
+    font-size: 1.6rem !important;
+    font-weight: 600 !important;
+    margin-top: 1.8rem !important;
+    margin-bottom: 0.8rem !important;
+    line-height: 1.3 !important;
+  }
+
+  h3 {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.6rem !important;
+    line-height: 1.3 !important;
+  }
+
+  h4 {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    margin-top: 1.2rem !important;
+    margin-bottom: 0.4rem !important;
+    line-height: 1.3 !important;
+  }
+
+  h5 {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    margin-top: 1rem !important;
+    margin-bottom: 0.3rem !important;
+    line-height: 1.3 !important;
+  }
+
+  h6 {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin-top: 1rem !important;
+    margin-bottom: 0.3rem !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Fix blog post title spacing from navbar */
+  article h1 {
+    margin-top: 2rem !important; /* More space from navbar */
+    padding-top: 1rem !important; /* Additional padding */
+  }
+
+  /* Simple and clean code block line number fix */
+  .prose pre[data-linenos] {
+    padding: 12px 0 !important; /* Only top/bottom padding, no left/right */
+  }
+  
+  .prose pre[data-linenos] table td:first-child {
+    padding-left: 12px !important;
+    padding-right: 8px !important;
+    text-align: right !important;
+    user-select: none !important;
+    color: var(--text-pale-color) !important;
+  }
+  
+  .prose pre[data-linenos] table td:nth-child(2) {
+    padding-left: 8px !important;
+    padding-right: 12px !important;
+  }
+
+  /* DEFINITIVE code block line number fix - highest specificity */
+  /* Remove ALL conflicting rules and apply only these */
+  
+  /* Step 1: Reset EVERYTHING for code blocks with line numbers */
+  .prose pre[data-linenos] {
+    padding: 0 !important;
+    margin: 1.25em 0 !important;
+  }
+  
+  .prose pre[data-linenos] table {
+    width: 100% !important;
+    margin: 0 !important;
+    border-collapse: collapse !important;
+    border: none !important;
+    padding: 12px 0 !important; /* Move padding from pre to table */
+  }
+  
+  .prose pre[data-linenos] table tbody,
+  .prose pre[data-linenos] table tr {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Step 2: Reset ALL table cell padding */
+  .prose pre[data-linenos] table td {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    line-height: 1.5 !important;
+    vertical-align: top !important;
+    text-align: initial !important;
+  }
+  
+  /* Step 3: Apply ONLY the necessary padding to specific columns */
+  .prose pre[data-linenos] table td:first-child {
+    text-align: right !important;
+    user-select: none !important;
+    color: var(--text-pale-color) !important;
+    min-width: 3em !important;
+    padding-left: 12px !important;
+    padding-right: 8px !important;
+    /* Ensure no other padding */
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .prose pre[data-linenos] table td:nth-child(2) {
+    padding-left: 8px !important;
+    padding-right: 12px !important;
+    /* Ensure no other padding */
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  /* Step 4: Override any base theme rules that might still interfere */
+  .prose pre[data-linenos] table td,
+  .prose pre[data-linenos] code,
+  .prose pre[data-linenos] pre {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Step 5: Fix highlight marks for line number blocks */
+  .prose pre[data-linenos] mark::before,
+  .prose pre[data-linenos] > code > mark::before {
+    left: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Extra hardening: zero horizontal padding when line numbers are present */
+  .z-code[data-linenos],
+  .prose pre[data-linenos] code {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Ensure highlight mark doesn’t assume side paddings when linenos are present */
+  .prose pre[data-linenos] mark::before {
+    left: 0 !important;
+    width: 100% !important;
+  }
+
+  /* More highlight fixes when line numbers are present */
+  .prose pre[data-linenos] mark::before,
+  .prose pre[data-linenos] > code > mark::before {
+    left: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Keep table cells strict; no unintended padding */
+  .prose pre[data-linenos] table td { padding: 0 !important; }
+
+  /* First and second column paddings only (single source of truth) */
+  .prose pre[data-linenos] table td:first-child {
+    padding-left: 12px !important;
+    padding-right: 8px !important;
+  }
+  .prose pre[data-linenos] table td:nth-child(2) {
+    padding-left: 8px !important;
+    padding-right: 12px !important;
+  }
+
+</style>

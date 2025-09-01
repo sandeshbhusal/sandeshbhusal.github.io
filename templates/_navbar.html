@@ -1,0 +1,29 @@
+{% set moon_icon = load_data(path="icon/moon.svg") %}
+{% set sun_icon = load_data(path="icon/sun.svg") %}
+
+<nav id="main-navbar" class="main-navbar">
+  <div class="navbar-container">
+    <div class="navbar-left">
+      <a href="{{ get_url(path='/') }}" class="navbar-back instant" aria-label="Back to Home">
+        home
+      </a>
+    </div>
+    
+    <div class="navbar-center">
+      {% for section in config.extra.sections %}
+      <a {% if section.is_external %}href="{{ section.path }}" target="_blank" rel='noreferrer noopener' class="navbar-link"{% else %}href="{{ get_url(path=section.path) }}" class="navbar-link instant"{% endif %}>
+        {{ section.name }}
+      </a>
+      {% endfor %}
+    </div>
+    
+    <div class="navbar-right">
+      {% if not config.extra.force_theme %}
+      <button id="navbar-theme-toggle" class="navbar-theme-toggle" aria-label="theme switch">
+        <span class="moon-icon">{{ moon_icon | safe }}</span>
+        <span class="sun-icon">{{ sun_icon | safe }}</span>
+      </button>
+      {% endif %}
+    </div>
+  </div>
+</nav>

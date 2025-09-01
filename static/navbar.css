@@ -1,0 +1,205 @@
+/* Navbar styles */
+.main-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--text-decoration-color);
+}
+
+:root { --navbar-height: 60px; }
+
+.navbar-container {
+  max-width: var(--main-max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  height: var(--navbar-height);
+}
+
+.navbar-left {
+  flex: 1;
+}
+
+.navbar-back {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.navbar-back:hover {
+  color: var(--primary-color);
+}
+
+.navbar-hierarchy {
+  color: var(--text-pale-color);
+  font-weight: 500;
+  font-size: 0.9rem;
+  font-family: var(--code-font);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.hierarchy-link {
+  color: var(--text-pale-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.hierarchy-link:hover {
+  color: var(--primary-color);
+}
+
+.hierarchy-separator {
+  color: var(--text-decoration-color);
+  margin: 0 0.125rem;
+}
+
+.hierarchy-current {
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.navbar-center {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+  margin-right: 1rem;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: var(--primary-color);
+}
+
+.navbar-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navbar-theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #000; /* Control icon color via currentColor */
+}
+
+.navbar-theme-toggle:hover {
+  background: var(--primary-decoration-color);
+}
+
+body.dark .navbar-theme-toggle {
+  color: #fff; /* Control icon color via currentColor */
+}
+
+.navbar-theme-toggle svg,
+.navbar-theme-toggle svg * {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Moon icon in light mode should be black */
+.navbar-theme-toggle .moon-icon svg {
+  fill: #000;
+}
+
+/* In dark mode, icons turn white */
+body.dark .navbar-theme-toggle svg,
+body.dark .navbar-theme-toggle .moon-icon svg,
+body.dark .navbar-theme-toggle .sun-icon svg {
+  fill: #fff; /* White in dark mode */
+}
+
+.navbar-theme-toggle .moon-icon,
+.navbar-theme-toggle .sun-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+.navbar-theme-toggle .moon-icon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.navbar-theme-toggle .sun-icon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.8);
+}
+
+body.dark .navbar-theme-toggle .moon-icon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.8);
+}
+
+body.dark .navbar-theme-toggle .sun-icon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Page content offset to account for fixed navbar */
+body:not(.homepage) #wrapper {
+  margin-top: var(--navbar-height);
+}
+
+/* Smooth scroll offset for anchor links */
+html {
+  scroll-padding-top: calc(var(--navbar-height) + 20px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 0.5rem 1rem;
+  }
+  
+  .navbar-center {
+    gap: 1rem;
+    margin-right: 0.5rem;
+  }
+  
+  .navbar-link {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .navbar-title {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-center {
+    gap: 0.5rem;
+  }
+  
+  .navbar-link {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,173 @@
+{% import "macros/prose.html" as macros %}
+{% extends "_base.html" %}
+
+{% block page %}search{% endblock page%}
+{% block lang %}{% if section.extra.lang %}{{ section.extra.lang }}{% else %}{{ section.lang }}{% endif %}{% endblock lang %}
+{% block title %}{{ section.title }} | {{ config.title }}{% endblock title %}
+{% block desc %}
+  {% if section.description %}
+    {% set desc = section.description %}
+  {% else %}
+    {% set desc = config.description %}
+  {% endif %}
+  <meta name="description" content="{{ desc }}">
+{% endblock desc %}
+
+{% block head %}
+{% if config.markdown.highlight_theme == "css" %}
+  {% if config.extra.force_theme == "dark" %}
+    <link id="hl" rel="stylesheet" type="text/css" href="{{ get_url(path='hl-dark.css') }}" />
+  {% else %}
+    <link id="hl" rel="stylesheet" type="text/css" href="{{ get_url(path='hl-light.css') }}" />
+  {% endif %}
+{% endif %}
+<link rel="stylesheet" type="text/css" href="{{ get_url(path='search.css') }}" />
+{% endblock head %}
+
+{% block content %}
+{% include "_navbar.html" %}
+<div id="wrapper">
+  {% include "_section_title.html" %}
+  <main class="layout-list">
+    <div class="search-container">
+      <input type="search" id="search-input" placeholder="Search posts..." autocomplete="off">
+      <div id="search-info" style="display: none;">
+        <p>Showing <span id="results-count">0</span> result(s)</p>
+      </div>
+    </div>
+
+    <div id="search-results"></div>
+
+    <div id="all-posts" class="post-list">
+      {% set posts_by_year = section.pages | sort(attribute="date") | reverse | group_by(attribute="year") %}
+      
+      {% for year, posts in posts_by_year %}
+        {% if not loop.first %}<hr class="year-separator" />{% endif %}
+        <h2 class="year-heading">{{ year }}</h2>
+        {% for post in posts %}
+        <a class="post instant {% if post.extra.featured %}featured{% endif %}" href="{{ post.permalink }}">
+          <span>{{ post.title }}</span>
+          <span class="date">{{ post.date | date(format=section.extra.date_format | default(value="%b %-d, %Y")) }}</span>
+        </a>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </main>
+  {% include "_footer.html" %}
+</div>
+{% endblock content %}
+
+{% block script %}
+<script src="{{ get_url(path='elasticlunr.min.js') }}"></script>
+<script>
+// Initialize search when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    const searchInfo = document.getElementById('search-info');
+    const resultsCount = document.getElementById('results-count');
+    const allPosts = document.getElementById('all-posts');
+    
+    let searchIndex;
+    
+    // Load the search index
+    fetch('{{ get_url(path="search_index.en.js") }}')
+        .then(response => response.text())
+        .then(data => {
+            // Execute the script to load window.searchIndex
+            eval(data);
+            searchIndex = elasticlunr.Index.load(window.searchIndex);
+        })
+        .catch(error => console.error('Error loading search index:', error));
+    
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim();
+        
+        if (query.length === 0) {
+            // Show all posts when search is empty
+            searchResults.innerHTML = '';
+            searchInfo.style.display = 'none';
+            allPosts.style.display = 'block';
+            return;
+        }
+        
+        if (query.length < 2) {
+            return; // Don't search for single characters
+        }
+        
+        if (!searchIndex) {
+            searchResults.innerHTML = '<p>Search index is still loading...</p>';
+            return;
+        }
+        
+        // Perform the search
+        const results = searchIndex.search(query, {
+            fields: {
+                title: {boost: 2},
+                body: {boost: 1}
+            }
+        });
+        
+        // Hide all posts and show search results
+        allPosts.style.display = 'none';
+        
+        if (results.length === 0) {
+            searchResults.innerHTML = '<div class="no-results"><p>No posts found for "' + query + '"</p></div>';
+            searchInfo.style.display = 'none';
+        } else {
+            let resultsHTML = '<div class="post-list">';
+            
+            results.forEach(result => {
+                const doc = window.searchIndex.documentStore.docs[result.ref];
+                const url = result.ref;
+                const title = doc.title || 'Untitled';
+                
+                // Extract a snippet from the body if available
+                let snippet = '';
+                if (doc.body) {
+                    const lowerBody = doc.body.toLowerCase();
+                    const lowerQuery = query.toLowerCase();
+                    const index = lowerBody.indexOf(lowerQuery);
+                    if (index !== -1) {
+                        const start = Math.max(0, index - 50);
+                        const end = Math.min(doc.body.length, index + query.length + 50);
+                        snippet = doc.body.substring(start, end);
+                        if (start > 0) snippet = '...' + snippet;
+                        if (end < doc.body.length) snippet = snippet + '...';
+                        
+                        // Highlight the search term
+                        const regex = new RegExp(`(${query})`, 'gi');
+                        snippet = snippet.replace(regex, '<mark>$1</mark>');
+                    } else {
+                        snippet = doc.body.substring(0, 100) + '...';
+                    }
+                }
+                
+                resultsHTML += `
+                    <div class="search-result">
+                        <a class="post instant" href="${url}">
+                            <span>${title}</span>
+                            <span class="line"></span>
+                        </a>
+                        ${snippet ? `<div class="search-snippet">${snippet}</div>` : ''}
+                    </div>
+                `;
+            });
+            
+            resultsHTML += '</div>';
+            searchResults.innerHTML = resultsHTML;
+            
+            resultsCount.textContent = results.length;
+            searchInfo.style.display = 'block';
+        }
+    });
+    
+    // Clear search when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+            // Optional: clear search when clicking outside
+        }
+    });
+});
+</script>
+{% endblock script %}

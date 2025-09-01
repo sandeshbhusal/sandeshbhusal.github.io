@@ -1,0 +1,88 @@
+/* Root variables for navbar height and ToC offset */
+:root {
+  --navbar-height: 60px; /* default, updated dynamically by JS if available */
+  --toc-sticky-top: calc(var(--navbar-height) + 40px);
+}
+
+/* Table of Contents highlighting */
+aside nav a {
+  transition: color 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+aside nav a.active {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+aside nav a.active::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+/* Tighter, previous-style spacing for ToC headings and subheadings */
+aside nav ul { 
+  line-height: 1.6 !important; 
+  margin: 0.25em 0 !important;
+}
+aside nav li { 
+  margin: 0.15em 0 !important;
+}
+aside nav a.h2 { 
+  padding-left: 0 !important; 
+}
+aside nav a.h3 { 
+  padding-left: 1.25em !important; 
+  margin-top: 0.1em !important;
+}
+aside nav ul ul { 
+  margin: 0.15em 0 0.25em 0 !important; 
+}
+
+/* Ensure ToC doesn't get hidden behind navbar - robust positioning */
+/* Override theme defaults with more specific selectors */
+body.post aside {
+  position: sticky !important;
+  top: var(--toc-sticky-top, 120px) !important; /* Navbar height + extra padding */
+  margin-top: 0 !important; /* Override theme's margin-top: 13em */
+  max-height: calc(100vh - 140px) !important; /* Account for navbar and extra padding */
+  overflow-y: auto;
+  z-index: 50; /* Higher z-index, but still below navbar (100) */
+}
+
+/* Ensure the ToC navigation specifically accounts for navbar */
+body.post aside nav {
+  position: relative;
+  z-index: 50;
+  padding-top: 1rem; /* Additional top padding within the nav */
+  max-height: calc(100vh - 160px) !important; /* Override theme's max-height */
+}
+
+/* Additional fix for the main content wrapper to ensure proper stacking context */
+#wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure the main content doesn't interfere with ToC positioning */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* Prevent anchor jumps from hiding under navbar */
+.prose h1[id],
+.prose h2[id],
+.prose h3[id],
+.prose h4[id],
+.prose h5[id],
+.prose h6[id] {
+  scroll-margin-top: calc(var(--navbar-height) + 20px);
+}

@@ -1,0 +1,124 @@
+/* Search page layout - match blog page styling */
+body.search {
+  #wrapper {
+    margin: 0 auto;
+    max-width: var(--main-max-width);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px; /* Account for fixed navbar height */
+  }
+
+  main {
+    margin: 1em 0;
+    padding-top: 1rem; /* Extra padding from navbar */
+  }
+}
+
+/* Search functionality styles */
+.search-container {
+  margin-bottom: 2rem;
+  padding-top: 1rem; /* Extra space from navbar */
+}
+
+/* Year organization styles */
+.year-separator {
+  border: none;
+  border-top: 1px solid var(--text-decoration-color);
+  margin: 2rem 0 1rem 0;
+}
+
+.year-heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 1.5rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+}
+
+#search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--text-decoration-color);
+  border-radius: 0; /* Remove rounded corners to match theme */
+  font-size: 1rem;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: border-color 0.2s ease;
+  margin-bottom: 1rem;
+}
+
+#search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+#search-info {
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text-pale-color);
+  border-bottom: 1px solid var(--text-decoration-color);
+  margin-bottom: 1rem;
+}
+
+.search-result {
+  margin-bottom: 1rem;
+}
+
+.search-result .post {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--text-decoration-color);
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.search-result .post:hover {
+  color: var(--primary-color);
+}
+
+.search-result .post .line {
+  flex: 1;
+  height: 1px;
+  background: var(--text-decoration-color);
+  margin: 0 1rem;
+}
+
+.search-snippet {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: var(--primary-decoration-color);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-pale-color);
+  margin-left: 0;
+}
+
+.search-snippet mark {
+  background: var(--highlight-mark-color);
+  color: var(--text-color);
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-pale-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #search-input {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .search-snippet {
+    font-size: 0.85rem;
+  }
+}
