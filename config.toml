@@ -6,8 +6,8 @@
 #=========================================================================================
 
 base_url = "/"
-title = "My Blog"
-description = "Welcome to my personal blog"
+title = "Sandesh Bhusal's Blog"
+description = "My personal home page - I write about tech, musings, and anything in between."
 default_language = "en"
 theme = "serene"
 output_dir = "public"
