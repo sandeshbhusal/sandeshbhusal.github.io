@@ -2,7 +2,7 @@ on: push
 name: Build and deploy GH Pages
 jobs:
   build:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/zola-branch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
