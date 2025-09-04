@@ -14,9 +14,9 @@ social_media_card = "social_cards/blog_markdown.jpg"
 
 A couple of days ago, I got sucked into watching a lot of modern C++ videos. While the people who know me can effectively vouch that I am a very avid Rustacean (it says so right on my profile!), I liked a lot of things modern C++ (post C++11) brings to the table, specially with memory safety and program ergonomics. The ergonomics are slowly improving. And therefore, I decided to learn modern C++ (or at least get a taste for it), by learning it with entirely too many linked lists (just like I learned Rust).
 
-## The primer : _A_ linked list
+## 1. The primer : Linked List `Node`
 
-This part brings me to write a very _very_ simple linked list. One preferably for an int, and I will progressively add more features/ make changes to this linked list as I go along. This will help first solidify the fundamentals, and then go off into the optimization part for the list.
+Linked Lists are created from nodes, with each node containing two things - one ptr (or container) for data, and another ptr for the node that comes after this node. A linked list, be it a singly linked list or doubly linked list is fundamentally composed of these two things, so that's what I implemented first:
 
 ```c++
 class Node {
@@ -25,29 +25,19 @@ private:
     Node* next;
 public:
     Node(int data, Node* next = nullptr): data(data), next(next) {}
-    void set_next(Node *next) {
-        this->next = next;
-    }
-    void set_data(int data) {
-        this->data = data;
-    }
-    int get_data() const {
-        return data;
-    }
-    const Node* get_next() const {
-        return next;
-    }
-    Node* get_next_mut() {
-        return next;
-    }
+    void set_next(Node *next) { this->next = next; }
+    void set_data(int data) { this->data = data; }
+    int get_data() const { return data; }
+    const Node* get_next() const { return next; }
+    Node* get_next_mut() { return next; }
 };
 ```
 
 Pedants among us will definitely complain about the `this->` accessor, or maybe even how there is no destructor. That's fine for now. I am only using ints (trivially copyable). The next logical step would be to extend this code to make use of generics, so that we can have implementations for different types of data, like strings, or heap-allocated types. This leads to the natural (and trivial) modification into a structure using `template`s.
 
-## A more generic Node
+## 2. A more generic Node
 
-```c++
+```c++,hl_lines=1 4 7 11 14
 template<typename T>
 class Node {
 private:
@@ -75,7 +65,7 @@ public:
 
 This is a simple modification, that makes the class generic, and replaces all `int`s with `T` -- our template parameter. There is one fundamental issue with this approach. Whenever we work with non-copy types, this is perfectly fine. But when working with a non-trivially copyable types, it triggeres additional allocations (because of the copy constructor being triggered while setting data). In order to visualize this, we can track the global allocations/deallocations in the code. C++ lets us overload the global functions for allocations - `new` and `delete` which lets us track this.
 
-### Counting Allocations
+### 2.1. Counting Allocations
 
 ```c++
 static int allocs = 0;
@@ -148,7 +138,7 @@ Contents of section .rodata:
  4090 5f4d5f63 72656174 6500               _M_create.      
 ```
 
-### Rule of 5
+### 2.2. Rule of 5
 
 This example in and of itself is a bit hyperbolical - I just wanted to illustrate a case where I can trigger multiple allocations. Normal C++ programmers apparently do not write code like this -- instead, they adhere to the [rule of 5](https://www.geeksforgeeks.org/cpp/rule-of-five-in-cpp/). I change the `Node` class to have the following constructors:
 
@@ -194,7 +184,7 @@ Here is the allocation breakdown:
 
 We went from 5 allocations all the way down to 2. There's something interesting in this case, however.
 
-### Perfect Forwarding
+### 2.3. Perfect Forwarding
 
 As we observed above, there are multiple types of allocations that affect which constructor gets triggered and how many allocations this incurs. When passing the information to the constructor, however, it looks like we need to be very careful in regards to what we are passing into. If the value is trivially copyable, it's okay. If it is not, depending on if it is a rvalue or a lvalue different constructors work. One way to make sure that the right type of references get converted to right type as required by the consuming function. Let's take an example:
 
@@ -214,7 +204,7 @@ void baz() { bar("thequickbrownfoxjumpsoverthelazydog"); }
 
 Now, with the same example as above, we can reduce a single allocation by using `std::forward`. This is another step to the `Node` class implementation:
 
-```c++
+```c++,hl_lines=7-9
 template <typename T> class Node {
 private:
   T data;
@@ -244,5 +234,7 @@ allocs: 3 - deallocs: 0
 allocs: 3 - deallocs: 0
 ```
 
-
 [^1]: What is the effect if the string is just "foo" instead of "averylongstringindeedwascreatedhere"? C++ std::string's small-string optimization.
+
+## 3. A safer `next`
+

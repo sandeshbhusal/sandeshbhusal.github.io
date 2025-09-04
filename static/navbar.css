@@ -6,10 +6,10 @@
   right: 0;
   z-index: 100;
   background: var(--bg-color);
-  border-bottom: 1px solid var(--text-decoration-color);
+  /* border-bottom: 2px solid var(--text-decoration-color); */
 }
 
-:root { --navbar-height: 60px; }
+:root { --navbar-height: 40px; }
 
 .navbar-container {
   max-width: var(--main-max-width);
@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   height: var(--navbar-height);
 }
 
@@ -97,19 +97,19 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.0rem;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   color: #000; /* Control icon color via currentColor */
 }
 
-.navbar-theme-toggle:hover {
+/* .navbar-theme-toggle:hover {
   background: var(--primary-decoration-color);
-}
+} */
 
 body.dark .navbar-theme-toggle {
   color: #fff; /* Control icon color via currentColor */

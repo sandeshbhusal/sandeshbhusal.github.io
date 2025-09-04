@@ -14,8 +14,6 @@ toc:
     sidebar: right
 ---
 
-
-
 I've been working on a very small expression evaluation engine for my project [Hulaak](https://github.com/sandeshbhusal/Hulaak) for quite a bit now. Aptly, the expression evaluation language is called Hulang, and it's a very simple language that works on JSON documents to modify them, kind of like what [jq](https://jqlang.github.io/jq/) does. The language implementation is still in its infancy, but I've been working on it on and off for a few days now, and this is my kinda-sorta journey of writing a lexer for the language.
 
 {{< notice info >}}
