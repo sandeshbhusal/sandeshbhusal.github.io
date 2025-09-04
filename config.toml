@@ -17,6 +17,7 @@ build_search_index = true # Enable search functionality
 generate_feeds = false # Whether to generate a feed file in root, read docs for more info about rss feed
 feed_filenames = ["feed.xml"] # "feed.xml" | "atom.xml" | "rss.xml", read docs for more info
 taxonomies = [{ name = "tags" }, { name = "categories" }]
+generate_sitemap = true
 
 [markdown]
 highlight_code = true
