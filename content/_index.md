@@ -32,10 +32,10 @@ I like to think of myself as an engineer - I love to (try and) solve problems wh
 
 Here’s a list of my socials if you want to connect with me:
 
-- GitHub
-- LinkedIn
+- [GitHub](https://github.com/sandeshbhusal)
+- [LinkedIn](hptts://linkedin.com/in/sandeshbhusal)
 
-I am in a relationship with the very awesome Supriya. Giver her profile a visit!
+I am in a relationship with the very awesome [Supriya](https://supriyakhadka.com.np/). Giver her profile a visit!
 
 
 
