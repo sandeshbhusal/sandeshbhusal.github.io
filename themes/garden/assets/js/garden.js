@@ -20,8 +20,30 @@
       $('.mobile-menu').focus();
     }
   });
-  const contents = $('.toc-sidebar details');
-  if (contents && matchMedia('(max-width: 1380px)').matches) contents.open = false;
+  const toc = $('.toc-sidebar');
+  if (toc) {
+    const toggle = $('.toc-toggle', toc), drawer = $('.toc-drawer', toc);
+    const setOpen = open => {
+      toc.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', `${open ? 'Close' : 'Open'} table of contents`);
+      drawer.inert = !open;
+      drawer.setAttribute('aria-hidden', String(!open));
+    };
+    toggle.onclick = () => setOpen(!toc.classList.contains('is-open'));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && toc.classList.contains('is-open')) {
+        setOpen(false);
+        toggle.focus({ preventScroll: true });
+      }
+    });
+    document.addEventListener('click', event => {
+      if (!toc.contains(event.target)) setOpen(false);
+    });
+    $$('#TableOfContents a', toc).forEach(link => link.addEventListener('click', () => {
+      if (matchMedia('(max-width: 1380px)').matches) setOpen(false);
+    }));
+  }
   const dialog = $('.search-dialog'), input = $('input', dialog), results = $('.search-results', dialog), label = $('.search-label', dialog);
   let searchGeneration = 0;
   const search = async () => {

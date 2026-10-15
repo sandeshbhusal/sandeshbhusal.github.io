@@ -26,6 +26,37 @@
     const canvas = document.querySelector('.globe-wrap canvas');
     if (!canvas)
         return;
+    const hero = section.closest('.home-hero');
+    const introduction = hero?.querySelector('.hero-copy');
+    const expandButton = section.querySelector('.graph-expand');
+    if (hero && introduction && expandButton) {
+        let collapsedContentHeight;
+        window.addEventListener('resize', () => {
+            if (!hero.classList.contains('is-expanded')) collapsedContentHeight = undefined;
+        });
+        const setExpanded = expanded => {
+            if (expanded) {
+                const style = getComputedStyle(hero);
+                collapsedContentHeight ??= hero.getBoundingClientRect().height - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+                hero.style.setProperty('--expanded-globe-height', `${Math.round(Math.max(collapsedContentHeight + 120, Math.min(innerHeight * .65, 620)))}px`);
+            }
+            hero.classList.toggle('is-expanded', expanded);
+            introduction.inert = expanded;
+            introduction.setAttribute('aria-hidden', String(expanded));
+            expandButton.setAttribute('aria-expanded', String(expanded));
+            const label = expanded ? 'Exit expanded graph' : 'Expand graph';
+            expandButton.setAttribute('aria-label', label);
+            expandButton.title = label;
+        };
+        expandButton.hidden = false;
+        expandButton.onclick = () => setExpanded(!hero.classList.contains('is-expanded'));
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && hero.classList.contains('is-expanded')) {
+                setExpanded(false);
+                expandButton.focus({ preventScroll: true });
+            }
+        });
+    }
     const ctx = canvas.getContext('2d');
     const aura = canvas.closest('.knowledge-graph')?.querySelector('.globe-aura');
     let width = 0, height = 0, frame = 0, last = 0, visible = true, hover = -1;
