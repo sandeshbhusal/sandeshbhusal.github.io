@@ -4,6 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{{ if not .IsHome }}{{ .Title }} — {{ end }}{{ site.Title }}</title>
 <meta name="description" content="{{ .Params.summary | default site.Params.description }}">
+{{ partial "social-meta.html" . }}
 <link rel="canonical" href="{{ .Permalink }}"><link rel="icon" href="{{ site.Params.favicon | default "favicon.png" | relURL }}?v=vexels" type="image/png">
 {{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .RelPermalink }}">{{ end }}
 <link rel="preconnect" href="https://fonts.googleapis.com">

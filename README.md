@@ -45,6 +45,21 @@ Use ordinary Markdown links such as `[Binary search](binary-search.md#conclusion
 
 Put your own images in `static/images/` and link to `/images/example.png`.
 
+## Revisions and related posts
+
+Set `lastmod` in a post's front matter after a meaningful revision. An “Updated” date appears only when it is later than the original `date`; checkout times and theme changes do not affect it.
+
+```yaml
+lastmod: 2026-10-15
+related:
+  - stm32-bootloader
+  - simple-kernel-debug
+```
+
+`related` lists note filenames without `.md`, in the order you want them shown. The theme adds topic matches after these choices, up to three posts total, skips posts already shown in backlinks, and hides the section when there are no matches. Use normal Markdown links in the article for connections that should also appear in the graph and backlinks.
+
+Share cards are generated as 1200×630 PNGs during the Hugo build, with Open Graph and Twitter metadata. No image service or extra font downloads are needed to build them. The author name and correction form URL are configured with `params.author` and `params.issueURL`; the “Found a mistake?” link opens a prefilled GitHub issue form for the reader to submit.
+
 ## Rich content
 
 The theme supports tables, task lists, footnotes, trusted HTML, code highlighting, line numbers, a TOC, tags, archives, and RSS. Search, graph interactions, copying, hover previews, and theme preferences use plain browser JavaScript. Math uses `$...$` or `$$...$$`; diagrams use fenced `mermaid` blocks. IBM Plex Sans and JetBrains Mono are loaded from Google Fonts. Icons, KaTeX (including its math fonts), and Mermaid assets are bundled locally with their licenses.

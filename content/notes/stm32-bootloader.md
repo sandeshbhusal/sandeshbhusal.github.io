@@ -7,6 +7,8 @@ tags:
 summary: For a change of pace, I wanted to work on an embedded project, but
   being the "systems programmer" that I am, without a proper working knowledge
   of the electrical signals (well,…
+related:
+  - simple-kernel-debug
 stage: evergreen
 source: https://sandeshbhusal.github.io/posts/stm32-bootloader/
 ---
@@ -305,6 +307,8 @@ Breakpoint 1, main () at main.c:3
 And voila! We are in main.
 
 ![debug](/images/debug_panes.png)
+
+For a Linux kernel version of the QEMU/GDB workflow, see [Building smol Linux image for reproducible crashes](simple-kernel-debug.md).
 
 ## What did we learn? What's moving forward?
 It's more about what I learned:

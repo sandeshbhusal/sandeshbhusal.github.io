@@ -1,0 +1,5 @@
+{{- with site.Params.issueURL -}}
+{{- $body := printf "Post: %s\nURL: %s\n\nWhat needs correcting?\n\n" $.Title $.Permalink -}}
+{{- $url := printf "%s?%s" . (querify "title" (printf "Correction: %s" $.Title) "body" $body) -}}
+<p class="post-correction"><a href="{{ $url }}" target="_blank" rel="noopener noreferrer">Found a mistake? <span aria-hidden="true">↗</span></a></p>
+{{- end -}}

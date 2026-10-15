@@ -5,6 +5,8 @@ tags:
   - linux
   - os
 summary: How I (sometimes) debug issues with reproducible kernel issues
+related:
+  - stm32-bootloader
 stage: evergreen
 source: https://sandeshbhusal.github.io/posts/simple-kernel-debug/
 ---
@@ -305,3 +307,5 @@ You should see something like this on the screen (I'm using tmux):
 [   12.792438] Kernel Offset: disabled
 [   12.792810] ---[ end Kernel panic - not syncing: Attempted to kill init! exitcode=0x00007f00 ]---
 ```
+
+For the bare-metal version of this QEMU/GDB workflow, see [Writing a Baremetal Bootloader for STM32](stm32-bootloader.md).

@@ -1,0 +1,23 @@
+{{- $page := .page -}}
+{{- $excluded := .exclude | default slice -}}
+{{- $notes := where site.RegularPages "Section" "notes" -}}
+{{- $related := slice -}}
+{{- range $page.Params.related -}}
+  {{- $path := . -}}
+  {{- with site.GetPage (printf "/notes/%s" $path) -}}
+    {{- if and (ne .RelPermalink $page.RelPermalink) (where $notes "RelPermalink" .RelPermalink) (not (where $excluded "RelPermalink" .RelPermalink)) -}}
+      {{- $related = $related | append . -}}
+    {{- end -}}
+  {{- else -}}
+    {{- errorf "Unknown related note %q in %s" $path $page.File.Path -}}
+  {{- end -}}
+{{- end -}}
+{{- range $notes.Related $page -}}
+  {{- if not (where $excluded "RelPermalink" .RelPermalink) -}}
+    {{- $related = $related | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $related = first 3 (uniq $related) -}}
+{{- with $related -}}
+<section class="related-posts"><h2>Related posts</h2><div class="backlink-grid">{{ range . }}{{ partial "card.html" . }}{{ end }}</div></section>
+{{- end -}}

@@ -1,0 +1,23 @@
+{{- /* Render a PNG at build time using Hugo's built-in font and image cache. */ -}}
+{{- $title := .Title | plainify | htmlUnescape -}}
+{{- if .IsHome }}{{ $title = "Systems, software, and things I learn." }}{{ end -}}
+{{- $title = strings.Truncate 110 "…" $title -}}
+{{- $lines := slice -}}
+{{- $line := "" -}}
+{{- range split $title " " -}}
+  {{- $next := strings.TrimSpace (printf "%s %s" $line .) -}}
+  {{- if and $line (gt (len $next) 30) -}}
+    {{- $lines = $lines | append $line -}}
+    {{- $line = . -}}
+  {{- else -}}
+    {{- $line = $next -}}
+  {{- end -}}
+{{- end -}}
+{{- with $line }}{{ $lines = $lines | append . }}{{ end -}}
+{{- $filters := slice
+  (images.Text site.Title (dict "color" "#416697" "size" 28 "x" 64 "y" 64))
+  (images.Text (delimit $lines "\n") (dict "color" "#202834" "size" 60 "linespacing" 14 "x" 64 "y" 180))
+  (images.Text (site.Params.author | default site.Title) (dict "color" "#606b7a" "size" 24 "x" 64 "y" 548))
+-}}
+{{- $image := (resources.Get "images/share-base.png").Filter $filters -}}
+{{- return $image -}}

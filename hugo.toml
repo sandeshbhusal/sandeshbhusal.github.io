@@ -12,6 +12,8 @@ summaryLength = 30
   bluejay = 'bluejay-vexels.png'
   favicon = 'favicon.png'
   recentCount = 5
+  author = 'Sandesh Bhusal'
+  issueURL = 'https://github.com/sandeshbhusal/sandeshbhusal.github.io/issues/new'
 [taxonomies]
   tag = 'tags'
 [permalinks]
@@ -34,3 +36,14 @@ summaryLength = 30
 [markup.tableOfContents]
   startLevel = 2
   endLevel = 3
+
+# Revision dates are editorial, never inferred from checkout or build timestamps.
+[frontmatter]
+  lastmod = ['lastmod', 'date']
+[related]
+  includeNewer = true
+  threshold = 80
+  toLower = true
+  [[related.indices]]
+    name = 'tags'
+    weight = 100
