@@ -7,4 +7,4 @@ Source: https://www.vexels.com/png-svg/preview/203043/blue-jay-bird-stroke
 Terms: https://www.vexels.com/terms-and-conditions/
 The full asset requires the user's Vexels license before public deployment. No Vexels account was accessed and no purchase was made.
 
-Clear Sans: Intel’s Clear Sans font, bundled locally from https://github.com/intel/clear-sans under the Apache 2.0 License. See `vendor/fonts/clear-sans-LICENSE.txt`.
+IBM Plex Sans (text) and JetBrains Mono (code) are loaded from Google Fonts: https://fonts.google.com/specimen/IBM+Plex+Sans and https://fonts.google.com/specimen/JetBrains+Mono.

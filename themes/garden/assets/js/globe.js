@@ -20,21 +20,8 @@
     });
     let rotation = { yaw: .6, pitch: .38 }, zoom = 1, category = null, paused = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const section = document.querySelector('.knowledge-graph');
-    const changeZoom = value => { zoom = Math.max(.65, Math.min(2.6, value)); section.querySelector('output').textContent = Math.round(zoom * 100) + '%'; section.querySelector('canvas').dataset.zoom = zoom.toFixed(2); };
-    section.querySelector('.graph-stats').textContent = `${notes.length} posts · ${edges.length} connections`;
+    const changeZoom = value => { zoom = Math.max(.65, Math.min(2.6, value)); section.querySelector('canvas').dataset.zoom = zoom.toFixed(2); };
     section.querySelector('canvas').dataset.nodeCount = nodes.length;
-    const filter = section.querySelector('[aria-label="Filter graph by topic"]');
-    categories.forEach((tag, index) => filter.add(new Option(tag || 'Uncategorized', index)));
-    filter.addEventListener('change', () => { category = filter.value === '' ? null : Number(filter.value); });
-    section.querySelector('[aria-label="Open a graph note"]').addEventListener('change', e => { if (e.target.value)
-        location.assign(e.target.value); });
-    const pause = section.querySelector('[data-graph="pause"]');
-    const updatePause = () => { pause.textContent = paused ? '▶' : 'Ⅱ'; pause.setAttribute('aria-label', paused ? 'Rotate graph' : 'Pause graph'); };
-    updatePause();
-    section.querySelector('[data-graph="in"]').onclick = () => changeZoom(zoom * 1.2);
-    section.querySelector('[data-graph="out"]').onclick = () => changeZoom(zoom / 1.2);
-    pause.onclick = () => { paused = !paused; updatePause(); };
-    section.querySelector('[data-graph="reset"]').onclick = () => { rotation = { yaw: .6, pitch: .38 }; category = null; filter.value = ''; changeZoom(1); };
     changeZoom(1);
     const canvas = document.querySelector('.globe-wrap canvas');
     if (!canvas)
@@ -145,8 +132,11 @@
             const p = projected[index];
             if (p.x < 8 || p.x > width - 8 || p.y < 16 || p.y > height - 16)
                 continue;
-            ctx.font = '12px Inter, ui-sans-serif, system-ui';
-            const title = nodes[index].title, textWidth = ctx.measureText(title).width;
+            ctx.font = '12px "IBM Plex Sans", ui-sans-serif, system-ui';
+            let title = nodes[index].title;
+            const maxTextWidth = Math.max(40, width - 32);
+            while (ctx.measureText(title).width > maxTextWidth && title.length > 1) title = title.slice(0, -2) + '…';
+            const textWidth = ctx.measureText(title).width;
             const labelX = Math.min(Math.max(p.x + 12, 8), width - textWidth - 16), labelY = Math.max(25, p.y - 6);
             const box = { x: labelX - 5, y: labelY - 15, width: textWidth + 10, height: 23 };
             if (occupied.some(other => box.x < other.x + other.width && box.x + box.width > other.x && box.y < other.y + other.height && box.y + box.height > other.y))
@@ -155,11 +145,11 @@
             labelCount++;
             labelHits.push({ ...box, index });
             ctx.globalAlpha = index === labelIndex ? 1 : labelOpacity * (.55 + p.z * .45);
-            ctx.fillStyle = isDark ? '#242e40ee' : '#fffef7ee';
+            ctx.fillStyle = isDark ? '#21262eee' : '#ffffffee';
             ctx.beginPath();
             ctx.roundRect(labelX - 6, labelY - 15, textWidth + 12, 23, 5);
             ctx.fill();
-            ctx.fillStyle = isDark ? '#c8d8ee' : '#5871a2';
+            ctx.fillStyle = isDark ? '#c9d9f0' : '#416697';
             ctx.fillText(title, labelX, labelY);
         }
         ctx.globalAlpha = 1;

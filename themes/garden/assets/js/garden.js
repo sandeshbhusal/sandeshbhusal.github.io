@@ -3,12 +3,25 @@
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   let index;
   const getIndex = () => index ||= fetch(document.body.dataset.index).then(r => { if (!r.ok) throw Error('Could not load search index'); return r.json(); }).then(notes => notes.map(n => ({ ...n, tags: n.tags || [] })));
-  $('.theme-toggle').onclick = () => {
+  const themeButton = $('.theme-toggle');
+  const updateThemeLabel = () => themeButton.setAttribute('aria-label', `Switch to ${document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'} mode`);
+  updateThemeLabel();
+  themeButton.onclick = () => {
     const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = theme;
+    updateThemeLabel();
     try { localStorage.setItem('garden-theme', theme); } catch {}
   };
   $('.mobile-menu').onclick = e => { const open = $('.nav-links').classList.toggle('is-open'); e.currentTarget.setAttribute('aria-expanded', open); };
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && $('.nav-links').classList.contains('is-open')) {
+      $('.nav-links').classList.remove('is-open');
+      $('.mobile-menu').setAttribute('aria-expanded', 'false');
+      $('.mobile-menu').focus();
+    }
+  });
+  const contents = $('.toc-sidebar details');
+  if (contents && matchMedia('(max-width: 1380px)').matches) contents.open = false;
   const dialog = $('.search-dialog'), input = $('input', dialog), results = $('.search-results', dialog), label = $('.search-label', dialog);
   let searchGeneration = 0;
   const search = async () => {

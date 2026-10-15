@@ -1,5 +1,17 @@
 {{ define "main" }}
-{{ partial "globe.html" . }}
-<section class="site-intro">{{ .Content }}</section>
-<section class="recent-section"><div class="section-heading"><h2>Recent posts</h2><a class="text-link" href="{{ "archives/" | relURL }}">All posts ↗</a></div><div class="note-list">{{ range first (site.Params.recentCount | default 5) (where site.RegularPages "Section" "notes").ByDate.Reverse }}{{ partial "row.html" . }}{{ end }}</div></section>
+<section class="home-hero" aria-labelledby="home-title">
+  <div class="hero-copy">
+    <h1 id="home-title">Systems, software,<br>and things I learn<span class="hero-dot">.</span></h1>
+    <p>Hi, I’m Sandesh. I work close to the hardware and write about what I find along the way.</p>
+    <div class="hero-socials" aria-label="Social profiles">
+      <a class="icon-button" href="https://linkedin.com/in/sandeshbhusal" aria-label="Sandesh on LinkedIn" title="LinkedIn">{{ partial "icons/linkedin.html" . }}</a>
+      <a class="icon-button" href="https://github.com/sandeshbhusal" aria-label="Sandesh on GitHub" title="GitHub">{{ partial "icons/github.html" . }}</a>
+    </div>
+  </div>
+  <div class="hero-graph">{{ partial "globe.html" . }}</div>
+</section>
+<section class="recent-section" aria-labelledby="recent-title">
+  <div class="section-heading"><div><h2 id="recent-title">Recent posts</h2></div><a class="text-link" href="{{ "archives/" | relURL }}">All posts <span aria-hidden="true">↗</span></a></div>
+  <div class="note-list">{{ range first (site.Params.recentCount | default 5) (where site.RegularPages "Section" "notes").ByDate.Reverse }}{{ partial "row.html" . }}{{ end }}</div>
+</section>
 {{ end }}
