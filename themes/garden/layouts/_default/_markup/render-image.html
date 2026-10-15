@@ -1,0 +1,4 @@
+{{- $src := .Destination -}}{{- $missing := false -}}{{- with hugo.Data.import }}{{ $missing = in .missingSourceAssets (strings.TrimPrefix "/" $src) }}{{ end -}}
+{{- if $missing -}}<span class="missing-media">{{ .PlainText }} — unavailable in the original source.</span>{{- else -}}
+{{- if strings.HasPrefix $src "/" }}{{ $src = relURL (strings.TrimPrefix "/" $src) }}{{ end -}}
+<img src="{{ $src }}" alt="{{ .PlainText }}" loading="lazy"{{ with .Title }} title="{{ . }}"{{ end }}>{{- end -}}

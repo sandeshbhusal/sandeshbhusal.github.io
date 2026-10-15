@@ -1,0 +1,1 @@
+<div class="md-column">{{ with .Get "title" }}<p class="column-caption">{{ . }}</p>{{ end }}{{ .Inner | .Page.RenderString (dict "display" "block") }}</div>

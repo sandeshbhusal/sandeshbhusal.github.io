@@ -1,0 +1,1 @@
+{{ $target := site.GetPage (printf "/notes/%s" (.Get 0)) }}{{ with $target }}<a data-preview href="{{ .RelPermalink }}{{ with $.Get 2 }}#{{ . }}{{ end }}">{{ $.Get 1 | default .Title }}</a>{{ else }}{{ errorf "Unknown note %q" (.Get 0) }}{{ end }}

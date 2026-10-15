@@ -1,0 +1,24 @@
+{
+  "repository": "sandeshbhusal/sandeshbhusal.github.io",
+  "branch": "zola-branch",
+  "commit": "82983ea0c689f789c42a887d3f43275f73270909",
+  "published": [
+    "1brc-chapter1",
+    "binary-search",
+    "gossip-glomers",
+    "simple-kernel-debug",
+    "stm32-bootloader",
+    "writing-lexer"
+  ],
+  "excludedDrafts": [
+    "linked-list"
+  ],
+  "assets": [
+    "images/1brc/1-flamegraph-dwarf.svg",
+    "images/1brc/1-flamegraph.svg"
+  ],
+  "missingSourceAssets": [
+    "images/stm32_mmap.png",
+    "images/debug_panes.png"
+  ]
+}

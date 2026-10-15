@@ -1,0 +1,5 @@
+name = 'Garden'
+description = 'A quiet knowledge garden with a rotating graph, Markdown notes, archives, and local search.'
+min_version = '0.162.1'
+[author]
+  name = 'Sandesh Bhusal'

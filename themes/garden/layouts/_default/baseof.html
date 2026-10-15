@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale }}" data-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ if not .IsHome }}{{ .Title }} — {{ end }}{{ site.Title }}</title>
+<meta name="description" content="{{ .Params.summary | default site.Params.description }}">
+<link rel="canonical" href="{{ .Permalink }}"><link rel="icon" href="{{ site.Params.favicon | default "favicon.png" | relURL }}?v=vexels" type="image/png">
+{{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .RelPermalink }}">{{ end }}
+{{ $css := slice (resources.Get "css/fonts.css") (resources.Get "css/garden.css") | resources.Concat "css/garden.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('garden-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}</script>
+{{ if .IsPage }}<link rel="stylesheet" href="{{ "vendor/katex/katex.min.css" | relURL }}">{{ end }}
+</head>
+<body data-index="{{ "index.json" | relURL }}">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="nav-inner"><a href="{{ site.Home.RelPermalink }}" class="wordmark"><span class="brand-icon"><img class="bluejay-icon" src="{{ site.Params.bluejay | default "bluejay-vexels.png" | relURL }}" alt="" width="28" height="28"></span>{{ site.Title }}</a><div class="nav-right"><nav class="nav-links" aria-label="Main navigation"><a {{ if .IsHome }}class="active" aria-current="page"{{ end }} href="{{ site.Home.RelPermalink }}">Garden</a><a {{ if not .IsHome }}class="active"{{ end }} href="{{ "archives/" | relURL }}">Archives</a></nav><button class="nav-search" aria-label="Search the garden">{{ partial "icons/search.html" . }}<span>Search the garden</span><kbd>⌃ K</kbd></button><span class="nav-divider"></span><button class="theme-toggle icon-button" aria-label="Switch color theme"><span class="theme-moon">{{ partial "icons/moon.html" . }}</span><span class="theme-sun">{{ partial "icons/sun.html" . }}</span></button><button class="mobile-menu icon-button" aria-label="Toggle navigation" aria-expanded="false">☰</button></div></div></header>
+<main id="main" class="page-shell">{{ block "main" . }}{{ end }}</main>
+<footer class="site-footer"><span>{{ site.Params.footer | default site.Title }}</span><a href="{{ "archives/" | relURL }}">Archives</a></footer>
+<dialog class="search-dialog" aria-label="Search the garden"><div class="search-input-wrap"><input type="search" aria-label="Search notes" placeholder="Search the garden…"><button class="search-close" aria-label="Close search">Esc</button></div><div class="search-label" aria-live="polite">Search titles, tags, and full text</div><div class="search-results"></div><div class="search-footer">↑ ↓ to navigate · Enter to open · Esc to close</div></dialog>
+{{ $js := resources.Get "js/garden.js" | minify | fingerprint }}<script src="{{ $js.RelPermalink }}" defer></script>
+{{ if .IsHome }}{{ $globe := resources.Get "js/globe.js" | minify | fingerprint }}<script src="{{ $globe.RelPermalink }}" defer></script>{{ end }}
+{{ if .IsPage }}
+{{ if strings.Contains .Content `class="math` }}<script src="{{ "vendor/katex/katex.min.js" | relURL }}" defer></script>{{ end }}
+{{ if strings.Contains .Content `class="mermaid` }}<script src="{{ "vendor/mermaid.min.js" | relURL }}" defer></script>{{ end }}
+{{ end }}
+</body></html>

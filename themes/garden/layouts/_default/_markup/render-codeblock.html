@@ -1,0 +1,1 @@
+{{ if eq .Type "mermaid" }}<div class="mermaid-container"><pre class="mermaid">{{ .Inner }}</pre></div>{{ else }}<div class="code-block"><button class="copy-code" hidden aria-label="Copy code">{{ partial "icons/copy.html" . }}<span aria-live="polite">Copy</span></button>{{ transform.Highlight .Inner (.Type | default "text") "" }}</div>{{ end }}

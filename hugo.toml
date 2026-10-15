@@ -1,0 +1,36 @@
+baseURL = 'https://sandeshbhusal.github.io/'
+locale = 'en-US'
+title = 'Sandesh’s Garden'
+theme = 'garden'
+publishDir = 'public'
+enableRobotsTXT = true
+capitalizeListTitles = false
+summaryLength = 30
+[params]
+  description = 'A knowledge garden about systems, programming, and things I learn.'
+  footer = 'Sandesh’s knowledge garden'
+  bluejay = 'bluejay-vexels.png'
+  favicon = 'favicon.png'
+  recentCount = 5
+[taxonomies]
+  tag = 'tags'
+[permalinks]
+  notes = '/notes/:contentbasename/'
+  tags = '/archives/tags/:slug/'
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+[markup.goldmark.renderer]
+  unsafe = true
+[markup.goldmark.extensions.passthrough]
+  enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+  block = [['$$', '$$']]
+  inline = [['$', '$']]
+[markup.highlight]
+  noClasses = false
+  lineNos = true
+  lineNumbersInTable = false
+  guessSyntax = true
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 3

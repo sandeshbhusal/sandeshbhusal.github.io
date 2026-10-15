@@ -1,0 +1,8 @@
+{{- $url := .Destination -}}{{- $u := urls.Parse $url -}}
+{{- if and (not $u.IsAbs) (not (strings.HasPrefix $url "#")) -}}
+  {{- if or (strings.HasSuffix $u.Path ".md") (strings.HasPrefix $u.Path "/notes/") -}}
+    {{- $target := .Page.GetPage $u.Path -}}{{- if not $target }}{{ $target = site.GetPage (printf "/notes/%s" (path.BaseName $u.Path)) }}{{ end -}}
+    {{- with $target }}{{ $url = .RelPermalink }}{{ with $u.Fragment }}{{ $url = printf "%s#%s" $url . }}{{ end }}{{ else }}{{ errorf "Unresolved note link %q in %s" $url .Page.File.Path }}{{ end -}}
+  {{- else if strings.HasPrefix $url "/" -}}{{- $url = relURL (strings.TrimPrefix "/" $url) -}}{{- end -}}
+{{- end -}}
+<a href="{{ $url }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $u.IsAbs }} target="_blank" rel="noopener noreferrer"{{ else if not (strings.HasPrefix $url "#") }} data-preview{{ end }}>{{ .Text | safeHTML }}</a>
