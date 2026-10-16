@@ -163,7 +163,7 @@
             const p = projected[index];
             if (p.x < 8 || p.x > width - 8 || p.y < 16 || p.y > height - 16)
                 continue;
-            ctx.font = '12px "IBM Plex Sans", ui-sans-serif, system-ui';
+            ctx.font = '12px "Inter", ui-sans-serif, system-ui';
             let title = nodes[index].title;
             const maxTextWidth = Math.max(40, width - 32);
             while (ctx.measureText(title).width > maxTextWidth && title.length > 1) title = title.slice(0, -2) + '…';

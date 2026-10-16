@@ -13,7 +13,7 @@
   font-display: swap;
 }
 :root {
-  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-paragraph: var(--font-sans);
   --font-mono: "Commit Mono", ui-monospace, monospace;
@@ -238,6 +238,8 @@ kbd { font-family: var(--font-mono); font-size: var(--type-caption); border: 1px
 #TableOfContents a.active { border-color: var(--accent); }
 .prose { font-size: var(--type-title); line-height: 1.6; overflow-wrap: anywhere; }
 .prose p { margin: 0 0 1em; }
+.article-body > .prose { font-size: 1.0625rem; line-height: 1.4; }
+.article-body > .prose p { margin-bottom: .9em; }
 .prose h2, .prose h3 { scroll-margin-top: 32px; }
 .prose h2 { font-size: var(--type-section); margin: 1.5em 0 .65em; letter-spacing: -.7px; }
 .prose h3 { font-size: 19px; margin: 1.35em 0 .65em; letter-spacing: -.3px; }
