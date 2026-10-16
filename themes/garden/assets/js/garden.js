@@ -1,6 +1,18 @@
 (() => {
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+  const header = $('.site-header');
+  let headerFrame = 0;
+  const updateHeader = () => {
+    headerFrame = 0;
+    if (window.scrollY > 24) header.classList.add('is-scrolled');
+    else if (window.scrollY <= 8) header.classList.remove('is-scrolled');
+  };
+  window.addEventListener('scroll', () => {
+    if (!headerFrame) headerFrame = requestAnimationFrame(updateHeader);
+  }, { passive: true });
+  window.addEventListener('pageshow', updateHeader);
+  updateHeader();
   let index;
   const getIndex = () => index ||= fetch(document.body.dataset.index).then(r => { if (!r.ok) throw Error('Could not load search index'); return r.json(); }).then(notes => notes.map(n => ({ ...n, tags: n.tags || [] })));
   const themeButton = $('.theme-toggle');
@@ -18,6 +30,12 @@
       $('.nav-links').classList.remove('is-open');
       $('.mobile-menu').setAttribute('aria-expanded', 'false');
       $('.mobile-menu').focus();
+    }
+  });
+  document.addEventListener('click', event => {
+    if (!event.target.closest('.nav-links, .mobile-menu')) {
+      $('.nav-links').classList.remove('is-open');
+      $('.mobile-menu').setAttribute('aria-expanded', 'false');
     }
   });
   const toc = $('.toc-sidebar');
@@ -56,10 +74,10 @@
       results.replaceChildren(...hits.map(n => {
         const a = document.createElement('a'); a.href = n.url;
         const strong = document.createElement('strong'); strong.textContent = n.title;
-        const small = document.createElement('small'); small.textContent = n.summary;
+        const small = document.createElement('small'); small.textContent = `${n.section === 'thoughts' ? 'Thought · ' : ''}${n.summary}`;
         a.append(strong, small); return a;
       }));
-      label.textContent = hits.length ? `${hits.length} notes` : 'No notes found';
+      label.textContent = hits.length ? `${hits.length} results` : 'No results found';
     } catch { label.textContent = 'Search could not load. Please try again.'; }
   };
   $('.nav-search').onclick = () => { dialog.showModal(); input.focus(); search(); };

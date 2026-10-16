@@ -1,6 +1,6 @@
 (async () => {
     const notes = await fetch(document.body.dataset.index).then(r => { if (!r.ok)
-        throw Error('Graph index unavailable'); return r.json(); }).then(notes => notes.map(n => ({ ...n, tags: n.tags || [] })));
+        throw Error('Graph index unavailable'); return r.json(); }).then(notes => notes.filter(n => n.section === 'notes').map(n => ({ ...n, tags: n.tags || [] })));
     const colors = ['#608cc0', '#a381b5', '#6ba4be', '#87a567', '#c18d6c', '#c388a5', '#62a69b', '#b3a064', '#b17f88', '#86a69e'];
     function colorForTag(tag = '') { let hash = 0; for (const c of tag.toLowerCase())
         hash = (hash * 31 + c.charCodeAt(0)) >>> 0; return colors[hash % colors.length]; }

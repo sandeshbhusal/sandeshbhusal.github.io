@@ -6,4 +6,5 @@
 {{ partial "correction-link.html" . }}
 {{ $current := . }}{{ $backlinks := slice }}{{ range where site.RegularPages "Section" "notes" }}{{ if ne .RelPermalink $current.RelPermalink }}{{ $content := .Content }}{{ if strings.Contains $content (printf `href="%s` $current.RelPermalink) }}{{ $backlinks = $backlinks | append . }}{{ end }}{{ end }}{{ end }}
 {{ with $backlinks }}<section class="backlinks"><h2>Backlinks <span>({{ len . }})</span></h2><div class="backlink-grid">{{ range . }}{{ partial "card.html" . }}{{ end }}</div></section>{{ end }}
-{{ partial "related-posts.html" (dict "page" . "exclude" $backlinks) }}</div></div></article>{{ end }}
+{{ partial "related-posts.html" (dict "page" . "exclude" $backlinks) }}
+</div></div></article>{{ end }}

@@ -1,6 +1,6 @@
 {{- $notes := slice -}}
-{{- range (where site.RegularPages "Section" "notes").ByDate.Reverse -}}
+{{- range (where site.RegularPages "Section" "in" (slice "notes" "thoughts")).ByDate.Reverse -}}
 {{- $links := slice -}}
 {{- range findRE `href="[^"]+"` .Content -}}{{- $links = $links | append (replaceRE `^href="([^"#]+)(#[^"]*)?"$` "$1" .) -}}{{- end -}}
-{{- $notes = $notes | append (dict "title" .Title "slug" .File.ContentBaseName "url" .RelPermalink "date" (.Date.Format "2006-01-02") "tags" (.Params.tags | default slice) "summary" (.Params.summary | default "") "body" .Plain "links" $links "readingTime" .ReadingTime) -}}
+{{- $notes = $notes | append (dict "section" .Section "title" .Title "slug" .File.ContentBaseName "url" .RelPermalink "date" (.Date.Format "2006-01-02") "tags" (.Params.tags | default .Params.topics | default slice) "summary" (.Params.summary | default (.Plain | truncate 160)) "body" .Plain "links" $links "readingTime" .ReadingTime) -}}
 {{- end -}}{{- $notes | jsonify | safeJS -}}

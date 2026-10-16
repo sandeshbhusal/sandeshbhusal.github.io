@@ -11,7 +11,8 @@
   <div class="hero-graph">{{ partial "globe.html" . }}</div>
 </section>
 <section class="recent-section" aria-labelledby="recent-title">
-  <div class="section-heading"><div><h2 id="recent-title">Recent posts</h2></div><a class="text-link" href="{{ "archives/" | relURL }}">All posts <span aria-hidden="true">↗</span></a></div>
+  <div class="section-heading"><h2 id="recent-title">Recent posts</h2></div>
   <div class="note-list">{{ range first (site.Params.recentCount | default 5) (where site.RegularPages "Section" "notes").ByDate.Reverse }}{{ partial "row.html" . }}{{ end }}</div>
+  <div class="recent-footer"><a class="view-all-button" href="{{ "archives/" | relURL }}">View all <span aria-hidden="true">→</span></a></div>
 </section>
 {{ end }}

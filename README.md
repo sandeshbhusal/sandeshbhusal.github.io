@@ -24,6 +24,7 @@ Generated output and caches are ignored by Git and can be deleted after use.
 
 - `content/_index.md`: homepage introduction and social links.
 - `content/notes/*.md`: posts and metadata.
+- `content/thoughts/*.md`: short snippets shown in full on the Thoughts feed.
 - `hugo.toml`: site title, base URL, description, footer, favicon, and other settings.
 - `themes/garden/`: reusable theme, templates, CSS, JavaScript, and bundled browser assets.
 - `data/import.json`: import provenance and known missing illustrations.
@@ -44,6 +45,20 @@ Use ordinary Markdown links such as `[Binary search](binary-search.md#conclusion
 ```
 
 Put your own images in `static/images/` and link to `/images/example.png`.
+
+## Thoughts
+
+`/thoughts/` is a separate feed for snippets, observations, links, and unfinished ideas. It shows the full Markdown body, newest first, with 20 thoughts per page. Each timestamp links to a permanent page; `/thoughts/index.xml` provides a full-content RSS feed. Thoughts appear in site search, while the homepage posts, archives, and knowledge graph stay focused on notes.
+
+Create a thought:
+
+```sh
+hugo new content thoughts/something-on-my-mind.md
+```
+
+Use the title as a short label for search, the permalink page, and RSS; the feed itself leads with the body. The date includes a time and timezone so multiple thoughts in a day sort correctly. Optional `topics: [rust, reading]` appear as labels without adding them to the blog’s tag archives. Markdown, images, code, math, and diagrams work here too.
+
+Preview with `hugo server -D`, then set `draft: false` to publish. The included `a-small-thought.md` is a draft example; replace or remove it as you like. Production shows an empty state until you publish your first thought. Set `lastmod` to show an updated date after editing. The feed uses a pixel-art bluejay profile picture; customize `params.thoughtAvatar` and `params.thoughtHandle` in `hugo.toml` to make it your own.
 
 ## Revisions and related posts
 

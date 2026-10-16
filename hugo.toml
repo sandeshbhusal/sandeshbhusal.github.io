@@ -9,10 +9,12 @@ summaryLength = 30
 [params]
   description = 'A knowledge garden about systems, programming, and things I learn.'
   footer = 'Sandesh’s knowledge garden'
-  bluejay = 'bluejay-vexels.png'
-  favicon = 'favicon.png'
+  bluejay = 'images/thoughts-avatar.png'
+  favicon = 'images/thoughts-avatar.png'
   recentCount = 5
   author = 'Sandesh Bhusal'
+  thoughtHandle = 'sbhusal'
+  thoughtAvatar = 'images/thoughts-avatar.png'
   issueURL = 'https://github.com/sandeshbhusal/sandeshbhusal.github.io/issues/new'
 [taxonomies]
   tag = 'tags'

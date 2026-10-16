@@ -1,0 +1,26 @@
+{{ define "main" }}
+<section class="thoughts-page" aria-labelledby="thoughts-title">
+  <header class="thoughts-heading">
+    <div>
+      <h1 id="thoughts-title">{{ .Title }}</h1>
+      <p class="thoughts-profile-name">{{ site.Params.author | default site.Title }} <span>(@{{ site.Params.thoughtHandle | default "sbhusal" }})</span></p>
+    </div>
+    <a class="thought-follow" href="{{ (.OutputFormats.Get "RSS").RelPermalink }}">Follow via RSS</a>
+  </header>
+  {{ $paginator := .Paginate .RegularPages.ByDate.Reverse 20 }}
+  <div class="thought-feed">
+    {{ range $paginator.Pages }}
+      {{ partial "thought.html" . }}
+    {{ else }}
+      <div class="thoughts-empty"><h2>A little room to think.</h2><p>Nothing here yet. Check back for small observations and ideas.</p></div>
+    {{ end }}
+  </div>
+  {{ if gt $paginator.TotalPages 1 }}
+  <nav class="thought-pagination" aria-label="Thoughts pagination">
+    <div>{{ with $paginator.Prev }}<a href="{{ .URL }}">← Newer thoughts</a>{{ end }}</div>
+    <span>{{ $paginator.PageNumber }} / {{ $paginator.TotalPages }}</span>
+    <div>{{ with $paginator.Next }}<a href="{{ .URL }}">Older thoughts →</a>{{ end }}</div>
+  </nav>
+  {{ end }}
+</section>
+{{ end }}
