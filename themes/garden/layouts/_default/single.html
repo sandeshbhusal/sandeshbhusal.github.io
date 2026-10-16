@@ -1,4 +1,14 @@
-{{ define "main" }}<article class="article-page"><a class="back-link" href="{{ "archives/" | relURL }}">{{ partial "icons/arrow-left.html" . }} All posts</a><header class="article-header"><div class="article-tags">{{ range .GetTerms "tags" }}<a class="tag" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}</div><h1>{{ .Title }}</h1><p class="article-summary">{{ .Params.summary }}</p><div class="article-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time><span>{{ .ReadingTime }} min read</span>{{ if .Lastmod.After .Date }}<span class="article-updated">Updated <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "Jan 2, 2006" }}</time></span>{{ end }}</div></header>
+{{ define "main" }}
+<article class="article-page">
+<header class="article-header">
+  <h1>{{ .Title }}</h1>
+  <div class="article-meta">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+    <span>{{ .ReadingTime }} min read</span>
+    {{ with .GetTerms "tags" }}<div class="article-tags" aria-label="Tags">{{ range . }}<a class="tag" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}</div>{{ end }}
+    {{ if .Lastmod.After .Date }}<span class="article-updated">Updated <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "Jan 2, 2006" }}</time></span>{{ end }}
+  </div>
+</header>
 <div class="article-layout">{{ if gt (len .Fragments.Headings) 0 }}<aside class="toc-sidebar" aria-label="Table of contents"><div class="toc-shell">
 <button class="toc-toggle icon-button" type="button" aria-label="Open table of contents" aria-expanded="false" aria-controls="toc-drawer" title="On this page"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
 <div class="toc-drawer" id="toc-drawer" inert aria-hidden="true"><div class="toc-drawer-inner"><h2>On this page</h2>{{ .TableOfContents }}</div></div>

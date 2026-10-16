@@ -9,7 +9,7 @@
 {{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .RelPermalink }}">{{ end }}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
 {{ $css := resources.Get "css/garden.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('garden-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}</script>
 {{ if or .IsPage (eq .Section "thoughts") }}<link rel="stylesheet" href="{{ "vendor/katex/katex.min.css" | relURL }}">{{ end }}
@@ -29,6 +29,7 @@
       </nav>
       <div class="nav-tools" role="group" aria-label="Search and appearance">
         <button type="button" class="nav-search icon-button" aria-label="Search the garden" title="Search">{{ partial "icons/search.html" . }}</button>
+        <a class="nav-rss icon-button" href="{{ "index.xml" | relURL }}" aria-label="Subscribe via RSS" title="RSS">{{ partial "icons/rss.html" . }}</a>
         <button type="button" class="theme-toggle icon-button" aria-label="Switch color theme"><span class="theme-moon">{{ partial "icons/moon.html" . }}</span><span class="theme-sun">{{ partial "icons/sun.html" . }}</span></button>
       </div>
       <button type="button" class="mobile-menu icon-button" aria-label="Toggle navigation" aria-controls="site-navigation" aria-expanded="false">
@@ -38,7 +39,6 @@
   </div>
 </header>
 <main id="main" class="page-shell">{{ block "main" . }}{{ end }}</main>
-<footer class="site-footer"><span>{{ site.Params.footer | default site.Title }}</span><div class="footer-links"><a href="{{ "index.xml" | relURL }}">RSS</a><a href="{{ "archives/" | relURL }}">All notes ↗</a></div></footer>
 <dialog class="search-dialog" aria-label="Search the garden"><div class="search-input-wrap"><input type="search" aria-label="Search posts and thoughts" placeholder="Search the garden…"><button class="search-close" aria-label="Close search">Esc</button></div><div class="search-label" aria-live="polite">Search titles, tags, and full text</div><div class="search-results"></div><div class="search-footer">↑ ↓ to navigate · Enter to open · Esc to close</div></dialog>
 {{ $js := resources.Get "js/garden.js" | minify | fingerprint }}<script src="{{ $js.RelPermalink }}" defer></script>
 {{ if .IsHome }}{{ $globe := resources.Get "js/globe.js" | minify | fingerprint }}<script src="{{ $globe.RelPermalink }}" defer></script>{{ end }}

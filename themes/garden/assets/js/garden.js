@@ -2,6 +2,29 @@
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const header = $('.site-header');
+  const page = document.documentElement;
+  page.classList.add('scrollbar-managed');
+  let scrollbarTimer;
+  const nearScrollbar = event => event.clientX >= page.clientWidth - 24;
+  const updateScrollbarHover = event => {
+    if (event.pointerType === 'touch') return;
+    page.classList.toggle('scrollbar-hovered', nearScrollbar(event));
+  };
+  window.addEventListener('pointermove', updateScrollbarHover, { passive: true });
+  window.addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'touch' && event.button === 0 && nearScrollbar(event)) {
+      page.classList.add('scrollbar-dragging');
+    }
+  }, { passive: true });
+  const stopScrollbarDrag = event => {
+    page.classList.remove('scrollbar-dragging');
+    updateScrollbarHover(event);
+  };
+  window.addEventListener('pointerup', stopScrollbarDrag, { passive: true });
+  window.addEventListener('pointercancel', stopScrollbarDrag, { passive: true });
+  window.addEventListener('blur', () => {
+    page.classList.remove('scrollbar-hovered', 'scrollbar-dragging');
+  });
   let headerFrame = 0;
   const updateHeader = () => {
     headerFrame = 0;
@@ -9,6 +32,9 @@
     else if (window.scrollY <= 8) header.classList.remove('is-scrolled');
   };
   window.addEventListener('scroll', () => {
+    page.classList.add('is-scrolling');
+    clearTimeout(scrollbarTimer);
+    scrollbarTimer = setTimeout(() => page.classList.remove('is-scrolling'), 900);
     if (!headerFrame) headerFrame = requestAnimationFrame(updateHeader);
   }, { passive: true });
   window.addEventListener('pageshow', updateHeader);
@@ -93,7 +119,7 @@
   $$('.copy-code').forEach(button => {
     button.hidden = false;
     button.onclick = async () => {
-      const pre = $('pre', button.parentElement).cloneNode(true);
+      const pre = $('.highlight pre', button.parentElement).cloneNode(true);
       $$('.ln,.lnt', pre).forEach(el => el.remove());
       const text = pre.textContent.replace(/\n$/, '');
       let copied = false;

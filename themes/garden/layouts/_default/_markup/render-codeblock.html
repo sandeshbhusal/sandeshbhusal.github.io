@@ -1,1 +1,14 @@
-{{ if eq .Type "mermaid" }}<div class="mermaid-container"><pre class="mermaid">{{ .Inner }}</pre></div>{{ else }}<div class="code-block"><button class="copy-code" hidden aria-label="Copy code">{{ partial "icons/copy.html" . }}<span aria-live="polite">Copy</span></button>{{ transform.Highlight .Inner (.Type | default "text") "" }}</div>{{ end }}
+{{- if eq .Type "mermaid" -}}
+<div class="mermaid-container"><pre class="mermaid">{{ .Inner }}</pre></div>
+{{- else -}}
+{{- $highlighted := transform.Highlight .Inner (.Type | default "text") "" -}}
+{{- $numbers := findRE `<span class="ln">[^<]*</span>` $highlighted -}}
+{{- $code := replaceRE `<span class="ln">[^<]*</span>` "" $highlighted -}}
+<div class="code-block">
+  <button type="button" class="copy-code" hidden aria-label="Copy code">{{ partial "icons/copy.html" . }}<span aria-live="polite">Copy</span></button>
+  <div class="code-content">
+    {{- with $numbers -}}<pre class="code-gutter" aria-hidden="true">{{ range . }}<span>{{ . | plainify }}</span>{{ end }}</pre>{{- end -}}
+    {{- $code | safeHTML -}}
+  </div>
+</div>
+{{- end -}}
