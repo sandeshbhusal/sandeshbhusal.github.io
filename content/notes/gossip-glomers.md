@@ -1073,6 +1073,102 @@ Using this, and implementing a simple genetic algorithm, we land with a graph th
 
 ```
 
+Here is the same topology with the nodes arranged in a ring. Each colored curve is a bidirectional connection:
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="640" height="640" role="img" aria-labelledby="gossip-ring-title gossip-ring-desc" style="display: block; max-width: 100%; height: auto; margin: 28px auto;">
+  <title id="gossip-ring-title">Genetic algorithm broadcast topology</title>
+  <desc id="gossip-ring-desc">25 nodes arranged clockwise in a ring from n0 to n24, with 33 colored, curved bidirectional connections. Each node has two or three neighbors.</desc>
+  <g fill="none" stroke-width="2" stroke-opacity="0.8" stroke-linecap="round">
+    <path data-edge="n0 n4" stroke="#528ac8" d="M 320.00 50.00 C 320.00 179.60, 438.54 244.77, 547.97 175.33"><title>n0 ↔ n4</title></path>
+    <path data-edge="n0 n5" stroke="#bd79c9" d="M 320.00 50.00 C 320.00 179.60, 453.53 276.62, 576.79 236.57"><title>n0 ↔ n5</title></path>
+    <path data-edge="n0 n17" stroke="#36a49b" d="M 320.00 50.00 C 320.00 179.60, 192.96 379.78, 75.70 434.96"><title>n0 ↔ n17</title></path>
+    <path data-edge="n1 n6" stroke="#df9950" d="M 387.15 58.48 C 354.92 184.01, 460.12 311.19, 589.47 303.05"><title>n1 ↔ n6</title></path>
+    <path data-edge="n1 n11" stroke="#dc788b" d="M 387.15 58.48 C 354.92 184.01, 371.68 450.54, 419.39 571.04"><title>n1 ↔ n11</title></path>
+    <path data-edge="n1 n24" stroke="#8c9e52" d="M 387.15 58.48 C 354.92 184.01, 285.08 184.01, 252.85 58.48"><title>n1 ↔ n24</title></path>
+    <path data-edge="n2 n10" stroke="#528ac8" d="M 450.07 83.40 C 387.64 196.97, 402.52 433.58, 478.70 538.43"><title>n2 ↔ n10</title></path>
+    <path data-edge="n2 n11" stroke="#bd79c9" d="M 450.07 83.40 C 387.64 196.97, 371.68 450.54, 419.39 571.04"><title>n2 ↔ n11</title></path>
+    <path data-edge="n2 n13" stroke="#36a49b" d="M 450.07 83.40 C 387.64 196.97, 302.40 459.29, 286.16 587.87"><title>n2 ↔ n13</title></path>
+    <path data-edge="n3 n5" stroke="#df9950" d="M 504.83 123.18 C 416.11 217.65, 453.53 276.62, 576.79 236.57"><title>n3 ↔ n5</title></path>
+    <path data-edge="n3 n6" stroke="#dc788b" d="M 504.83 123.18 C 416.11 217.65, 460.12 311.19, 589.47 303.05"><title>n3 ↔ n6</title></path>
+    <path data-edge="n3 n7" stroke="#8c9e52" d="M 504.83 123.18 C 416.11 217.65, 457.91 346.31, 585.22 370.59"><title>n3 ↔ n7</title></path>
+    <path data-edge="n4 n8" stroke="#bd79c9" d="M 547.97 175.33 C 438.54 244.77, 447.04 379.78, 564.30 434.96"><title>n4 ↔ n8</title></path>
+    <path data-edge="n5 n18" stroke="#528ac8" d="M 576.79 236.57 C 453.53 276.62, 182.09 346.31, 54.78 370.59"><title>n5 ↔ n18</title></path>
+    <path data-edge="n6 n23" stroke="#36a49b" d="M 589.47 303.05 C 460.12 311.19, 252.36 196.97, 189.93 83.40"><title>n6 ↔ n23</title></path>
+    <path data-edge="n7 n14" stroke="#df9950" d="M 585.22 370.59 C 457.91 346.31, 268.32 450.54, 220.61 571.04"><title>n7 ↔ n14</title></path>
+    <path data-edge="n8 n16" stroke="#dc788b" d="M 564.30 434.96 C 447.04 379.78, 211.82 409.49, 111.96 492.10"><title>n8 ↔ n16</title></path>
+    <path data-edge="n8 n22" stroke="#8c9e52" d="M 564.30 434.96 C 447.04 379.78, 223.89 217.65, 135.17 123.18"><title>n8 ↔ n22</title></path>
+    <path data-edge="n9 n20" stroke="#528ac8" d="M 528.04 492.10 C 428.18 409.49, 186.47 276.62, 63.21 236.57"><title>n9 ↔ n20</title></path>
+    <path data-edge="n9 n21" stroke="#bd79c9" d="M 528.04 492.10 C 428.18 409.49, 201.46 244.77, 92.03 175.33"><title>n9 ↔ n21</title></path>
+    <path data-edge="n10 n20" stroke="#36a49b" d="M 478.70 538.43 C 402.52 433.58, 186.47 276.62, 63.21 236.57"><title>n10 ↔ n20</title></path>
+    <path data-edge="n10 n22" stroke="#df9950" d="M 478.70 538.43 C 402.52 433.58, 223.89 217.65, 135.17 123.18"><title>n10 ↔ n22</title></path>
+    <path data-edge="n12 n14" stroke="#dc788b" d="M 353.84 587.87 C 337.60 459.29, 268.32 450.54, 220.61 571.04"><title>n12 ↔ n14</title></path>
+    <path data-edge="n12 n15" stroke="#8c9e52" d="M 353.84 587.87 C 337.60 459.29, 237.48 433.58, 161.30 538.43"><title>n12 ↔ n15</title></path>
+    <path data-edge="n12 n21" stroke="#528ac8" d="M 353.84 587.87 C 337.60 459.29, 201.46 244.77, 92.03 175.33"><title>n12 ↔ n21</title></path>
+    <path data-edge="n13 n15" stroke="#bd79c9" d="M 286.16 587.87 C 302.40 459.29, 237.48 433.58, 161.30 538.43"><title>n13 ↔ n15</title></path>
+    <path data-edge="n14 n19" stroke="#36a49b" d="M 220.61 571.04 C 268.32 450.54, 179.88 311.19, 50.53 303.05"><title>n14 ↔ n19</title></path>
+    <path data-edge="n15 n18" stroke="#df9950" d="M 161.30 538.43 C 237.48 433.58, 182.09 346.31, 54.78 370.59"><title>n15 ↔ n18</title></path>
+    <path data-edge="n16 n23" stroke="#8c9e52" d="M 111.96 492.10 C 211.82 409.49, 252.36 196.97, 189.93 83.40"><title>n16 ↔ n23</title></path>
+    <path data-edge="n17 n19" stroke="#dc788b" d="M 75.70 434.96 C 192.96 379.78, 179.88 311.19, 50.53 303.05"><title>n17 ↔ n19</title></path>
+    <path data-edge="n20 n21" stroke="#df9950" d="M 63.21 236.57 C 186.47 276.62, 201.46 244.77, 92.03 175.33"><title>n20 ↔ n21</title></path>
+    <path data-edge="n22 n24" stroke="#528ac8" d="M 135.17 123.18 C 223.89 217.65, 285.08 184.01, 252.85 58.48"><title>n22 ↔ n24</title></path>
+    <path data-edge="n23 n24" stroke="#bd79c9" d="M 189.93 83.40 C 252.36 196.97, 285.08 184.01, 252.85 58.48"><title>n23 ↔ n24</title></path>
+  </g>
+  <g fill="var(--surface, #f5f7fa)" stroke="var(--accent, #416697)" stroke-width="1.5">
+    <circle cx="320.00" cy="50.00" r="22" />
+    <circle cx="387.15" cy="58.48" r="22" />
+    <circle cx="450.07" cy="83.40" r="22" />
+    <circle cx="504.83" cy="123.18" r="22" />
+    <circle cx="547.97" cy="175.33" r="22" />
+    <circle cx="576.79" cy="236.57" r="22" />
+    <circle cx="589.47" cy="303.05" r="22" />
+    <circle cx="585.22" cy="370.59" r="22" />
+    <circle cx="564.30" cy="434.96" r="22" />
+    <circle cx="528.04" cy="492.10" r="22" />
+    <circle cx="478.70" cy="538.43" r="22" />
+    <circle cx="419.39" cy="571.04" r="22" />
+    <circle cx="353.84" cy="587.87" r="22" />
+    <circle cx="286.16" cy="587.87" r="22" />
+    <circle cx="220.61" cy="571.04" r="22" />
+    <circle cx="161.30" cy="538.43" r="22" />
+    <circle cx="111.96" cy="492.10" r="22" />
+    <circle cx="75.70" cy="434.96" r="22" />
+    <circle cx="54.78" cy="370.59" r="22" />
+    <circle cx="50.53" cy="303.05" r="22" />
+    <circle cx="63.21" cy="236.57" r="22" />
+    <circle cx="92.03" cy="175.33" r="22" />
+    <circle cx="135.17" cy="123.18" r="22" />
+    <circle cx="189.93" cy="83.40" r="22" />
+    <circle cx="252.85" cy="58.48" r="22" />
+  </g>
+  <g fill="var(--text, #353b45)" font-family="monospace" font-size="14" text-anchor="middle" dominant-baseline="central">
+    <text x="320.00" y="50.00">n0</text>
+    <text x="387.15" y="58.48">n1</text>
+    <text x="450.07" y="83.40">n2</text>
+    <text x="504.83" y="123.18">n3</text>
+    <text x="547.97" y="175.33">n4</text>
+    <text x="576.79" y="236.57">n5</text>
+    <text x="589.47" y="303.05">n6</text>
+    <text x="585.22" y="370.59">n7</text>
+    <text x="564.30" y="434.96">n8</text>
+    <text x="528.04" y="492.10">n9</text>
+    <text x="478.70" y="538.43">n10</text>
+    <text x="419.39" y="571.04">n11</text>
+    <text x="353.84" y="587.87">n12</text>
+    <text x="286.16" y="587.87">n13</text>
+    <text x="220.61" y="571.04">n14</text>
+    <text x="161.30" y="538.43">n15</text>
+    <text x="111.96" y="492.10">n16</text>
+    <text x="75.70" y="434.96">n17</text>
+    <text x="54.78" y="370.59">n18</text>
+    <text x="50.53" y="303.05">n19</text>
+    <text x="63.21" y="236.57">n20</text>
+    <text x="92.03" y="175.33">n21</text>
+    <text x="135.17" y="123.18">n22</text>
+    <text x="189.93" y="83.40">n23</text>
+    <text x="252.85" y="58.48">n24</text>
+  </g>
+</svg>
+
 Instead of using the given topology, this is the topology we can use. With this, we get the following results on median:
 
 ```bash
