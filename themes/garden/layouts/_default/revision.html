@@ -1,0 +1,31 @@
+{{ define "main" }}
+<article class="revision-page" data-revision aria-label="{{ .Title }} presentation">
+  <header class="revision-header">
+    <h1>{{ .Title }}</h1>
+    <div class="revision-actions" hidden>
+      <button type="button" data-export-pdf title="Open the print dialog to save the deck as PDF">Export PDF</button>
+      <button type="button" data-speaker title="Open speaker notes, next slide, and timer (S)">Speaker view</button>
+      <button type="button" data-overview aria-pressed="false" title="Show all slides (O)">Overview</button>
+      <button type="button" data-fullscreen aria-pressed="false">Present ⛶</button>
+    </div>
+  </header>
+  <div class="revision-stage" tabindex="0" aria-label="Slide presentation. Arrow keys navigate; O opens overview; S opens speaker view.">
+    <div class="slides">
+    {{ range $index, $slide := split .Content "<hr>" }}
+    <section class="revision-card" id="slide-{{ add $index 1 }}" aria-label="Slide {{ add $index 1 }}">
+      <div class="revision-slide-content prose">{{ $slide | safeHTML }}</div>
+    </section>
+    {{ end }}
+    </div>
+  </div>
+  <nav class="revision-navigation" aria-label="Slide navigation" hidden>
+    <button type="button" data-card-prev>← Previous</button>
+    <span data-card-position role="status" aria-live="polite" aria-atomic="true"></span>
+    <button type="button" data-card-next>Next →</button>
+  </nav>
+  <nav class="revision-thumbnails" aria-label="Slide previews" hidden></nav>
+</article>
+<script src="{{ "vendor/reveal/dist/reveal.js" | relURL }}" defer></script>
+<script src="{{ "vendor/reveal/dist/plugin/notes.js" | relURL }}" defer></script>
+{{ $js := resources.Get "js/revision.js" | minify | fingerprint }}<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ end }}

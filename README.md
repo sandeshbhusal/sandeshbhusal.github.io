@@ -46,6 +46,38 @@ Use ordinary Markdown links such as `[Binary search](binary-search.md#conclusion
 
 Put your own images in `static/images/` and link to `/images/example.png`.
 
+## Revision decks
+
+Create a Markdown presentation with `hugo new content --kind revision notes/my-topic.md`.
+Use `layout: revision` and separate slides with a line containing `---`.
+Ordinary Markdown, tables, code, and math work within each slide.
+
+The locally bundled reveal.js engine displays one slide at a time within the
+site's usual width. Click a thumbnail to jump to a slide, use Previous/Next,
+or focus the deck and use arrow keys. **Overview** (`O`) shows all slides.
+**Present** (`F`) enters fullscreen, hides the navbar and thumbnail strip, and
+hides presentation controls after a short idle period. Move the pointer to
+show them again. Escape or Exit fullscreen returns to the embedded deck.
+
+**Speaker view** (`S`) opens a separate window with the current slide, next
+slide, notes, and a timer. Share the presentation window with your audience.
+Add optional notes inside a slide with ordinary HTML:
+
+```html
+<aside class="notes">
+  Remind myself to explain this example before advancing.
+</aside>
+```
+
+Notes are hidden in audience slides and thumbnails. Headings retain their
+links, and slide URLs look like `#/slide-2`. Without JavaScript, all slides
+remain readable. **Export PDF** opens a print-ready deck in a new tab and
+launches the browser's print dialog; choose **Save as PDF**.
+After saving or canceling, the export tab returns to the normal deck at the
+slide you were viewing.
+No npm build step is needed: compiled reveal.js assets and its MIT license
+live in `themes/garden/static/vendor/reveal/`.
+
 ## Thoughts
 
 `/thoughts/` is a separate feed for snippets, observations, links, and unfinished ideas. It shows the full Markdown body, newest first, with 20 thoughts per page. Each timestamp links to a permanent page; `/thoughts/index.xml` provides a full-content RSS feed. Thoughts appear in site search, while the homepage posts, archives, and knowledge graph stay focused on notes.

@@ -1,5 +1,9 @@
 # Asset credits
 
+reveal.js 6.0.2 is bundled under `vendor/reveal/` (compiled presentation runtime,
+core stylesheet, and speaker notes plugin). Its MIT license is in
+`vendor/reveal/LICENSE`. Source: https://github.com/hakimel/reveal.js/tree/6.0.2.
+
 The illustrations under `images/1brc/` were imported with the author's posts from https://github.com/sandeshbhusal/sandeshbhusal.github.io.
 
 `bluejay-vexels.png` and `favicon.png`: the public preview of the Vexels “Blue jay bird stroke” graphic, explicitly selected by the user, used for the local design preview.
