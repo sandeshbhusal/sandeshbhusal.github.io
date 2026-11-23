@@ -19,19 +19,12 @@
       {{ with $backlinks }}<span aria-hidden="true"> · </span><a href="#connections">{{ len . }} link{{ if ne (len .) 1 }}s{{ end }} here</a>{{ end }}
       {{ with .Params.source }}<span aria-hidden="true"> · </span><a href="{{ . }}">Source ↗</a>{{ end }}
     </p>
+    {{ if gt (len .Fragments.Headings) 0 }}<nav class="contents" aria-label="On this page"><b>Contents</b>{{ .TableOfContents }}</nav>{{ end }}
   </header>
-  <div class="article-layout{{ if gt (len .Fragments.Headings) 0 }} has-toc{{ end }}">
-    <div class="article-body"><div class="prose">{{ .Content }}</div>
-    {{ partial "correction-link.html" . }}
-    {{ with $backlinks }}<section class="backlinks" id="connections"><h2>Connections <span>({{ len . }})</span></h2><div class="link-grid">{{ range . }}{{ partial "card.html" . }}{{ end }}</div></section>{{ end }}
-    {{ partial "related-posts.html" (dict "page" . "exclude" $backlinks) }}
-    </div>
-    {{ if gt (len .Fragments.Headings) 0 }}
-    <aside class="toc-aside" aria-label="On this page">
-      <b>Contents</b>
-      {{ .TableOfContents }}
-    </aside>
-    {{ end }}
+  <div class="article-body"><div class="prose">{{ .Content }}</div>
+  {{ partial "correction-link.html" . }}
+  {{ with $backlinks }}<section class="backlinks" id="connections"><h2>Connections <span>({{ len . }})</span></h2><div class="link-grid">{{ range . }}{{ partial "card.html" . }}{{ end }}</div></section>{{ end }}
+  {{ partial "related-posts.html" (dict "page" . "exclude" $backlinks) }}
   </div>
 </article>
 {{ end }}

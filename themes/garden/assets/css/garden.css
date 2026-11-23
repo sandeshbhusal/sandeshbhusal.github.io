@@ -170,7 +170,9 @@ button { cursor: pointer; }
   z-index: 50;
   border-bottom: 1px solid var(--rule);
   background: var(--paper);
+  transition: transform .2s ease;
 }
+.site-header.is-hidden { transform: translateY(-100%); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 52px; }
 .wordmark {
   color: var(--ink);
@@ -292,27 +294,15 @@ button { cursor: pointer; }
 .article-meta a:hover { text-decoration-color: var(--accent); }
 .back-link { display: inline-block; margin-bottom: 26px; color: var(--muted); font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; text-decoration: none; text-transform: lowercase; }
 .back-link:hover { color: var(--accent); text-decoration: underline; }
-.article-layout {
-  --toc-gap: 12px;
-  --toc-width: clamp(120px, calc((100vw - 860px) / 2), 180px);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--toc-width);
-  gap: var(--toc-gap);
-  align-items: start;
-  margin-right: calc(0px - var(--toc-width) - var(--toc-gap));
-}
 .article-body { min-width: 0; max-width: none; }
-@media (min-width: 1101px) {
-  .article-layout.has-toc .article-body { padding-right: 24px; }
-}
-.toc-aside { position: sticky; top: 84px; align-self: start; padding-left: 10px; border-left: 1px solid var(--rule); font-size: 12px; line-height: 1.45; }
-.toc-aside > b { display: block; margin-bottom: 10px; color: var(--accent); font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: lowercase; }
-.toc-aside nav ul { margin: 0; padding: 0; list-style: none; }
-.toc-aside nav li { margin: 0 0 7px; }
-.toc-aside nav ul ul { margin: 6px 0 0 12px; }
-.toc-aside nav a { color: var(--muted); text-decoration: none; }
-.toc-aside nav a:hover { color: var(--accent); }
-.toc-aside nav a.active { color: var(--accent); font-weight: 600; }
+.contents { margin: 18px 0 30px; font-size: 13px; }
+.contents > b { display: block; margin-bottom: 8px; color: var(--accent); font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: lowercase; }
+.contents ul { margin: 0; padding-left: 18px; list-style: disc; }
+.contents ul ul { margin-top: 4px; padding-left: 16px; list-style: circle; }
+.contents li { margin: 0 0 4px; }
+.contents a { color: var(--muted); text-decoration: none; }
+.contents a:hover { color: var(--accent); text-decoration: underline; }
+.contents a.active { color: var(--accent); font-weight: 600; }
 
 /* ——— Reading prose ——————————————————————————————————————— */
 .prose {
@@ -555,11 +545,6 @@ html.reveal-print { scrollbar-gutter: auto; scroll-padding: 0; }
 .footer-copy { color: var(--faint); font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; text-transform: lowercase; }
 
 /* ——— Responsive ————————————————————————————————————————— */
-@media (max-width: 1100px) {
-  .article-layout { grid-template-columns: 1fr; gap: 28px; margin-right: 0; }
-  .article-layout.has-toc .article-body { padding-right: 0; }
-  .toc-aside { position: static; order: -1; padding: 0 0 12px; border-left: 0; border-bottom: 1px solid var(--rule); }
-}
 @media (max-width: 900px) {
   .nav-inner, .footer-inner, .page-shell { width: calc(100% - 40px); }
 }
@@ -622,11 +607,10 @@ html.reveal-print { scrollbar-gutter: auto; scroll-padding: 0; }
 
 /* ——— Print ——————————————————————————————————————————————— */
 @media print {
-  .site-header, .site-footer, .breadcrumb, .stamp, .toc-aside, .back-link, .post-correction, .backlinks, .related-posts, .copy-code { display: none !important; }
+  .site-header, .site-footer, .breadcrumb, .stamp, .contents, .back-link, .post-correction, .backlinks, .related-posts, .copy-code { display: none !important; }
   body { background: #fff; color: #000; }
   .page-shell { width: 100%; padding: 0; }
   .article-header, .article-body, .prose { max-width: none; }
-  .article-layout { margin-right: 0; }
   .prose a { color: #000; }
   .code-block { background: #fff; color: #000; border-color: #000; }
   .code-head, .prose blockquote, .prose details { background: #fff; }

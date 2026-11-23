@@ -3,10 +3,14 @@
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const header = $('.site-header');
   let headerFrame = 0;
+  let lastY = window.scrollY;
   const updateHeader = () => {
     headerFrame = 0;
-    if (window.scrollY > 12) header.classList.add('is-scrolled');
-    else header.classList.remove('is-scrolled');
+    const y = window.scrollY;
+    header.classList.toggle('is-scrolled', y > 12);
+    const openUI = !!document.querySelector('.nav-links.is-open, .search-dialog[open]');
+    header.classList.toggle('is-hidden', y > 120 && y > lastY && !openUI);
+    lastY = y;
   };
   window.addEventListener('scroll', () => {
     if (!headerFrame) headerFrame = requestAnimationFrame(updateHeader);
