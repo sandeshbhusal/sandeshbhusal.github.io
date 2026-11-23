@@ -15,9 +15,9 @@
 {{- end -}}
 {{- with $line }}{{ $lines = $lines | append . }}{{ end -}}
 {{- $filters := slice
-  (images.Text site.Title (dict "color" "#416697" "size" 28 "x" 64 "y" 64))
-  (images.Text (delimit $lines "\n") (dict "color" "#202834" "size" 60 "linespacing" 14 "x" 64 "y" 180))
-  (images.Text (site.Params.author | default site.Title) (dict "color" "#606b7a" "size" 24 "x" 64 "y" 548))
+  (images.Text site.Title (dict "color" "#9b4f2e" "size" 28 "x" 64 "y" 64))
+  (images.Text (delimit $lines "\n") (dict "color" "#24201a" "size" 60 "linespacing" 14 "x" 64 "y" 180))
+  (images.Text (site.Params.author | default site.Title) (dict "color" "#675f52" "size" 24 "x" 64 "y" 548))
 -}}
 {{- $image := (resources.Get "images/share-base.png").Filter $filters -}}
 {{- return $image -}}

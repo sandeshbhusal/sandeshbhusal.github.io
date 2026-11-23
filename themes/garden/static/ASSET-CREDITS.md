@@ -11,7 +11,7 @@ Source: https://www.vexels.com/png-svg/preview/203043/blue-jay-bird-stroke
 Terms: https://www.vexels.com/terms-and-conditions/
 The full asset requires the user's Vexels license before public deployment. No Vexels account was accessed and no purchase was made.
 
-Space Grotesk (headings) and Inter (text) are loaded from Google Fonts: https://fonts.google.com/specimen/Space+Grotesk and https://fonts.google.com/specimen/Inter.
+Inter (headings, reading and interface text) and IBM Plex Mono (labels and metadata) are loaded from Google Fonts: https://fonts.google.com/specimen/Inter and https://fonts.google.com/specimen/IBM+Plex+Mono.
 
 Commit Mono (code) is bundled under `vendor/commit-mono/`, with its SIL Open Font License 1.1 in `LICENSE.txt`.
 Source: https://github.com/eigilnikolajsen/commit-mono/tree/d407cd2bf8e01ca1db70544052fbbb9606406c3b

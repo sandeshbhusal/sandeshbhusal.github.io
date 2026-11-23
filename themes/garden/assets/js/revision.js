@@ -126,7 +126,6 @@
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'revision-thumbnail';
-        button.setAttribute('aria-label', `Go to slide ${index + 1}`);
         const canvas = document.createElement('span');
         canvas.className = 'revision-thumbnail-canvas';
         canvas.setAttribute('aria-hidden', 'true');

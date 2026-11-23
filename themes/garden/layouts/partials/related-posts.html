@@ -19,5 +19,5 @@
 {{- end -}}
 {{- $related = first 3 (uniq $related) -}}
 {{- with $related -}}
-<section class="related-posts"><h2>Related posts</h2><div class="backlink-grid">{{ range . }}{{ partial "card.html" . }}{{ end }}</div></section>
+<section class="related-posts"><h2>Related posts</h2><ul class="plain-links">{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul></section>
 {{- end -}}

@@ -3,6 +3,5 @@
   <a class="back-link" href="{{ with site.GetPage "/thoughts" }}{{ .RelPermalink }}{{ end }}">{{ partial "icons/arrow-left.html" . }} All thoughts</a>
   <h1 class="thought-single-title">{{ .Title }}</h1>
   {{ partial "thought.html" . }}
-  
 </section>
 {{ end }}

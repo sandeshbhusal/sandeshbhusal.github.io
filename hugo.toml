@@ -1,14 +1,13 @@
 baseURL = 'https://sandeshbhusal.github.io/'
 locale = 'en-US'
-title = 'Sandesh’s Garden'
+title = "Sandesh's Blog"
 theme = 'garden'
 publishDir = 'public'
 enableRobotsTXT = true
 capitalizeListTitles = false
 summaryLength = 30
 [params]
-  description = 'A knowledge garden about systems, programming, and things I learn.'
-  footer = 'Sandesh’s knowledge garden'
+  description = 'Notes on systems, programming, and things I learn.'
   bluejay = 'images/thoughts-avatar.png'
   favicon = 'images/thoughts-avatar.png'
   recentCount = 5

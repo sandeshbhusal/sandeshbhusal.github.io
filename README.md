@@ -1,4 +1,4 @@
-# Sandesh’s Garden
+# Sandesh's Blog
 
 A Hugo site with Markdown content and a reusable theme. Requires Hugo **0.162.1 or newer**. No Docker, Node.js, npm, or helper scripts are needed.
 
@@ -80,7 +80,7 @@ live in `themes/garden/static/vendor/reveal/`.
 
 ## Thoughts
 
-`/thoughts/` is a separate feed for snippets, observations, links, and unfinished ideas. It shows the full Markdown body, newest first, with 20 thoughts per page. Each timestamp links to a permanent page; `/thoughts/index.xml` provides a full-content RSS feed. Thoughts appear in site search, while the homepage posts, archives, and knowledge graph stay focused on notes.
+`/thoughts/` is a separate feed for snippets, observations, links, and unfinished ideas. It shows the full Markdown body, newest first, with 20 thoughts per page. Each timestamp links to a permanent page; `/thoughts/index.xml` provides a full-content RSS feed. Thoughts appear in site search, while the homepage posts and archives stay focused on notes.
 
 Create a thought:
 
@@ -103,13 +103,13 @@ related:
   - simple-kernel-debug
 ```
 
-`related` lists note filenames without `.md`, in the order you want them shown. The theme adds topic matches after these choices, up to three posts total, skips posts already shown in backlinks, and hides the section when there are no matches. Use normal Markdown links in the article for connections that should also appear in the graph and backlinks.
+`related` lists note filenames without `.md`, in the order you want them shown. The theme adds topic matches after these choices, up to three posts total, skips posts already shown in backlinks, and hides the section when there are no matches. Use normal Markdown links in the article for connections that should also appear as backlinks.
 
 Share cards are generated as 1200×630 PNGs during the Hugo build, with Open Graph and Twitter metadata. No image service or extra font downloads are needed to build them. The author name and correction form URL are configured with `params.author` and `params.issueURL`; the “Found a mistake?” link opens a prefilled GitHub issue form for the reader to submit.
 
 ## Rich content
 
-The theme supports tables, task lists, footnotes, trusted HTML, code highlighting, line numbers, a TOC, tags, archives, and RSS. Search, graph interactions, copying, hover previews, and theme preferences use plain browser JavaScript. Math uses `$...$` or `$$...$$`; diagrams use fenced `mermaid` blocks. Space Grotesk gives headings and post titles a geometric, technical character; Inter handles body text and interface labels. Both are loaded from Google Fonts; Commit Mono is bundled locally for code, including regular and italic variable styles. Icons, KaTeX (including its math fonts), and Mermaid assets are bundled locally with their licenses.
+The theme supports tables, task lists, footnotes, trusted HTML, code highlighting, line numbers, an inline TOC, tags, archives, and RSS. Search, copying, and theme preferences use plain browser JavaScript. Math uses `$...$` or `$$...$$`; diagrams use fenced `mermaid` blocks. The warm field-notes design uses Inter for headings and reading text, and IBM Plex Mono for labels and metadata; both are loaded from Google Fonts. Commit Mono is bundled locally as the code fallback, including regular and italic variable styles. Icons, KaTeX (including its math fonts), and Mermaid assets are bundled locally with their licenses.
 
 Optional columns stack on mobile:
 

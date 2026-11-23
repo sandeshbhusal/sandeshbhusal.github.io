@@ -2,39 +2,13 @@
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const header = $('.site-header');
-  const page = document.documentElement;
-  page.classList.add('scrollbar-managed');
-  let scrollbarTimer;
-  const nearScrollbar = event => event.clientX >= page.clientWidth - 24;
-  const updateScrollbarHover = event => {
-    if (event.pointerType === 'touch') return;
-    page.classList.toggle('scrollbar-hovered', nearScrollbar(event));
-  };
-  window.addEventListener('pointermove', updateScrollbarHover, { passive: true });
-  window.addEventListener('pointerdown', event => {
-    if (event.pointerType !== 'touch' && event.button === 0 && nearScrollbar(event)) {
-      page.classList.add('scrollbar-dragging');
-    }
-  }, { passive: true });
-  const stopScrollbarDrag = event => {
-    page.classList.remove('scrollbar-dragging');
-    updateScrollbarHover(event);
-  };
-  window.addEventListener('pointerup', stopScrollbarDrag, { passive: true });
-  window.addEventListener('pointercancel', stopScrollbarDrag, { passive: true });
-  window.addEventListener('blur', () => {
-    page.classList.remove('scrollbar-hovered', 'scrollbar-dragging');
-  });
   let headerFrame = 0;
   const updateHeader = () => {
     headerFrame = 0;
-    if (window.scrollY > 24) header.classList.add('is-scrolled');
-    else if (window.scrollY <= 8) header.classList.remove('is-scrolled');
+    if (window.scrollY > 12) header.classList.add('is-scrolled');
+    else header.classList.remove('is-scrolled');
   };
   window.addEventListener('scroll', () => {
-    page.classList.add('is-scrolling');
-    clearTimeout(scrollbarTimer);
-    scrollbarTimer = setTimeout(() => page.classList.remove('is-scrolling'), 900);
     if (!headerFrame) headerFrame = requestAnimationFrame(updateHeader);
   }, { passive: true });
   window.addEventListener('pageshow', updateHeader);
@@ -64,30 +38,6 @@
       $('.mobile-menu').setAttribute('aria-expanded', 'false');
     }
   });
-  const toc = $('.toc-sidebar');
-  if (toc) {
-    const toggle = $('.toc-toggle', toc), drawer = $('.toc-drawer', toc);
-    const setOpen = open => {
-      toc.classList.toggle('is-open', open);
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', `${open ? 'Close' : 'Open'} table of contents`);
-      drawer.inert = !open;
-      drawer.setAttribute('aria-hidden', String(!open));
-    };
-    toggle.onclick = () => setOpen(!toc.classList.contains('is-open'));
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && toc.classList.contains('is-open')) {
-        setOpen(false);
-        toggle.focus({ preventScroll: true });
-      }
-    });
-    document.addEventListener('click', event => {
-      if (!toc.contains(event.target)) setOpen(false);
-    });
-    $$('#TableOfContents a', toc).forEach(link => link.addEventListener('click', () => {
-      if (matchMedia('(max-width: 1380px)').matches) setOpen(false);
-    }));
-  }
   const dialog = $('.search-dialog'), input = $('input', dialog), results = $('.search-results', dialog), label = $('.search-label', dialog);
   let searchGeneration = 0;
   const search = async () => {
@@ -119,7 +69,7 @@
   $$('.copy-code').forEach(button => {
     button.hidden = false;
     button.onclick = async () => {
-      const pre = $('.highlight pre', button.parentElement).cloneNode(true);
+      const pre = $('.highlight pre', button.closest('.code-block')).cloneNode(true);
       $$('.ln,.lnt', pre).forEach(el => el.remove());
       const text = pre.textContent.replace(/\n$/, '');
       let copied = false;
@@ -136,6 +86,12 @@
       button.querySelector('span').textContent = copied ? 'Copied' : 'Copy unavailable';
       setTimeout(() => button.querySelector('span').textContent = 'Copy', 1800);
     };
+  });
+  $$('.code-block').forEach(block => {
+    const gutter = $('.code-gutter', block);
+    if (!gutter) return;
+    const numbers = $$('span', gutter);
+    $$('.chroma .line', block).forEach((line, i) => { if (line.classList.contains('hl') && numbers[i]) numbers[i].classList.add('hl'); });
   });
   // Vendor scripts are deferred; they have finished loading by DOMContentLoaded.
   document.addEventListener('DOMContentLoaded', () => {
@@ -163,28 +119,6 @@
     };
     [field,year,sort].forEach(el=>el.addEventListener(el===field?'input':'change',update)); update();
   }
-  // Text-only previews use the same small, Hugo-generated index as search.
-  let preview, timer;
-  const closePreview = () => { preview?.remove(); preview=null; };
-  document.addEventListener('keydown', e=>{if(e.key==='Escape')closePreview();});
-  window.addEventListener('resize',closePreview);
-  $$('a[data-preview]').forEach(a => {
-    const show = () => { clearTimeout(timer); timer=setTimeout(async()=>{
-      try {
-        const notes=await getIndex(), note=notes.find(n=>new URL(a.href).pathname===n.url);
-        if(!note || (!a.matches(':hover') && document.activeElement!==a)) return;
-        closePreview(); preview=document.createElement('div');preview.className='note-preview';preview.setAttribute('role','tooltip');
-        const tag=document.createElement('span');tag.className='preview-tag';tag.textContent=note.tags[0]||'note';
-        const h=document.createElement('h3');h.textContent=note.title;
-        const p=document.createElement('p');p.className='preview-summary';p.textContent=note.summary;
-        const excerpt=document.createElement('p');excerpt.className='preview-excerpt';excerpt.textContent=note.body.slice(0,260);
-        const footer=document.createElement('div');footer.className='preview-footer';footer.textContent=`${note.date} · ${note.readingTime} min read`;
-        preview.append(tag,h,p,excerpt,footer);document.body.append(preview);
-        const b=a.getBoundingClientRect();preview.style.left=Math.max(12,Math.min(b.left,innerWidth-preview.offsetWidth-12))+'px';preview.style.top=Math.max(12,b.top>280?b.top-274:Math.min(b.bottom+6,innerHeight-276))+'px';
-      } catch {}
-    },150); };
-    const hide=()=>{clearTimeout(timer);closePreview();};a.addEventListener('mouseenter',show);a.addEventListener('focus',show);a.addEventListener('mouseleave',hide);a.addEventListener('blur',hide);a.addEventListener('click',hide);
-  });
   const tocLinks=$$('#TableOfContents a');
   if(tocLinks.length){const observer=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting)tocLinks.forEach(a=>a.classList.toggle('active',decodeURIComponent(a.hash.slice(1))===entry.target.id));},{rootMargin:'-10% 0px -70% 0px'});tocLinks.forEach(a=>{const h=document.getElementById(decodeURIComponent(a.hash.slice(1)));if(h)observer.observe(h);});}
 })();

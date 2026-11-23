@@ -1,11 +1,31 @@
 {{- if eq .Type "mermaid" -}}
 <div class="mermaid-container"><pre class="mermaid">{{ .Inner }}</pre></div>
 {{- else -}}
-{{- $highlighted := transform.Highlight .Inner (.Type | default "text") "" -}}
+{{- $rawType := .Type | default "text" -}}
+{{- $lang := $rawType -}}
+{{- $options := "" -}}
+{{- if strings.Contains $rawType "," -}}
+  {{- $parts := split $rawType "," -}}
+  {{- $lang = index $parts 0 -}}
+  {{- $optionHead := index $parts 1 -}}
+  {{- $prefix := printf "```%s " $rawType -}}
+  {{- range $line := split .Page.RawContent "\n" -}}
+    {{- $trimmed := strings.TrimSpace $line -}}
+    {{- if strings.HasPrefix $trimmed $prefix -}}
+      {{- $options = printf "%s %s" $optionHead (strings.TrimPrefix $prefix $trimmed) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $lines := len (split .Inner "\n") -}}
+{{- $highlighted := transform.Highlight .Inner $lang $options -}}
 {{- $numbers := findRE `<span class="ln">[^<]*</span>` $highlighted -}}
 {{- $code := replaceRE `<span class="ln">[^<]*</span>` "" $highlighted -}}
 <div class="code-block">
-  <button type="button" class="copy-code" hidden aria-label="Copy code">{{ partial "icons/copy.html" . }}<span aria-live="polite">Copy</span></button>
+  <div class="code-head">
+    <span class="code-language">{{ $lang }}</span>
+    <span class="code-lines">{{ $lines }} lines</span>
+    <button type="button" class="copy-code" hidden aria-label="Copy code">{{ partial "icons/copy.html" . }}<span aria-live="polite">Copy</span></button>
+  </div>
   <div class="code-content">
     {{- with $numbers -}}<pre class="code-gutter" aria-hidden="true">{{ range . }}<span>{{ . | plainify }}</span>{{ end }}</pre>{{- end -}}
     {{- $code | safeHTML -}}

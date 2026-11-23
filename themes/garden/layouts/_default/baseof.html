@@ -6,10 +6,12 @@
 <meta name="description" content="{{ .Params.summary | default .Description | default site.Params.description }}">
 {{ partial "social-meta.html" . }}
 <link rel="canonical" href="{{ .Permalink }}"><link rel="icon" href="{{ site.Params.favicon | default "favicon.png" | relURL }}?v=pixel-bluejay" type="image/png">
+<meta name="theme-color" content="#f7f2e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#181613" media="(prefers-color-scheme: dark)">
 {{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .RelPermalink }}">{{ end }}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap">
 {{ if eq .Layout "revision" }}<link rel="stylesheet" href="{{ "vendor/reveal/dist/reveal.css" | relURL }}">{{ end }}
 {{ $css := resources.Get "css/garden.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('garden-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}</script>
@@ -19,30 +21,39 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="nav-inner">
-    <a href="{{ site.Home.RelPermalink }}" class="wordmark{{ if .IsHome }} active{{ end }}" {{ if .IsHome }}aria-current="page"{{ end }} aria-label="{{ site.Title }} home">
-      <img class="bluejay-icon" src="{{ site.Params.bluejay | default "bluejay-vexels.png" | relURL }}" alt="" width="40" height="40">
-      <span>{{ site.Title }}</span>
-    </a>
+    <a href="{{ site.Home.RelPermalink }}" class="wordmark{{ if .IsHome }} active{{ end }}" {{ if .IsHome }}aria-current="page"{{ end }}>{{ site.Title }}</a>
     <div class="nav-right">
       <nav id="site-navigation" class="nav-links" aria-label="Main navigation">
         <a {{ if or (eq .Section "archives") (eq .Section "tags") (eq .Section "notes") }}class="active"{{ end }} {{ if eq .RelPermalink ("archives/" | relURL) }}aria-current="page"{{ end }} href="{{ "archives/" | relURL }}">Notes</a>
         <a {{ if eq .Section "thoughts" }}class="active"{{ end }} {{ if and (eq .Section "thoughts") .IsSection }}aria-current="page"{{ end }} href="{{ "thoughts/" | relURL }}">Thoughts</a>
       </nav>
       <div class="nav-tools" role="group" aria-label="Search and appearance">
-        <button type="button" class="nav-search icon-button" aria-label="Search the garden" title="Search">{{ partial "icons/search.html" . }}</button>
+        <button type="button" class="nav-search icon-button" aria-label="Search" title="Search">{{ partial "icons/search.html" . }}</button>
         <a class="nav-rss icon-button" href="{{ "index.xml" | relURL }}" aria-label="Subscribe via RSS" title="RSS">{{ partial "icons/rss.html" . }}</a>
         <button type="button" class="theme-toggle icon-button" aria-label="Switch color theme"><span class="theme-moon">{{ partial "icons/moon.html" . }}</span><span class="theme-sun">{{ partial "icons/sun.html" . }}</span></button>
       </div>
       <button type="button" class="mobile-menu icon-button" aria-label="Toggle navigation" aria-controls="site-navigation" aria-expanded="false">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path class="menu-lines" d="M4 7h16M4 12h16M4 17h16"/><path class="menu-close" d="m6 6 12 12M6 18 18 6"/></svg>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path class="menu-lines" d="M4 7h16M4 12h16M4 17h16"/><path class="menu-close" d="m6 6 12 12M6 18 18 6"/></svg>
       </button>
     </div>
   </div>
 </header>
 <main id="main" class="page-shell">{{ block "main" . }}{{ end }}</main>
-<dialog class="search-dialog" aria-label="Search the garden"><div class="search-input-wrap"><input type="search" aria-label="Search posts and thoughts" placeholder="Search the garden…"><button class="search-close" aria-label="Close search">Esc</button></div><div class="search-label" aria-live="polite">Search titles, tags, and full text</div><div class="search-results"></div><div class="search-footer">↑ ↓ to navigate · Enter to open · Esc to close</div></dialog>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="{{ "archives/" | relURL }}">Notes</a>
+      <a href="{{ "thoughts/" | relURL }}">Thoughts</a>
+      <a href="{{ "index.xml" | relURL }}">RSS</a>
+    </nav>
+    <p class="footer-copy">© {{ now.Year }} {{ site.Params.author | default site.Title }}</p>
+  </div>
+</footer>
+<dialog class="search-dialog" aria-label="Search"><div class="search-input-wrap">{{ partial "icons/search.html" . }}<input type="search" aria-label="Search posts and thoughts" placeholder="Search…"><button class="search-close" aria-label="Close search">Esc</button></div><div class="search-label" aria-live="polite">Search titles, tags, and full text</div><div class="search-results"></div><div class="search-footer">↑ ↓ to navigate · Enter to open · Esc to close</div></dialog>
 {{ $js := resources.Get "js/garden.js" | minify | fingerprint }}<script src="{{ $js.RelPermalink }}" defer></script>
-{{ if .IsHome }}{{ $globe := resources.Get "js/globe.js" | minify | fingerprint }}<script src="{{ $globe.RelPermalink }}" defer></script>{{ end }}
 {{ if or .IsPage (eq .Section "thoughts") }}
 {{ $rendered := .Content }}{{ if .IsSection }}{{ range .RegularPages }}{{ $rendered = printf "%s%s" $rendered .Content }}{{ end }}{{ end }}
 {{ if strings.Contains $rendered `class="math` }}<script src="{{ "vendor/katex/katex.min.js" | relURL }}" defer></script>{{ end }}

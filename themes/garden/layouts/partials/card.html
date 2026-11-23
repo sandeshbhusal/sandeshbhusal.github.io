@@ -1,1 +1,5 @@
-<a data-preview href="{{ .RelPermalink }}"><span><small>{{ index (.Params.tags | default (slice "note")) 0 }}</small><strong>{{ .Title }}</strong></span><span>↗</span></a>
+<a class="link-card" href="{{ .RelPermalink }}">
+  <span class="link-card-kind">{{ index (.Params.tags | default (slice "Note")) 0 }}</span>
+  <strong>{{ .Title }}</strong>
+  <span class="link-card-arrow" aria-hidden="true">→</span>
+</a>
