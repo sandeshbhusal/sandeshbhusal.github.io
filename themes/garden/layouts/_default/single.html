@@ -20,7 +20,7 @@
       {{ with .Params.source }}<span aria-hidden="true"> · </span><a href="{{ . }}">Source ↗</a>{{ end }}
     </p>
   </header>
-  <div class="article-layout">
+  <div class="article-layout{{ if gt (len .Fragments.Headings) 0 }} has-toc{{ end }}">
     <div class="article-body"><div class="prose">{{ .Content }}</div>
     {{ partial "correction-link.html" . }}
     {{ with $backlinks }}<section class="backlinks" id="connections"><h2>Connections <span>({{ len . }})</span></h2><div class="link-grid">{{ range . }}{{ partial "card.html" . }}{{ end }}</div></section>{{ end }}
