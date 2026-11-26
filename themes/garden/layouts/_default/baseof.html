@@ -6,8 +6,8 @@
 <meta name="description" content="{{ .Params.summary | default .Description | default site.Params.description }}">
 {{ partial "social-meta.html" . }}
 <link rel="canonical" href="{{ .Permalink }}"><link rel="icon" href="{{ site.Params.favicon | default "favicon.png" | relURL }}?v=pixel-bluejay" type="image/png">
-<meta name="theme-color" content="#f7f2e8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#181613" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161d24" media="(prefers-color-scheme: dark)">
 {{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .RelPermalink }}">{{ end }}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

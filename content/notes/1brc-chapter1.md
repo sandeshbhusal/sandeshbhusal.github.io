@@ -7,7 +7,7 @@ summary: "I stumbled upon Gunnar Morling’s One Billion Rows Challenge and
   couldn’t resist giving it a shot. The premise is straightforward: you get a
   text file with a billion lines, each…"
 stage: evergreen
-source: https://sandeshbhusal.github.io/posts/1brc-chapter1/
+source: https://github.com/sandeshbhusal/sandeshbhusal.github.io/blob/main/content/notes/1brc-chapter1.md
 ---
 
 I stumbled upon Gunnar Morling’s [One Billion Rows Challenge](https://www.morling.dev/blog/one-billion-row-challenge/) and couldn’t resist giving it a shot. The premise is straightforward: you get a text file with a billion lines, each line has a city name and a temperature reading. The task is to print every city (sorted alphabetically) along with its minimum, average, and maximum temperature across all measurements. Here’s a sample of what the input looks like:

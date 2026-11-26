@@ -10,7 +10,7 @@ summary: For a change of pace, I wanted to work on an embedded project, but
 related:
   - simple-kernel-debug
 stage: evergreen
-source: https://sandeshbhusal.github.io/posts/stm32-bootloader/
+source: https://github.com/sandeshbhusal/sandeshbhusal.github.io/blob/main/content/notes/stm32-bootloader.md
 ---
 
 For a change of pace, I wanted to work on an embedded project, but being the "systems programmer" that I am, without a proper working knowledge of the electrical signals (well, I do have a degree, but it's not in electrical engineering), I decided to tinker with the STM32 microcontroller. After borrowing one from a friend (thanks, Royce!) I started to tinker with it, but I found myself working with a STM32 Cube IDE, and that just won't do, will it?

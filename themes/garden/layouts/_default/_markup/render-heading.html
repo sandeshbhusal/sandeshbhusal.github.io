@@ -1,0 +1,4 @@
+{{- $id := .Attributes.id -}}
+{{- if not $id }}{{ $id = anchorize (replaceRE "<[^>]*>" "" .Text) }}{{ end -}}
+{{- $showLink := and (eq .Page.Section "notes") (ne .Page.Params.layout "revision") -}}
+<h{{ .Level }} id="{{ $id }}">{{ .Text | safeHTML }}{{ if $showLink }}<a class="heading-toc-link" href="#TableOfContents" aria-label="Back to contents">{{ partial "icons/chevron-up.html" . }}</a>{{ end }}</h{{ .Level }}>

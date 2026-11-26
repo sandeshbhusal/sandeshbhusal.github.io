@@ -2,7 +2,7 @@
 
 Date: 2026-11-23
 
-## Selected: Warm field notes
+## Selected: Steel-blue field notes
 
 Status: **approved by user; implemented across `themes/garden`**
 
@@ -11,7 +11,7 @@ Prototype source: `/tmp/opencode/knowledge-prototype/field-template.html`
 
 Why this one:
 - User: “I like this one. Change the blog based on this design.”
-- Keeps the plain structure of the personal-wiki choice, but adds warmth: cream paper, rust ink, Inter headings, a notebook left rule, and a small “Working note” stamp.
+- Keeps the plain structure of the personal-wiki choice, but adds a quiet cool tone: pale blue-grey paper, steel blue ink, Inter headings, a notebook left rule, and a small “Working note” stamp.
 - Knowledge-forward without peacockiness: no ticker, stickers, hard shadows, or oversized grotesk display.
 - Light and dark themes both pass Lighthouse 1.0.
 

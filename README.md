@@ -109,7 +109,7 @@ Share cards are generated as 1200×630 PNGs during the Hugo build, with Open Gra
 
 ## Rich content
 
-The theme supports tables, task lists, footnotes, trusted HTML, code highlighting, line numbers, an inline TOC, tags, archives, and RSS. Search, copying, and theme preferences use plain browser JavaScript. Math uses `$...$` or `$$...$$`; diagrams use fenced `mermaid` blocks. The warm field-notes design uses Inter for headings and reading text, and IBM Plex Mono for labels and metadata; both are loaded from Google Fonts. Commit Mono is bundled locally as the code fallback, including regular and italic variable styles. Icons, KaTeX (including its math fonts), and Mermaid assets are bundled locally with their licenses.
+The theme supports tables, task lists, footnotes, trusted HTML, code highlighting, line numbers, an inline TOC, tags, archives, and RSS. Search, copying, and theme preferences use plain browser JavaScript. Math uses `$...$` or `$$...$$`; diagrams use fenced `mermaid` blocks. The steel-blue field-notes design uses Inter for headings and reading text, and IBM Plex Mono for labels and metadata; both are loaded from Google Fonts. Commit Mono is bundled locally as the code fallback, including regular and italic variable styles. Icons, KaTeX (including its math fonts), and Mermaid assets are bundled locally with their licenses.
 
 Optional columns stack on mobile:
 

@@ -7,7 +7,7 @@ tags:
   - algorithms
 summary: My solutions to the Gossip Glomers challenge by fly.io
 stage: evergreen
-source: https://sandeshbhusal.github.io/posts/gossip-glomers/
+source: https://github.com/sandeshbhusal/sandeshbhusal.github.io/blob/main/content/notes/gossip-glomers.md
 ---
 
 [Gossip Glomers](https://fly.io/dist-sys/) is a distributed systems challenge created by [fly.io](https://fly.io), where participants are expected to work around a simulating library called `maelstrom` that simulates failures and latencies in a distributed system. The library provided works with `go`, but being the rustacean that I am, I decided to rewrite the library in Rust, and implement solutions to the challenges. The [specifications](#) are publicly available (and well-documented) so it was a breeze to go through. In this post, I will only explain the solutions to the challenge upto the _efficient broadcast_ challenge.

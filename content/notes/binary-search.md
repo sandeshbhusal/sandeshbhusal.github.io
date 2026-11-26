@@ -8,7 +8,7 @@ summary: Binary search is one of the most trivial and elegant algorithms to
   understand, and yet, equally easy to get wrong while implementing it. There
   are a couple of checkpoints,…
 stage: evergreen
-source: https://sandeshbhusal.github.io/posts/binary-search/
+source: https://github.com/sandeshbhusal/sandeshbhusal.github.io/blob/main/content/notes/binary-search.md
 ---
 
 ## Refresher

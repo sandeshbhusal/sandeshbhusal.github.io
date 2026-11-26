@@ -8,7 +8,7 @@ summary: How I (sometimes) debug issues with reproducible kernel issues
 related:
   - stm32-bootloader
 stage: evergreen
-source: https://sandeshbhusal.github.io/posts/simple-kernel-debug/
+source: https://github.com/sandeshbhusal/sandeshbhusal.github.io/blob/main/content/notes/simple-kernel-debug.md
 ---
 
 <!-- 
